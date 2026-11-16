@@ -1,0 +1,12 @@
+# Xiaomie Magic Tools (小咩魔法系列软件)
+
+> Official suite of AI productivity tools for cross-border e-commerce sellers.
+
+## Core Products
+- **Xiaomie Magic Collector (小咩魔法采集)**: https://xiaomie.tools/collector/ (Download: https://collector.xiaomie.tools/%E5%B0%8F%E5%92%A9%E9%AD%94%E6%B3%95%E9%87%87%E9%9B%86-chrome-v1.0.8.zip)
+- **Xiaomie Magic Carousel (小咩魔法轮播视频)**: https://xiaomie.tools/carousel/ (Studio: https://carousel.xiaomie.tools/)
+
+## Shared Infrastructure
+- **API Endpoint**: https://api.xiaomie.tools (isolated by `app_id`)
+- **System Notification Email**: noreply@xiaomie.tools
+- **Official Support Email**: info@xiaomie.tools

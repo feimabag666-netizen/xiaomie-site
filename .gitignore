@@ -1,0 +1,10 @@
+node_modules/
+.wrangler/
+.dev.vars
+*.log
+.DS_Store
+private/
+KEY.txt
+*KEY*.txt
+*API*.txt
+*Purelymail*.txt

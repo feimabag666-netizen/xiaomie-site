@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="zh-CN" dir="ltr" data-app-id="collector">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>小咩魔法采集 v1.0.8 — 全网商品与图文智能采集 Chrome/Edge 扩展 | 1688/亚马逊/独立站一键采集</title>
+  <meta name="description" content="全网通用商品与图文素材智能采集插件：AI智能筛图、防卡死本地长图OCR、四级箱规参数补查、B2B/ToC独家卖点与故事生成、纯正单语种输出。支持1688、淘宝、亚马逊、速卖通、Shopify及博客图文，免费试用20款。" />
+  <meta name="keywords" content="小咩魔法采集,商品采集插件,1688采集工具,亚马逊选品采集,长图OCR插件,箱规参数提取,跨境电商采集,Chrome扩展" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <link rel="canonical" href="https://xiaomie.tools/collector/" />
+  <link rel="alternate" hreflang="zh-CN" href="https://xiaomie.tools/collector/" />
+  <link rel="alternate" hreflang="zh-TW" href="https://xiaomie.tools/collector/zh-tw/" />
+  <link rel="alternate" hreflang="en" href="https://xiaomie.tools/collector/en/" />
+  <link rel="alternate" hreflang="ja" href="https://xiaomie.tools/collector/ja/" />
+  <link rel="alternate" hreflang="ko" href="https://xiaomie.tools/collector/ko/" />
+  <link rel="alternate" hreflang="es" href="https://xiaomie.tools/collector/es/" />
+  <link rel="alternate" hreflang="de" href="https://xiaomie.tools/collector/de/" />
+  <link rel="alternate" hreflang="fr" href="https://xiaomie.tools/collector/fr/" />
+  <link rel="alternate" hreflang="vi" href="https://xiaomie.tools/collector/vi/" />
+  <link rel="alternate" hreflang="th" href="https://xiaomie.tools/collector/th/" />
+  <link rel="alternate" hreflang="x-default" href="https://xiaomie.tools/collector/en/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="小咩魔法采集 v1.0.8 — 全网商品与图文智能采集 Chrome/Edge 扩展 | 1688/亚马逊/独立站一键采集" />
+  <meta property="og:description" content="全网通用商品与图文素材智能采集插件：AI智能筛图、防卡死本地长图OCR、四级箱规参数补查、B2B/ToC独家卖点与故事生成、纯正单语种输出。支持1688、淘宝、亚马逊、速卖通、Shopify及博客图文，免费试用20款。" />
+  <meta property="og:url" content="https://xiaomie.tools/collector/" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:image" content="https://xiaomie.tools/collector/assets/cat-logo.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="小咩魔法采集 v1.0.8 — 全网商品与图文智能采集 Chrome/Edge 扩展 | 1688/亚马逊/独立站一键采集" />
+  <meta name="twitter:description" content="全网通用商品与图文素材智能采集插件：AI智能筛图、防卡死本地长图OCR、四级箱规参数补查、B2B/ToC独家卖点与故事生成、纯正单语种输出。支持1688、淘宝、亚马逊、速卖通、Shopify及博客图文，免费试用20款。" />
+  <meta name="twitter:image" content="https://xiaomie.tools/collector/assets/cat-logo.jpg" />
+  <link rel="icon" type="image/jpeg" href="/collector/assets/cat-logo.jpg" />
+  <link rel="stylesheet" href="/collector/assets/style.css" />
+  <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"小咩魔法采集 (Xiaomie Magic Collector)","alternateName":"Xiaomie Magic Collector","applicationCategory":"BusinessApplication","operatingSystem":"Chrome, Microsoft Edge (Manifest V3, Windows / macOS)","softwareVersion":"1.0.8","url":"https://xiaomie.tools/collector/","downloadUrl":"https://collector.xiaomie.tools/%E5%B0%8F%E5%92%A9%E9%AD%94%E6%B3%95%E9%87%87%E9%9B%86-chrome-v1.0.8.zip","image":"https://xiaomie.tools/collector/assets/cat-logo.jpg","description":"全网通用商品与图文素材智能采集插件：AI智能筛图、防卡死本地长图OCR、四级箱规参数补查、B2B/ToC独家卖点与故事生成、纯正单语种输出。支持1688、淘宝、亚马逊、速卖通、Shopify及博客图文，免费试用20款。","inLanguage":"zh-CN","offers":[{"@type":"Offer","name":"🎁 免费试用版","price":"0","priceCurrency":"USD"},{"@type":"Offer","name":"⭐ VIP 百品采集包","price":"69","priceCurrency":"USD"},{"@type":"Offer","name":"👑 SVIP 终身至尊版","price":"139","priceCurrency":"USD"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"小咩魔法采集支持哪些电商平台和网页？","acceptedAnswer":{"@type":"Answer","text":"支持 1688、淘宝、天猫、亚马逊 (Amazon)、速卖通 (AliExpress)、Shopify 等独立站，以及任意博客、新闻评测等非电商图文网页，插件会自动识别页面类型。"}},{"@type":"Question","name":"为什么说它的长图 OCR「防卡死」？","acceptedAnswer":{"@type":"Answer","text":"插件内置了基于 Tesseract WASM SIMD 的本地离线 OCR 引擎，针对电商超长详情图做了分片与内存控制优化，不会像普通网页脚本那样把浏览器标签页卡死。"}},{"@type":"Question","name":"什么是「四级箱规参数补查漏斗」？","acceptedAnswer":{"@type":"Answer","text":"做亚马逊 FBA 或 B2B 外贸时，单品尺寸、装箱数、外箱尺寸、毛净重经常藏在详情页不同位置或长图里。四级漏斗会依次从页面结构、规格表、详情文本和 OCR 结果中逐层补全。"}},{"@type":"Question","name":"免费试用 20 个产品用完后怎么付费？支持海外付款吗？","acceptedAnswer":{"@type":"Answer","text":"扩展内集成了官方双币种收银台：中国大陆用户支持微信支付与支付宝；海外买家支持 Airwallex、Visa、MasterCard、Amex、Apple Pay 与 Google Pay（$69 / $139 USD），付款后屏幕秒出激活码。"}},{"@type":"Question","name":"升级 VIP 或 SVIP 后，还需要额外付平台月费吗？","acceptedAnswer":{"@type":"Answer","text":"不需要。VIP 为 100 款一次性额度（可叠加），SVIP 为终身买断不限量；激活后系统开放底部 API 配置区，您可填入自己的 API Key，无任何隐藏订阅费。"}}]}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <img src="/collector/assets/cat-logo.jpg" alt="Xiaomie Magic Collector Logo" width="38" height="38" />
+        <span>小咩魔法采集 · Xiaomie</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#features">核心卖点</a>
+        <a href="#compare">效果对比</a>
+        <a href="#pricing">授权方案</a>
+        <a href="#install">安装指南</a>
+        <a href="#faq">常见问题</a>
+      </nav>
+      <div class="header-actions">
+        <label for="langSwitcher" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Language</label>
+        <select id="langSwitcher" class="lang-select" aria-label="Language">
+          <option value="/collector/" selected>🌐 简体中文</option>
+            <option value="/collector/zh-tw/">🌐 繁體中文</option>
+            <option value="/collector/en/">🌐 English</option>
+            <option value="/collector/ja/">🌐 日本語</option>
+            <option value="/collector/ko/">🌐 한국어</option>
+            <option value="/collector/es/">🌐 Español</option>
+            <option value="/collector/de/">🌐 Deutsch</option>
+            <option value="/collector/fr/">🌐 Français</option>
+            <option value="/collector/vi/">🌐 Tiếng Việt</option>
+            <option value="/collector/th/">🌐 ภาษาไทย</option>
+        </select>
+        <button type="button" id="btnOpenAccountPortal" class="btn btn-secondary btn-sm">👤 Account / 账号中心</button>
+        <a class="btn btn-primary btn-sm" href="https://collector.xiaomie.tools/%E5%B0%8F%E5%92%A9%E9%AD%94%E6%B3%95%E9%87%87%E9%9B%86-chrome-v1.0.8.zip" download>免费下载 v1.0.8</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="badge-pill">v1.0.8 正式版 · Chrome &amp; Edge (Manifest V3) · 免费试用 20 款</span>
+          <h1>把 1688、亚马逊与全网商品资料，30 秒变成可直接上架的本地素材库</h1>
+          <p class="hero-sub">专为跨境电商、选品团队与独立站卖家打造的智能采集工作台：AI 自动区分主图/SKU图/详情图、内置防卡死本地长图 OCR、四级箱规参数补查、并自动生成 B2B 外贸或 ToC 种草独家卖点与品牌故事。</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="https://collector.xiaomie.tools/%E5%B0%8F%E5%92%A9%E9%AD%94%E6%B3%95%E9%87%87%E9%9B%86-chrome-v1.0.8.zip" download>⬇ 立即免费下载 v1.0.8 (.zip)</a>
+            <a class="btn btn-secondary" href="#features">查看 6 大核心黑科技</a>
+          </div>
+          <ul class="trust-list">
+            <li>无需配置服务器，纯本地浏览器运行</li><li>智能识别电商页 vs 普通图文/博客页</li><li>支持微信 / 支付宝 / Airwallex / 国际信用卡</li>
+          </ul>
+        </div>
+        <aside class="hero-card">
+          <img class="hero-mascot" src="/collector/assets/cat-logo.jpg" alt="Xiaomie Magic Collector v1.0.8" width="148" height="148" />
+          <div class="mini-stat-grid">
+            <div class="mini-stat"><strong>20 款</strong><span>新用户免费全功能试用</span></div><div class="mini-stat"><strong>4 级漏斗</strong><span>箱规与核心参数深度补查</span></div><div class="mini-stat"><strong>0 卡顿</strong><span>本地 WASM SIMD 长图 OCR</span></div><div class="mini-stat"><strong>100% 纯净</strong><span>单语种输出绝不中英混杂</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num">20 款</div>
+          <div class="stat-label">新用户免费全功能试用</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">4 级漏斗</div>
+          <div class="stat-label">箱规与核心参数深度补查</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">0 卡顿</div>
+          <div class="stat-label">本地 WASM SIMD 长图 OCR</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">100% 纯净</div>
+          <div class="stat-label">单语种输出绝不中英混杂</div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>为什么专业卖家都在换用「小咩魔法采集」？</h2>
+          <p>普通采集器只能抓几张零散图片，小咩魔法采集直接帮你完成「抓图 + 筛图 + 识字 + 查箱规 + 写卖点 + 归档」。</p>
+        </div>
+        <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">💡</div>
+          <h3>采集并提炼「独特卖点」与「独特故事」</h3>
+          <p>自动抓取并提炼商品核心卖点，一键切换「B2B 外贸批发」或「ToC 真实种草」风格生成独家品牌故事，支持纯正单一语言输出，彻底杜绝中英混杂。</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">📦</div>
+          <h3>全网找箱规 · 四级参数补查漏斗</h3>
+          <p>针对 FBA 与外贸痛点，全网跨区块自动核验 5 项必填核心参数，并通过四级漏斗深挖装箱数、外箱尺寸、毛净重等箱规参数，告别反复问工厂。</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">🤖</div>
+          <h3>智能过滤不想要的图片与视频内容</h3>
+          <p>自动过滤广告图、水印杂图、无效小图标与无关视频；AI 精准区分主图/SKU图/详情图，纯净抓取高清图、视频及 GIF/WebP/APNG/Canvas/Lottie 动图。</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">⚡</div>
+          <h3>全流程异步操作 · 防卡死本地长图 OCR</h3>
+          <p>采用异步并发架构与内置 Tesseract WASM SIMD 本地离线 OCR 引擎，后台静默解析数万像素超长详情图文字，浏览器全程丝滑不卡死。</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">🚀</div>
+          <h3>多链接批量操作 + 防风控限速归档</h3>
+          <p>支持粘贴多条链接或导入 TXT 批量队列采集，自动跳过已采链接，内置分/时/天频率保护；每个商品按编号自动创建独立本地文件夹归档。</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">🛒</div>
+          <h3>全网通用采集 · 电商/博客自动切换</h3>
+          <p>支持 1688、淘宝、天猫、亚马逊、速卖通、Shopify 独立站；打开博客或评测文章时自动切换纯净图文模式，只抓正文与高清素材。</p>
+        </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="compare" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>传统人工 / 普通采集插件 vs 小咩魔法采集</h2>
+        </div>
+        <div class="compare-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>对比维度</th>
+                <th>传统人工 / 普通插件</th>
+                <th>小咩魔法采集 v1.0.8</th>
+              </tr>
+            </thead>
+            <tbody>
+        <tr>
+          <td><strong>长图里的参数文字</strong></td>
+          <td>人工肉眼看图手敲，极易出错</td>
+          <td>✓ 内置防卡死本地 WASM OCR 自动提取</td>
+        </tr>
+        <tr>
+          <td><strong>杂图与广告图过滤</strong></td>
+          <td>全部打包下载，手动一张张删</td>
+          <td>✓ AI 智能筛图 + 像素阈值，仅留纯净商品图</td>
+        </tr>
+        <tr>
+          <td><strong>箱规 / 5项必填参数</strong></td>
+          <td>经常缺失，需反复联系工厂确认</td>
+          <td>✓ 四级参数补查漏斗，自动核验并补全</td>
+        </tr>
+        <tr>
+          <td><strong>产品卖点与故事文案</strong></td>
+          <td>无此功能，另开 ChatGPT 逐个粘贴</td>
+          <td>✓ 内置 B2B/ToC 双风格卖点与故事一键生成</td>
+        </tr>
+        <tr>
+          <td><strong>多语言输出纯净度</strong></td>
+          <td>经常中英混杂，上架前还要二次清洗</td>
+          <td>✓ 严格单一语言输出（中文或英文纯净输出）</td>
+        </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>透明双币种授权方案 · 24 小时自助秒激活</h2>
+          <p>先免费试用 20 个产品满意再升级；VIP / SVIP 激活后立即开放自有 API Key 区域，无任何隐藏月费。</p>
+        </div>
+        <div class="pricing-grid">
+        <article class="price-card">
+          
+          <div>
+            <div class="price-name">🎁 免费试用版</div>
+            <div class="price-amount">¥0 <span style="font-size:1rem;font-weight:700;color:var(--primary)">($0 USD)</span></div>
+            <div class="price-sub">/ 20 个产品</div>
+            <p class="price-desc">零门槛体验全流程智能采集，内置官方试用 API，装好即用。</p>
+            <ul class="price-bullets">
+              <li>20 个完整商品/网页采集额度</li><li>AI 智能筛图 &amp; 视频/动图抓取</li><li>防卡死本地长图 OCR 识别</li><li>四级箱规参数核验与本地归档</li>
+            </ul>
+          </div>
+          <a class="btn btn-secondary" href="https://collector.xiaomie.tools/%E5%B0%8F%E5%92%A9%E9%AD%94%E6%B3%95%E9%87%87%E9%9B%86-chrome-v1.0.8.zip" download>下载并免费试用 20 款</a>
+        </article>
+        <article class="price-card featured">
+          <span class="popular-badge">跨境卖家首选</span>
+          <div>
+            <div class="price-name">⭐ VIP 百品采集包</div>
+            <div class="price-amount">¥500 <span style="font-size:1rem;font-weight:700;color:var(--primary)">($69 USD)</span></div>
+            <div class="price-sub">/ 100 个产品（可叠加）</div>
+            <p class="price-desc">适合日常选品上架与中小团队，额度支持续购叠加，永不过期。</p>
+            <ul class="price-bullets">
+              <li>100 个产品全功能采集额度（可叠加）</li><li>解锁自有 API Key 配置区</li><li>B2B 外贸 / ToC 种草卖点故事生成</li><li>支持微信 / 支付宝 / Airwallex / 国际信用卡</li>
+            </ul>
+          </div>
+          <button type="button" class="btn btn-primary" data-open-airwallex data-plan="pack100">获取 VIP 百品包 (¥500 / $69)</button>
+        </article>
+        <article class="price-card">
+          
+          <div>
+            <div class="price-name">👑 SVIP 终身至尊版</div>
+            <div class="price-amount">¥999 <span style="font-size:1rem;font-weight:700;color:var(--primary)">($139 USD)</span></div>
+            <div class="price-sub">/ 终身不限量</div>
+            <p class="price-desc">一次买断终身畅享，全网不限量采集，适合铺货团队与供应链公司。</p>
+            <ul class="price-bullets">
+              <li>全网不限量永久采集权限</li><li>解锁自有 API Key，成本完全可控</li><li>包含后续版本免费更新升级</li><li>24 小时双币种收银台付款秒出卡密</li>
+            </ul>
+          </div>
+          <button type="button" class="btn btn-secondary" data-open-airwallex data-plan="lifetime">升级 SVIP 终身版 (¥999 / $139)</button>
+        </article>
+        </div>
+        <div class="payment-strip">
+          <div style="width:100%;font-weight:800;font-size:0.9rem;color:var(--ink)">官方双币种收款通道</div>
+          <span class="pay-badge">🌐 undefined</span>
+          <span class="pay-badge">💬 undefined</span>
+          <div style="width:100%;font-size:0.82rem;color:var(--muted)">undefined</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="install" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>30 秒极速安装与使用流程</h2>
+        </div>
+        <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>下载并解压安装包</h3>
+          <p>点击下载 v1.0.8 压缩包并完整解压到本地固定文件夹。</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>一键同步或加载扩展</h3>
+          <p>Windows 用户可直接双击「一键安装或更新到Edge.bat」；或在 Chrome/Edge 扩展页开启开发者模式加载解压文件夹。</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>打开商品页点击小咩图标</h3>
+          <p>在 1688、亚马逊、独立站等页面点击扩展图标，选择「预览配置」或「一键立即采集」，自动生成完整本地产品文件夹。</p>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>常见问题与 AI 检索问答 (FAQ)</h2>
+        </div>
+        <div class="faq-list">
+        <details class="faq-item">
+          <summary>小咩魔法采集支持哪些电商平台和网页？</summary>
+          <p>支持 1688、淘宝、天猫、亚马逊 (Amazon)、速卖通 (AliExpress)、Shopify 等独立站，以及任意博客、新闻评测等非电商图文网页，插件会自动识别页面类型。</p>
+        </details>
+        <details class="faq-item">
+          <summary>为什么说它的长图 OCR「防卡死」？</summary>
+          <p>插件内置了基于 Tesseract WASM SIMD 的本地离线 OCR 引擎，针对电商超长详情图做了分片与内存控制优化，不会像普通网页脚本那样把浏览器标签页卡死。</p>
+        </details>
+        <details class="faq-item">
+          <summary>什么是「四级箱规参数补查漏斗」？</summary>
+          <p>做亚马逊 FBA 或 B2B 外贸时，单品尺寸、装箱数、外箱尺寸、毛净重经常藏在详情页不同位置或长图里。四级漏斗会依次从页面结构、规格表、详情文本和 OCR 结果中逐层补全。</p>
+        </details>
+        <details class="faq-item">
+          <summary>免费试用 20 个产品用完后怎么付费？支持海外付款吗？</summary>
+          <p>扩展内集成了官方双币种收银台：中国大陆用户支持微信支付与支付宝；海外买家支持 Airwallex、Visa、MasterCard、Amex、Apple Pay 与 Google Pay（$69 / $139 USD），付款后屏幕秒出激活码。</p>
+        </details>
+        <details class="faq-item">
+          <summary>升级 VIP 或 SVIP 后，还需要额外付平台月费吗？</summary>
+          <p>不需要。VIP 为 100 款一次性额度（可叠加），SVIP 为终身买断不限量；激活后系统开放底部 API 配置区，您可填入自己的 API Key，无任何隐藏订阅费。</p>
+        </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2026 小咩魔法采集 (Xiaomie Magic Collector) · 专为全球跨境电商与选品团队打造 · <a href="mailto:info@xiaomie.tools" style="color:var(--primary);font-weight:700">info@xiaomie.tools</a></div>
+      <div class="footer-langs">
+        <a href="/collector/" hreflang="zh-CN">简体中文</a>
+          <a href="/collector/zh-tw/" hreflang="zh-TW">繁體中文</a>
+          <a href="/collector/en/" hreflang="en">English</a>
+          <a href="/collector/ja/" hreflang="ja">日本語</a>
+          <a href="/collector/ko/" hreflang="ko">한국어</a>
+          <a href="/collector/es/" hreflang="es">Español</a>
+          <a href="/collector/de/" hreflang="de">Deutsch</a>
+          <a href="/collector/fr/" hreflang="fr">Français</a>
+          <a href="/collector/vi/" hreflang="vi">Tiếng Việt</a>
+          <a href="/collector/th/" hreflang="th">ภาษาไทย</a>
+      </div>
+    </div>
+  </footer>
+  
+  <dialog id="accountPortalModal" class="xm-modal">
+    <div class="xm-modal-head">
+      <strong>👤 Account &amp; Entitlements / 账号与权益中心</strong>
+      <button type="button" id="btnCloseAccountPortal" class="btn btn-secondary btn-sm">✕</button>
+    </div>
+    <div id="portalLoginBox">
+      <p style="font-size:0.86rem;color:var(--ink-soft);margin-top:0">Sign in via Email Verification Code (sent from <strong>noreply@xiaomie.tools</strong> · Support: <strong>info@xiaomie.tools</strong>):</p>
+      <div class="xm-field">
+        <label for="webOtpEmail">Email Address / 邮箱地址</label>
+        <div class="xm-row">
+          <input id="webOtpEmail" type="email" placeholder="name@example.com" />
+          <button type="button" id="btnWebSendOtp" class="btn btn-secondary btn-sm" style="white-space:nowrap">Send Code</button>
+        </div>
+      </div>
+      <div class="xm-field">
+        <label for="webOtpCode">6-Digit Code / 邮箱验证码</label>
+        <div class="xm-row">
+          <input id="webOtpCode" type="text" placeholder="123456" maxlength="6" />
+          <button type="button" id="btnWebVerifyOtp" class="btn btn-primary btn-sm" style="white-space:nowrap">Verify &amp; Sign In</button>
+        </div>
+      </div>
+      <div id="webOtpStatus" class="xm-status"></div>
+    </div>
+    <div id="portalDashBox" style="display:none">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;padding:12px;border-radius:12px;background:var(--surface-alt)">
+        <div><small style="color:var(--muted)">Account (collector)</small><div id="portalUserEmail" style="font-weight:800;font-size:0.9rem"></div></div>
+        <div><small style="color:var(--muted)">Current Plan</small><div id="portalUserPlan" style="font-weight:800;font-size:0.9rem"></div></div>
+        <div><small style="color:var(--muted)">Remaining Quota</small><div id="portalUserQuota" style="font-weight:800;font-size:0.9rem;color:var(--primary)"></div></div>
+        <div style="display:flex;align-items:end;justify-content:end"><button type="button" id="btnWebLogout" class="btn btn-secondary btn-sm">Sign Out</button></div>
+      </div>
+      <strong style="font-size:0.88rem;display:block;margin-bottom:6px">Billing &amp; Deduction History / 权益与扣费记录</strong>
+      <div id="portalLedgerList" class="ledger-box"></div>
+    </div>
+  </dialog>
+
+  <dialog id="airwallexModal" class="xm-modal">
+    <div class="xm-modal-head">
+      <strong>🌐 Airwallex Global Checkout (USD)</strong>
+      <button type="button" id="btnCloseAwxModal" class="btn btn-secondary btn-sm">✕</button>
+    </div>
+    <p style="font-size:0.86rem;color:var(--ink-soft);margin-top:0">Powered by Airwallex (JINHUA CREDIT IMPORT AND EXPORT CO.,LTD). Supports Visa, MasterCard, Amex, Apple Pay &amp; Google Pay.</p>
+    <div class="xm-field">
+      <label for="awxPlanSelect">Select Plan / 选择方案</label>
+      <select id="awxPlanSelect">
+        
+      <option value="pack100">⭐ VIP 100-Product Pack — $69.00 USD</option>
+      <option value="lifetime">👑 SVIP Lifetime Unlimited — $139.00 USD</option>
+      </select>
+    </div>
+    <div class="xm-field">
+      <label for="awxBuyerEmail">Delivery Email / 接收激活码邮箱</label>
+      <input id="awxBuyerEmail" type="email" placeholder="you@example.com" />
+    </div>
+    <button type="button" id="btnSubmitAwxCheckout" class="btn btn-primary" style="width:100%">Proceed to Airwallex Checkout ↗</button>
+    <div id="awxCheckoutStatus" class="xm-status"></div>
+  </dialog>
+  <script src="/collector/assets/app.js" defer></script>
+</body>
+</html>

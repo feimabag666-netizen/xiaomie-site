@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-app-id="collector">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Xiaomie Magic Collector v1.0.8 — AI Product &amp; Media Scraper Extension for 1688, Amazon, Shopify</title>
+  <meta name="description" content="Universal Chrome &amp; Edge extension for e-commerce sourcing: AI image filtering, anti-freeze local long-image OCR, 4-level carton spec lookup funnel, B2B/ToC copy &amp; story generator, and pure single-language output. Try 20 products free." />
+  <meta name="keywords" content="1688 product scraper, ecommerce image downloader, chrome extension product collector, long image OCR extension, carton spec extractor, Amazon FBA sourcing tool, dropshipping product scraper" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <link rel="canonical" href="https://xiaomie.tools/collector/en/" />
+  <link rel="alternate" hreflang="zh-CN" href="https://xiaomie.tools/collector/" />
+  <link rel="alternate" hreflang="zh-TW" href="https://xiaomie.tools/collector/zh-tw/" />
+  <link rel="alternate" hreflang="en" href="https://xiaomie.tools/collector/en/" />
+  <link rel="alternate" hreflang="ja" href="https://xiaomie.tools/collector/ja/" />
+  <link rel="alternate" hreflang="ko" href="https://xiaomie.tools/collector/ko/" />
+  <link rel="alternate" hreflang="es" href="https://xiaomie.tools/collector/es/" />
+  <link rel="alternate" hreflang="de" href="https://xiaomie.tools/collector/de/" />
+  <link rel="alternate" hreflang="fr" href="https://xiaomie.tools/collector/fr/" />
+  <link rel="alternate" hreflang="vi" href="https://xiaomie.tools/collector/vi/" />
+  <link rel="alternate" hreflang="th" href="https://xiaomie.tools/collector/th/" />
+  <link rel="alternate" hreflang="x-default" href="https://xiaomie.tools/collector/en/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Xiaomie Magic Collector v1.0.8 — AI Product &amp; Media Scraper Extension for 1688, Amazon, Shopify" />
+  <meta property="og:description" content="Universal Chrome &amp; Edge extension for e-commerce sourcing: AI image filtering, anti-freeze local long-image OCR, 4-level carton spec lookup funnel, B2B/ToC copy &amp; story generator, and pure single-language output. Try 20 products free." />
+  <meta property="og:url" content="https://xiaomie.tools/collector/en/" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:image" content="https://xiaomie.tools/collector/assets/cat-logo.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Xiaomie Magic Collector v1.0.8 — AI Product &amp; Media Scraper Extension for 1688, Amazon, Shopify" />
+  <meta name="twitter:description" content="Universal Chrome &amp; Edge extension for e-commerce sourcing: AI image filtering, anti-freeze local long-image OCR, 4-level carton spec lookup funnel, B2B/ToC copy &amp; story generator, and pure single-language output. Try 20 products free." />
+  <meta name="twitter:image" content="https://xiaomie.tools/collector/assets/cat-logo.jpg" />
+  <link rel="icon" type="image/jpeg" href="/collector/assets/cat-logo.jpg" />
+  <link rel="stylesheet" href="/collector/assets/style.css" />
+  <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"小咩魔法采集 (Xiaomie Magic Collector)","alternateName":"Xiaomie Magic Collector","applicationCategory":"BusinessApplication","operatingSystem":"Chrome, Microsoft Edge (Manifest V3, Windows / macOS)","softwareVersion":"1.0.8","url":"https://xiaomie.tools/collector/en/","downloadUrl":"https://collector.xiaomie.tools/%E5%B0%8F%E5%92%A9%E9%AD%94%E6%B3%95%E9%87%87%E9%9B%86-chrome-v1.0.8.zip","image":"https://xiaomie.tools/collector/assets/cat-logo.jpg","description":"Universal Chrome & Edge extension for e-commerce sourcing: AI image filtering, anti-freeze local long-image OCR, 4-level carton spec lookup funnel, B2B/ToC copy & story generator, and pure single-language output. Try 20 products free.","inLanguage":"en","offers":[{"@type":"Offer","name":"🎁 Free Trial","price":"0","priceCurrency":"USD"},{"@type":"Offer","name":"⭐ VIP 100-Product Pack","price":"69","priceCurrency":"USD"},{"@type":"Offer","name":"👑 SVIP Lifetime Unlimited","price":"139","priceCurrency":"USD"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which e-commerce platforms does Xiaomie Magic Collector support?","acceptedAnswer":{"@type":"Answer","text":"It works on 1688, Taobao, Tmall, Amazon, AliExpress, Shopify, and virtually any independent store or blog/article page."}},{"@type":"Question","name":"How does the Anti-Freeze Long-Image OCR work?","acceptedAnswer":{"@type":"Answer","text":"It runs a local Tesseract WASM SIMD engine inside your browser with chunked memory handling, extracting text from ultra-long supplier detail images without freezing your tab."}},{"@type":"Question","name":"What is the 4-Level Carton & Spec Lookup Funnel?","acceptedAnswer":{"@type":"Answer","text":"It systematically checks structured DOM fields, spec tables, product descriptions, and OCR text from detail images to recover carton dimensions, weight, and 5 mandatory product specs."}},{"@type":"Question","name":"Are there any recurring monthly fees?","acceptedAnswer":{"@type":"Answer","text":"No. VIP ($69) is a stackable 100-product pack and SVIP ($139) is a one-time lifetime license. Both unlock the custom API Key field so you control your own API usage."}}]}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <img src="/collector/assets/cat-logo.jpg" alt="Xiaomie Magic Collector Logo" width="38" height="38" />
+        <span>小咩魔法采集 · Xiaomie</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#compare">Comparison</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#install">Install</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="header-actions">
+        <label for="langSwitcher" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Language</label>
+        <select id="langSwitcher" class="lang-select" aria-label="Language">
+          <option value="/collector/">🌐 简体中文</option>
+            <option value="/collector/zh-tw/">🌐 繁體中文</option>
+            <option value="/collector/en/" selected>🌐 English</option>
+            <option value="/collector/ja/">🌐 日本語</option>
+            <option value="/collector/ko/">🌐 한국어</option>
+            <option value="/collector/es/">🌐 Español</option>
+            <option value="/collector/de/">🌐 Deutsch</option>
+            <option value="/collector/fr/">🌐 Français</option>
+            <option value="/collector/vi/">🌐 Tiếng Việt</option>
+            <option value="/collector/th/">🌐 ภาษาไทย</option>
+        </select>
+        <button type="button" id="btnOpenAccountPortal" class="btn btn-secondary btn-sm">👤 Account / 账号中心</button>
+        <a class="btn btn-primary btn-sm" href="https://collector.xiaomie.tools/%E5%B0%8F%E5%92%A9%E9%AD%94%E6%B3%95%E9%87%87%E9%9B%86-chrome-v1.0.8.zip" download>Download Free v1.0.8</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="badge-pill">v1.0.8 Release · Chrome &amp; Edge (Manifest V3) · 20 Products Free Trial</span>
+          <h1>Turn Any 1688, Taobao, Amazon, or Shopify Page Into a Ready-to-List Product Folder in 30 Seconds</h1>
+          <p class="hero-sub">Built for cross-border sellers, Amazon FBA teams, and dropshippers: AI smart image filtering (Main / SKU / Detail), anti-freeze local WASM long-image OCR, 4-level carton spec lookup, and instant B2B/ToC selling point &amp; story generation.</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="https://collector.xiaomie.tools/%E5%B0%8F%E5%92%A9%E9%AD%94%E6%B3%95%E9%87%87%E9%9B%86-chrome-v1.0.8.zip" download>⬇ Download v1.0.8 Free (.zip)</a>
+            <a class="btn btn-secondary" href="#features">Explore 6 Breakthroughs</a>
+          </div>
+          <ul class="trust-list">
+            <li>100% browser-local execution — no server required</li><li>Auto-detects e-commerce vs article/blog pages</li><li>Airwallex, Visa, MasterCard, Apple Pay, Google Pay &amp; WeChat/Alipay</li>
+          </ul>
+        </div>
+        <aside class="hero-card">
+          <img class="hero-mascot" src="/collector/assets/cat-logo.jpg" alt="Xiaomie Magic Collector v1.0.8" width="148" height="148" />
+          <div class="mini-stat-grid">
+            <div class="mini-stat"><strong>20 Items</strong><span>Full-Featured Free Trial</span></div><div class="mini-stat"><strong>4-Level</strong><span>Carton &amp; Spec Lookup Funnel</span></div><div class="mini-stat"><strong>0 Freeze</strong><span>Local WASM SIMD Long-Image OCR</span></div><div class="mini-stat"><strong>100% Pure</strong><span>Zero Mixed-Language Output</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num">20 Items</div>
+          <div class="stat-label">Full-Featured Free Trial</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">4-Level</div>
+          <div class="stat-label">Carton &amp; Spec Lookup Funnel</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">0 Freeze</div>
+          <div class="stat-label">Local WASM SIMD Long-Image OCR</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">100% Pure</div>
+          <div class="stat-label">Zero Mixed-Language Output</div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Why Serious Sourcing Teams Switch to Xiaomie Magic Collector</h2>
+          <p>Ordinary scrapers dump messy image folders. Xiaomie delivers cleaned images, OCR-extracted specs, carton dimensions, and conversion-ready copy in one click.</p>
+        </div>
+        <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">💡</div>
+          <h3>Extract Unique Selling Points &amp; Generate Brand Stories</h3>
+          <p>Automatically extracts core USPs and generates unique B2B Wholesale or ToC Authentic product stories in pure English or Chinese with zero mixed-language mess.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">📦</div>
+          <h3>Global 4-Level Carton &amp; Spec Lookup Funnel</h3>
+          <p>Hunts across DOM, spec tables, descriptions, and OCR text to verify 5 mandatory specs and recover carton dimensions, weight, and packing quantities.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">🤖</div>
+          <h3>Smart Filtering of Unwanted Images &amp; Videos</h3>
+          <p>Automatically filters out ad banners, clutter icons, and unwanted videos; separates Main, SKU, and Detail images plus clean GIF, WebP, APNG, Canvas &amp; Lottie.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">⚡</div>
+          <h3>Async Non-Blocking Execution + Local Long-Image OCR</h3>
+          <p>Asynchronous pipeline with built-in Tesseract WASM SIMD OCR extracts text from ultra-long supplier images in the background without freezing your browser.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">🚀</div>
+          <h3>Batch Multi-URL Queue &amp; Anti-Ban Rate Limiting</h3>
+          <p>Paste multiple URLs or import .txt files, auto-skip collected links, enforce per-minute/hour/day limits, and archive into auto-numbered local folders.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">🛒</div>
+          <h3>Universal E-Commerce &amp; Content Auto-Detection</h3>
+          <p>Works on 1688, Taobao, Tmall, Amazon, AliExpress, and Shopify; automatically switches to clean Article &amp; Media mode on blogs and review pages.</p>
+        </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="compare" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Manual Sourcing / Basic Scrapers vs. Xiaomie Magic Collector</h2>
+        </div>
+        <div class="compare-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Capability</th>
+                <th>Manual / Basic Scrapers</th>
+                <th>Xiaomie Magic Collector v1.0.8</th>
+              </tr>
+            </thead>
+            <tbody>
+        <tr>
+          <td><strong>Specs inside long images</strong></td>
+          <td>Read images manually &amp; type by hand</td>
+          <td>✓ Anti-freeze local WASM OCR extracts automatically</td>
+        </tr>
+        <tr>
+          <td><strong>Ad &amp; clutter image removal</strong></td>
+          <td>Download everything, delete manually</td>
+          <td>✓ AI Smart Filter + pixel threshold keeps only product shots</td>
+        </tr>
+        <tr>
+          <td><strong>Carton &amp; 5 required specs</strong></td>
+          <td>Often missing; slow back-and-forth with factories</td>
+          <td>✓ 4-level lookup funnel verifies &amp; backfills specs</td>
+        </tr>
+        <tr>
+          <td><strong>Selling points &amp; stories</strong></td>
+          <td>Copy-paste manually into separate AI tools</td>
+          <td>✓ Built-in B2B/ToC copy &amp; story generator per product</td>
+        </tr>
+        <tr>
+          <td><strong>Output language cleanliness</strong></td>
+          <td>Mixed Chinese/English mess</td>
+          <td>✓ Strict single-language output (pure English or Chinese)</td>
+        </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Simple Dual-Currency Plans · Instant License Delivery</h2>
+          <p>Start with 20 free products. Upgrade once to unlock your own API Key slot with zero recurring monthly subscription fees.</p>
+        </div>
+        <div class="pricing-grid">
+        <article class="price-card">
+          
+          <div>
+            <div class="price-name">🎁 Free Trial</div>
+            <div class="price-amount">$0 <span style="font-size:1rem;font-weight:700;color:var(--primary)">(¥0)</span></div>
+            <div class="price-sub">/ 20 products</div>
+            <p class="price-desc">Includes built-in trial API so you can test the full workflow immediately.</p>
+            <ul class="price-bullets">
+              <li>20 full product/page collections</li><li>AI image filtering &amp; video/GIF capture</li><li>Anti-freeze local long-image OCR</li><li>4-level carton spec verification</li>
+            </ul>
+          </div>
+          <a class="btn btn-secondary" href="https://collector.xiaomie.tools/%E5%B0%8F%E5%92%A9%E9%AD%94%E6%B3%95%E9%87%87%E9%9B%86-chrome-v1.0.8.zip" download>Download &amp; Try 20 Free</a>
+        </article>
+        <article class="price-card featured">
+          <span class="popular-badge">Most Popular</span>
+          <div>
+            <div class="price-name">⭐ VIP 100-Product Pack</div>
+            <div class="price-amount">$69 <span style="font-size:1rem;font-weight:700;color:var(--primary)">(¥500)</span></div>
+            <div class="price-sub">/ 100 products (stackable)</div>
+            <p class="price-desc">Ideal for active Amazon/Shopify sellers. Credits stack and never expire.</p>
+            <ul class="price-bullets">
+              <li>100 product collection credits (stackable)</li><li>Unlocks your own custom API Key slot</li><li>B2B &amp; ToC selling point/story generator</li><li>Airwallex, Visa, MasterCard, Apple/Google Pay</li>
+            </ul>
+          </div>
+          <button type="button" class="btn btn-primary" data-open-airwallex data-plan="pack100">Get VIP Pack ($69 USD)</button>
+        </article>
+        <article class="price-card">
+          
+          <div>
+            <div class="price-name">👑 SVIP Lifetime Unlimited</div>
+            <div class="price-amount">$139 <span style="font-size:1rem;font-weight:700;color:var(--primary)">(¥999)</span></div>
+            <div class="price-sub">/ Lifetime</div>
+            <p class="price-desc">One-time payment for unlimited scraping across the entire web forever.</p>
+            <ul class="price-bullets">
+              <li>Unlimited lifetime collections across all sites</li><li>Unlocks custom API Key for full cost control</li><li>All future v1.x updates included</li><li>24/7 automated checkout with instant License Key</li>
+            </ul>
+          </div>
+          <button type="button" class="btn btn-secondary" data-open-airwallex data-plan="lifetime">Get SVIP Lifetime ($139 USD)</button>
+        </article>
+        </div>
+        <div class="payment-strip">
+          <div style="width:100%;font-weight:800;font-size:0.9rem;color:var(--ink)">Official Global &amp; Local Payment Channels</div>
+          <span class="pay-badge">🌐 undefined</span>
+          <span class="pay-badge">💬 undefined</span>
+          <div style="width:100%;font-size:0.82rem;color:var(--muted)">undefined</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="install" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Install &amp; Start Collecting in 30 Seconds</h2>
+        </div>
+        <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Download &amp; Unzip</h3>
+          <p>Download the v1.0.8 zip archive and extract it to a permanent folder on your computer.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>Load Unpacked in Chrome or Edge</h3>
+          <p>Open chrome://extensions or edge://extensions, enable Developer Mode, and click 'Load unpacked' to select the folder.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>Click Xiaomie on Any Product Page</h3>
+          <p>Open 1688, Amazon, or any store, click the Xiaomie icon, and save your structured product folder in one click.</p>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Frequently Asked Questions (FAQ)</h2>
+        </div>
+        <div class="faq-list">
+        <details class="faq-item">
+          <summary>Which e-commerce platforms does Xiaomie Magic Collector support?</summary>
+          <p>It works on 1688, Taobao, Tmall, Amazon, AliExpress, Shopify, and virtually any independent store or blog/article page.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How does the Anti-Freeze Long-Image OCR work?</summary>
+          <p>It runs a local Tesseract WASM SIMD engine inside your browser with chunked memory handling, extracting text from ultra-long supplier detail images without freezing your tab.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What is the 4-Level Carton &amp; Spec Lookup Funnel?</summary>
+          <p>It systematically checks structured DOM fields, spec tables, product descriptions, and OCR text from detail images to recover carton dimensions, weight, and 5 mandatory product specs.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Are there any recurring monthly fees?</summary>
+          <p>No. VIP ($69) is a stackable 100-product pack and SVIP ($139) is a one-time lifetime license. Both unlock the custom API Key field so you control your own API usage.</p>
+        </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2026 Xiaomie Magic Collector · Built for Global E-Commerce &amp; Sourcing Teams · <a href="mailto:info@xiaomie.tools" style="color:var(--primary);font-weight:700">info@xiaomie.tools</a></div>
+      <div class="footer-langs">
+        <a href="/collector/" hreflang="zh-CN">简体中文</a>
+          <a href="/collector/zh-tw/" hreflang="zh-TW">繁體中文</a>
+          <a href="/collector/en/" hreflang="en">English</a>
+          <a href="/collector/ja/" hreflang="ja">日本語</a>
+          <a href="/collector/ko/" hreflang="ko">한국어</a>
+          <a href="/collector/es/" hreflang="es">Español</a>
+          <a href="/collector/de/" hreflang="de">Deutsch</a>
+          <a href="/collector/fr/" hreflang="fr">Français</a>
+          <a href="/collector/vi/" hreflang="vi">Tiếng Việt</a>
+          <a href="/collector/th/" hreflang="th">ภาษาไทย</a>
+      </div>
+    </div>
+  </footer>
+  
+  <dialog id="accountPortalModal" class="xm-modal">
+    <div class="xm-modal-head">
+      <strong>👤 Account &amp; Entitlements / 账号与权益中心</strong>
+      <button type="button" id="btnCloseAccountPortal" class="btn btn-secondary btn-sm">✕</button>
+    </div>
+    <div id="portalLoginBox">
+      <p style="font-size:0.86rem;color:var(--ink-soft);margin-top:0">Sign in via Email Verification Code (sent from <strong>noreply@xiaomie.tools</strong> · Support: <strong>info@xiaomie.tools</strong>):</p>
+      <div class="xm-field">
+        <label for="webOtpEmail">Email Address / 邮箱地址</label>
+        <div class="xm-row">
+          <input id="webOtpEmail" type="email" placeholder="name@example.com" />
+          <button type="button" id="btnWebSendOtp" class="btn btn-secondary btn-sm" style="white-space:nowrap">Send Code</button>
+        </div>
+      </div>
+      <div class="xm-field">
+        <label for="webOtpCode">6-Digit Code / 邮箱验证码</label>
+        <div class="xm-row">
+          <input id="webOtpCode" type="text" placeholder="123456" maxlength="6" />
+          <button type="button" id="btnWebVerifyOtp" class="btn btn-primary btn-sm" style="white-space:nowrap">Verify &amp; Sign In</button>
+        </div>
+      </div>
+      <div id="webOtpStatus" class="xm-status"></div>
+    </div>
+    <div id="portalDashBox" style="display:none">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;padding:12px;border-radius:12px;background:var(--surface-alt)">
+        <div><small style="color:var(--muted)">Account (collector)</small><div id="portalUserEmail" style="font-weight:800;font-size:0.9rem"></div></div>
+        <div><small style="color:var(--muted)">Current Plan</small><div id="portalUserPlan" style="font-weight:800;font-size:0.9rem"></div></div>
+        <div><small style="color:var(--muted)">Remaining Quota</small><div id="portalUserQuota" style="font-weight:800;font-size:0.9rem;color:var(--primary)"></div></div>
+        <div style="display:flex;align-items:end;justify-content:end"><button type="button" id="btnWebLogout" class="btn btn-secondary btn-sm">Sign Out</button></div>
+      </div>
+      <strong style="font-size:0.88rem;display:block;margin-bottom:6px">Billing &amp; Deduction History / 权益与扣费记录</strong>
+      <div id="portalLedgerList" class="ledger-box"></div>
+    </div>
+  </dialog>
+
+  <dialog id="airwallexModal" class="xm-modal">
+    <div class="xm-modal-head">
+      <strong>🌐 Airwallex Global Checkout (USD)</strong>
+      <button type="button" id="btnCloseAwxModal" class="btn btn-secondary btn-sm">✕</button>
+    </div>
+    <p style="font-size:0.86rem;color:var(--ink-soft);margin-top:0">Powered by Airwallex (JINHUA CREDIT IMPORT AND EXPORT CO.,LTD). Supports Visa, MasterCard, Amex, Apple Pay &amp; Google Pay.</p>
+    <div class="xm-field">
+      <label for="awxPlanSelect">Select Plan / 选择方案</label>
+      <select id="awxPlanSelect">
+        
+      <option value="pack100">⭐ VIP 100-Product Pack — $69.00 USD</option>
+      <option value="lifetime">👑 SVIP Lifetime Unlimited — $139.00 USD</option>
+      </select>
+    </div>
+    <div class="xm-field">
+      <label for="awxBuyerEmail">Delivery Email / 接收激活码邮箱</label>
+      <input id="awxBuyerEmail" type="email" placeholder="you@example.com" />
+    </div>
+    <button type="button" id="btnSubmitAwxCheckout" class="btn btn-primary" style="width:100%">Proceed to Airwallex Checkout ↗</button>
+    <div id="awxCheckoutStatus" class="xm-status"></div>
+  </dialog>
+  <script src="/collector/assets/app.js" defer></script>
+</body>
+</html>
