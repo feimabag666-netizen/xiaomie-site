@@ -1,12 +1,29 @@
-# Xiaomie Magic Tools (小咩魔法系列软件)
+# XiaoMie Tools (https://xiaomie.tools)
+Operated by Limei Chen
+Official Support Email: info@xiaomie.tools
+Account & Provisioning API: https://api.xiaomie.tools
 
-> Official suite of AI productivity tools for cross-border e-commerce sellers.
+## Live Products
+1. Xiaomie Carousel Video Studio (小咩魔法轮播视频) — Live
+   - URL: https://xiaomie.tools/carousel/
+   - Online AI workspace that turns product photos into 30+ language native voiceover videos and SRT subtitles.
+   - Plans: $19/mo Starter, $69 100-Credit Pack, $99/yr Annual Pro. Instant activation via api.xiaomie.tools email account.
 
-## Core Products
-- **Xiaomie Magic Collector (小咩魔法采集)**: https://xiaomie.tools/collector/ (Download: https://collector.xiaomie.tools/%E5%B0%8F%E5%92%A9%E9%AD%94%E6%B3%95%E9%87%87%E9%9B%86-chrome-v1.0.8.zip)
-- **Xiaomie Magic Carousel (小咩魔法轮播视频)**: https://xiaomie.tools/carousel/ (Studio: https://carousel.xiaomie.tools/)
+2. Xiaomie Product Catalog & Selling Point Generator (小咩商品目录卖点生成器) — Live
+   - URL: https://xiaomie.tools/catalog/
+   - AI productivity software for long-image OCR text recognition, automated product specification structuring, multi-language localized selling-point copywriting, and catalog layout export.
+   - Plans: $9/mo Starter, $69 100-Item Pack, $99/yr Annual Pro. Instant activation via api.xiaomie.tools email account.
 
-## Shared Infrastructure
-- **API Endpoint**: https://api.xiaomie.tools (isolated by `app_id`)
-- **System Notification Email**: noreply@xiaomie.tools
-- **Official Support Email**: info@xiaomie.tools
+## Coming Soon
+3. Xiaomie Magic Image Translator (小咩魔法图片翻译) — Coming Soon
+   - Cross-border e-commerce desktop software for multi-language image text translation and lossless background repainting/typography reconstruction.
+   - Pre-launch Pricing:
+     - Trial: 20 free images (official built-in trial channel, no API key needed)
+     - 1,000-Image Pack: $14.9 (CNY ref ¥100) [BYOK]
+     - Lifetime License: $29 (CNY ref ¥199, unlimited local image runs) [BYOK]
+   - Important Note: Paid Image Translator licenses are software licenses only; users supply and pay for their own third-party API Key (BYOK - Bring Your Own Key).
+
+## Compliance & Legal Pages
+- Terms of Service: https://xiaomie.tools/terms/
+- Privacy Policy: https://xiaomie.tools/privacy/
+- Refund Policy (14-Day Refund Policy): https://xiaomie.tools/refund/

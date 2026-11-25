@@ -3,13 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>小咩魔法系列软件 (Xiaomie Magic Tools) — 跨境电商 AI 效率工具矩阵</title>
-  <meta name="description" content="跨境电商卖家全链路 AI 工具矩阵：小咩魔法采集（全网商品/长图OCR/箱规提取扩展）与小咩魔法轮播视频（30国母语AI口播与WebCodecs极速出片）。" />
+  <title>小咩魔法系列软件 (XiaoMie Tools) — 跨境电商 AI 视频、商品目录整理与图片翻译套件</title>
+  <meta name="description" content="XiaoMie Tools（小咩魔法系列软件）面向跨境电商卖家打造合规 AI 生产力工具矩阵：小咩魔法轮播视频（已上线）、小咩商品目录卖点生成器（已上线）与小咩魔法图片翻译（即将上线）。付款后通过 api.xiaomie.tools 邮箱账号自动即时开通。" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://xiaomie.tools/" />
   <link rel="alternate" hreflang="zh-CN" href="https://xiaomie.tools/" />
   <link rel="alternate" hreflang="en" href="https://xiaomie.tools/en/" />
-  <link rel="alternate" hreflang="x-default" href="https://xiaomie.tools/en/" />
+  <link rel="alternate" hreflang="x-default" href="https://xiaomie.tools/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="小咩魔法系列软件 (XiaoMie Tools) — 跨境电商 AI 视频、商品目录整理与图片翻译套件" />
+  <meta property="og:description" content="XiaoMie Tools（小咩魔法系列软件）面向跨境电商卖家打造合规 AI 生产力工具矩阵：小咩魔法轮播视频（已上线）、小咩商品目录卖点生成器（已上线）与小咩魔法图片翻译（即将上线）。付款后通过 api.xiaomie.tools 邮箱账号自动即时开通。" />
+  <meta property="og:url" content="https://xiaomie.tools/" />
+  <meta property="og:image" content="https://xiaomie.tools/assets/cat-logo.jpg" />
   <link rel="icon" type="image/jpeg" href="/assets/cat-logo.jpg" />
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
@@ -17,18 +22,19 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="/">
-        <img src="/assets/cat-logo.jpg" alt="Xiaomie Magic Tools Logo" width="38" height="38" />
+        <img src="/assets/cat-logo.jpg" alt="XiaoMie Tools Logo" width="38" height="38" />
         <span>小咩魔法系列软件</span>
       </a>
       <nav class="nav-links" aria-label="Primary">
-        <a href="#suite">软件矩阵</a>
-        <a href="/collector/">小咩魔法采集</a>
-        <a href="/carousel/">小咩魔法轮播视频</a>
-        <a href="#support">客服与接入</a>
+        <a href="#suite">产品矩阵</a>
+        <a href="#pricing">定价方案</a>
+        <a href="#support">邮箱支持</a>
+        <a href="/terms/">服务条款</a>
+        <a href="/refund/">退款政策</a>
       </nav>
       <div class="header-actions">
-        <a class="btn btn-secondary btn-sm" href="/en/">🌐 English</a>
-        <button type="button" id="btnOpenAccountPortal" class="btn btn-primary btn-sm">👤 Account / 账号中心</button>
+        <a class="btn btn-secondary btn-sm" href="/en/">🇺🇸 English</a>
+        <button type="button" class="btn btn-primary btn-sm" id="btnOpenAccountPortal">👤 Account / 账号中心</button>
       </div>
     </div>
   </header>
@@ -37,149 +43,294 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <span class="badge-pill">官方总站 · xiaomie.tools 系列效率矩阵</span>
-          <h1>小咩魔法系列软件 · 跨境卖家一站式 AI 生产力工具</h1>
-          <p class="hero-sub">跨境电商卖家全链路 AI 工具矩阵：小咩魔法采集（全网商品/长图OCR/箱规提取扩展）与小咩魔法轮播视频（30国母语AI口播与WebCodecs极速出片）。</p>
-          <div class="hero-ctas">
-            <a class="btn btn-primary" href="/collector/">🧩 进入小咩魔法采集</a>
-            <a class="btn btn-secondary" href="https://carousel.xiaomie.tools/" target="_blank" rel="noopener">🎬 打开轮播视频工作台 ↗</a>
+          <span class="badge">跨境电商 AI 生产力 SaaS 套件 · 统一账号体系</span>
+          <h1>专为外贸与跨境团队打造的 AI 商品目录、本地化卖点与轮播视频工作台</h1>
+          <p class="lead">一个 <code>api.xiaomie.tools</code> 邮箱账号通行全系产品。涵盖长图 OCR 文字识别、规格参数自动整理、30+ 语种轮播配音视频与即将上线的桌面图片翻译，付款后自动即时开通授权，支持 14 天退款保障。</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#suite">查看三大产品矩阵</a>
+            <a class="btn btn-secondary" href="#pricing">查看定价方案 ($9–$99)</a>
           </div>
           <ul class="trust-list">
-            <li>全系列统一登录与账本：api.xiaomie.tools</li>
-            <li>支持 Airwallex 全球外币收单（微信/支付宝预留中）</li>
-            <li>唯一官方客服邮箱：info@xiaomie.tools</li>
+            <li>付款后通过 api.xiaomie.tools 邮箱账号自动即时开通</li>
+            <li>支持全球信用卡与 SaaS 结算 · 透明公开的 14 天退款政策</li>
+            <li>官方唯一客服与商务支持邮箱：info@xiaomie.tools</li>
           </ul>
         </div>
         <aside class="hero-card">
-          <img class="hero-mascot" src="/assets/cat-logo.jpg" alt="Xiaomie Magic Mascot" width="148" height="148" />
-          <div class="mini-stat-grid">
-            <div class="mini-stat"><strong>2</strong><span>已上线旗舰软件</span></div>
-            <div class="mini-stat"><strong>30+</strong><span>覆盖语种市场</span></div>
-            <div class="mini-stat"><strong>100%</strong><span>按 app_id 独立计费</span></div>
-            <div class="mini-stat"><strong>24/7</strong><span>智能分单客服响应</span></div>
+          <img class="hero-mascot" src="/assets/cat-logo.jpg" alt="XiaoMie Tools Brand Logo" />
+          <h3 style="margin:0 0 6px">小咩魔法软件生态中心</h3>
+          <p style="margin:0;color:var(--muted);font-size:0.9rem">
+            Operated by Limei Chen · info@xiaomie.tools
+          </p>
+          <div class="hero-card-tags">
+            <span class="chip">🎬 Carousel Video (Live)</span>
+            <span class="chip">📑 Catalog &amp; Copy (Live)</span>
+            <span class="chip">🖼️ Image Translator (Soon)</span>
           </div>
         </aside>
       </div>
     </section>
 
-    <section id="suite" class="section">
+    <section class="section section-alt" id="suite">
       <div class="container">
         <div class="section-head">
-          <h2>全系列软件矩阵</h2>
-          <p>各软件独立运行、独立定价，共用统一邮箱账号体系与全球收款通道。</p>
+          <h2>小咩魔法三大核心产品矩阵</h2>
+          <p>两款核心 SaaS 产品已正式上线并支持即时开通，桌面图片翻译新品即将上线。</p>
         </div>
+
         <div class="features-grid">
-          <article class="feature-card">
-            <div class="feature-icon">🧩</div>
-            <h3>小咩魔法采集 (v1.0.8)</h3>
-            <p>Chrome/Edge 通用采集扩展：支持 1688、淘宝、亚马逊、Shopify 与图文博客；内置防卡死长图 OCR、四级箱规补查与纯正单语种文案。</p>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
-              <a class="btn btn-primary btn-sm" href="/collector/">查看详情 (10语种)</a>
-              <a class="btn btn-secondary btn-sm" href="https://collector.xiaomie.tools/" target="_blank" rel="noopener">下载扩展包 ↗</a>
+          <article class="feature-card" style="display:flex;flex-direction:column;justify-content:space-between;gap:14px">
+            <div>
+              <span class="status-badge live">● 已上线 / Live</span>
+              <div class="feature-icon">🎬</div>
+              <h3>小咩魔法轮播视频</h3>
+              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:8px">Xiaomie Carousel Video Studio</p>
+              <p>商品实拍图一键生成 30+ 语种母语配音视频与 SRT 字幕的在线 AI 工作台，助力独立站与短视频出海获客。</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <a class="btn btn-primary btn-sm" href="https://carousel.xiaomie.tools" target="_blank" rel="noopener">进入工作台</a>
+              <a class="btn btn-secondary btn-sm" href="/carousel/">了解详情</a>
             </div>
           </article>
 
-          <article class="feature-card">
-            <div class="feature-icon">🎬</div>
-            <h3>小咩魔法轮播视频 (v15.55)</h3>
-            <p>几张商品实拍图 5–10 秒直出 30 国母语带货成片：WebCodecs 本地硬编码、微软原生配音、自动滤杂图与同名 .srt 同步落盘。</p>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
-              <a class="btn btn-primary btn-sm" href="https://carousel.xiaomie.tools/" target="_blank" rel="noopener">进入在线工作台 ↗</a>
-              <a class="btn btn-secondary btn-sm" href="/carousel/">功能与定价</a>
+          <article class="feature-card" style="display:flex;flex-direction:column;justify-content:space-between;gap:14px">
+            <div>
+              <span class="status-badge live">● 已上线 / Live</span>
+              <div class="feature-icon">📑</div>
+              <h3>小咩商品目录卖点生成器</h3>
+              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:8px">Xiaomie Product Catalog & Selling Point Generator</p>
+              <p>支持商品长图 OCR 文字识别、商品规格参数自动整理、多语种本地化卖点文案生成与商品目录排版导出的 AI 效率助手。</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <a class="btn btn-primary btn-sm" href="/catalog/">进入产品页</a>
+              <a class="btn btn-secondary btn-sm" href="https://catalog.xiaomie.tools" target="_blank" rel="noopener">下载与工作台</a>
             </div>
           </article>
 
-          <article class="feature-card">
-            <div class="feature-icon">✨</div>
-            <h3>更多魔法系列软件敬请期待</h3>
-            <p>后续新工具将直接接入 api.xiaomie.tools 共用登录、发信与收款体系，按 app_id 独立管理权益，敬请期待。</p>
+          <article class="feature-card" style="display:flex;flex-direction:column;justify-content:space-between;gap:14px;border-color:#fcd34d;background:#fffdf7">
+            <div>
+              <span class="status-badge coming-soon">⏳ 即将上线 / Coming Soon</span>
+              <div class="feature-icon" style="background:#fef3c7">🖼️</div>
+              <h3>小咩魔法图片翻译（小咩图片翻译软件）</h3>
+              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:8px">Xiaomie Magic Image Translator</p>
+              <p>跨境电商商品图文字多语种 AI 翻译与原图背景无损排版重绘桌面软件，支持精准擦除原文并自动回填多国本地化排版文字。</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+              <button type="button" class="btn btn-disabled btn-sm" disabled aria-disabled="true">即将开放 · 敬请期待</button>
+              <a class="btn btn-secondary btn-sm" href="mailto:info@xiaomie.tools?subject=Notify%20Me%20-%20Xiaomie%20Magic%20Image%20Translator">开售邮件提醒</a>
+            </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="support" class="section section-alt">
+    <section class="section" id="pricing">
       <div class="container">
         <div class="section-head">
-          <h2>统一服务与客服支持</h2>
-          <p>系统登录验证码由 noreply@xiaomie.tools 自动发出；售前咨询、售后支持与商务合作请发送至官方唯一客服邮箱 info@xiaomie.tools。</p>
+          <h2>透明清晰的多币种 SaaS 定价方案</h2>
+          <p>已上线的两款 SaaS 工具支持 $9–$99 月付/年付订阅或点数包，<strong>付款后通过 <code>api.xiaomie.tools</code> 邮箱账号自动即时开通</strong>。</p>
         </div>
-        <div class="stats-grid">
-          <div class="stat-card"><div class="stat-num">noreply@</div><div class="stat-label">xiaomie.tools (系统验证码)</div></div>
-          <div class="stat-card"><div class="stat-num">info@</div><div class="stat-label">xiaomie.tools (官方客服总入口)</div></div>
-          <div class="stat-card"><div class="stat-num">api.</div><div class="stat-label">xiaomie.tools (全系列共用接口)</div></div>
-          <div class="stat-card"><div class="stat-num">Airwallex</div><div class="stat-label">空中云汇国际收单</div></div>
+
+        <div class="pricing-grid">
+          <div class="price-card">
+            <div>
+              <div class="price-name">月度入门订阅（Starter Monthly）</div>
+              <div class="price-amount">$9 <small>/ mo</small></div>
+              <p class="price-desc">适合个人卖家与外贸业务日常长图 OCR 识别、规格整理与卖点文案生成（Carousel 入门订阅 $19/月起）。</p>
+              <ul class="price-list">
+                <li>每月 50 次商品目录与卖点生成额度</li>
+                <li>支持长图 OCR 文字识别与箱规自动整理</li>
+                <li>付款后通过 api.xiaomie.tools 邮箱即时开通</li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn-secondary" data-open-checkout data-plan="monthly9">选择 $9/月 入门订阅</button>
+          </div>
+
+          <div class="price-card featured">
+            <span class="popular-badge">团队推荐方案</span>
+            <div>
+              <div class="price-name">100 次专业点数包（Growth Pack）</div>
+              <div class="price-amount">$69 <small>/ 100 credits</small></div>
+              <p class="price-desc">约 ¥500 · 灵活按次消费不过期，适用商品目录卖点生成与轮播配音视频工作台。</p>
+              <ul class="price-list">
+                <li>包含 100 次完整目录排版 / AI 视频生成</li>
+                <li>覆盖 30+ 语种本地化文案与 SRT 字幕导出</li>
+                <li>付款后通过 api.xiaomie.tools 自动充值到账</li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn-primary" data-open-checkout data-plan="pack100">立即开通 $69 点数包</button>
+          </div>
+
+          <div class="price-card">
+            <div>
+              <div class="price-name">年度专业版（Annual Studio Pro）</div>
+              <div class="price-amount">$99 <small>/ yr</small></div>
+              <p class="price-desc">年付低至 $8.25/月 · 解锁高频商品目录排版、多语种卖点生成与企业优先技术支持。</p>
+              <ul class="price-list">
+                <li>全年度不限次长图 OCR 与规格目录整理</li>
+                <li>专享 info@xiaomie.tools 优先客服与故障响应</li>
+                <li>享 14 天退款保障 · 付款即时自动开通</li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn-secondary" data-open-checkout data-plan="annual99">订阅 $99/年 专业版</button>
+          </div>
+        </div>
+
+        <div class="translator-pricing-box">
+          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px">
+            <div>
+              <span class="status-badge coming-soon" style="margin-bottom:6px">⏳ 即将上线 · Coming Soon 透明预热定价</span>
+              <h3 style="margin:0;font-size:1.25rem">《小咩魔法图片翻译（Xiaomie Magic Image Translator）》预热定价说明</h3>
+            </div>
+            <button type="button" class="btn btn-disabled btn-sm" disabled aria-disabled="true">即将开放 · 暂未开放下单</button>
+          </div>
+
+          <div class="pricing-grid">
+            <div class="price-card">
+              <div>
+                <div class="price-name">体验授权（Trial）</div>
+                <div class="price-amount">$0 <small>/ 免费体验 20 张</small></div>
+                <p class="price-desc">免费体验 20 张（官方内置体验通道直连，无需自备 Key），先测原图背景无损重绘效果。</p>
+              </div>
+              <button type="button" class="btn btn-disabled btn-sm" disabled>即将上线</button>
+            </div>
+
+            <div class="price-card">
+              <div>
+                <div class="price-name">1,000 张额度包（1,000-Image Pack）</div>
+                <div class="price-amount">$14.9 <small>（国内参考价 ¥100）</small></div>
+                <p class="price-desc">桌面软件 1,000 张图片处理授权包，支持自备第三方 API Key 批量翻译与背景无损回填。</p>
+              </div>
+              <button type="button" class="btn btn-disabled btn-sm" disabled>即将上线</button>
+            </div>
+
+            <div class="price-card">
+              <div>
+                <div class="price-name">终身授权（Lifetime License）</div>
+                <div class="price-amount">$29 <small>（国内参考价 ¥199）</small></div>
+                <p class="price-desc">一次买断软件终身授权，桌面软件本身处理不设张数上限（需自备 Key）。</p>
+              </div>
+              <button type="button" class="btn btn-disabled btn-sm" disabled>即将上线</button>
+            </div>
+          </div>
+
+          <div class="byok-notice">
+            <strong>⚠️ 重要说明（必须阅读）：</strong>
+            1,000 张额度包（$14.9 / ¥100）与终身授权（$29 / ¥199）属于桌面软件授权，用户需自行填写并承担第三方 API Key（<strong>BYOK - Bring Your Own Key</strong>），软件授权费不包含第三方 API 调用额度。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="support">
+      <div class="container">
+        <div class="section-head">
+          <h2>合规收款通道、自动开通与官方客服支持</h2>
+          <p>严格遵循国际 SaaS 合规标准：全站统一使用唯一官方客服邮箱与 14 天无忧退款条款。</p>
+        </div>
+
+        <div class="payment-grid">
+          <div class="pay-card active">
+            <span class="pay-badge live">Global Card &amp; SaaS Checkout</span>
+            <h3>全球信用卡与国际 SaaS 结算</h3>
+            <p>面向全球卖家提供清晰 USD 计价方案（预留接入 Creem Checkout），付款后自动关联邮箱即时解锁权益。</p>
+            <button type="button" class="btn btn-primary btn-sm" data-open-checkout data-plan="pack100">打开结算入口</button>
+          </div>
+          <div class="pay-card">
+            <span class="pay-badge soon">api.xiaomie.tools</span>
+            <h3>邮箱账号即时自动交付</h3>
+            <p>登录验证码由 noreply@xiaomie.tools 发送，付费订阅与额度实时同步至您的邮箱账号中心。</p>
+            <a class="btn btn-secondary btn-sm" href="https://api.xiaomie.tools/api/checkout?app_id=catalog" target="_blank" rel="noopener">API Status</a>
+          </div>
+          <div class="pay-card">
+            <span class="pay-badge live">info@xiaomie.tools</span>
+            <h3>官方客服与 14 天退款保障</h3>
+            <p>任何软件咨询、数据删除或依据 14 天退款政策的退订申请，请联系唯一官方邮箱 info@xiaomie.tools。</p>
+            <a class="btn btn-secondary btn-sm" href="mailto:info@xiaomie.tools">info@xiaomie.tools</a>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
+  
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div>© 2026 Xiaomie Magic Tools · <a href="mailto:info@xiaomie.tools" style="color:var(--primary);font-weight:700">info@xiaomie.tools</a></div>
+      <div>© 2026 XiaoMie Tools. Operated by Limei Chen. Contact: <a href="mailto:info@xiaomie.tools" style="color:var(--primary);font-weight:700">info@xiaomie.tools</a></div>
       <div class="footer-langs">
-        <a href="/">简体中文</a>
-        <a href="/en/">English</a>
-        <a href="/collector/">Collector</a>
-        <a href="/carousel/">Carousel</a>
+        <a href="/terms/">服务条款 Terms</a>
+        <a href="/privacy/">隐私政策 Privacy</a>
+        <a href="/refund/">14 天退款政策 Refund</a>
+        <a href="/en/">🇺🇸 English</a><a href="/carousel/">轮播视频</a><a href="/catalog/">商品目录卖点生成器</a>
       </div>
     </div>
   </footer>
   
   <dialog id="accountPortalModal" class="xm-modal">
     <div class="xm-modal-head">
-      <strong>👤 Account &amp; Entitlements / 账号与权益中心</strong>
-      <button type="button" id="btnCloseAccountPortal" class="btn btn-secondary btn-sm">✕</button>
+      <strong>XiaoMie Tools · 统一账号与额度中心</strong>
+      <button type="button" class="xm-modal-close" id="btnCloseAccountPortal">✕</button>
     </div>
-    <div id="portalLoginBox">
-      <p style="font-size:0.86rem;color:var(--ink-soft);margin-top:0">Sign in via Email Verification Code (sent from <strong>noreply@xiaomie.tools</strong> · Support: <strong>info@xiaomie.tools</strong>):</p>
-      <div class="xm-field">
-        <label for="webOtpEmail">Email Address / 邮箱地址</label>
+    <div class="xm-modal-body">
+      <div id="portalLoginBox">
+        <p style="margin-top:0;color:var(--ink-soft);font-size:0.9rem">
+          输入您的常用邮箱，由 <code>noreply@xiaomie.tools</code> 发送 6 位验证码免密登录。付款后系统通过 <code>api.xiaomie.tools</code> 邮箱账号自动即时开通权益。
+        </p>
+        <label class="xm-label" for="webOtpEmail">电子邮箱</label>
         <div class="xm-row">
-          <input id="webOtpEmail" type="email" placeholder="name@example.com" />
-          <button type="button" id="btnWebSendOtp" class="btn btn-secondary btn-sm" style="white-space:nowrap">Send Code</button>
+          <input id="webOtpEmail" class="xm-input" type="email" placeholder="name@company.com" />
+          <button type="button" class="btn btn-secondary btn-sm" id="btnWebSendOtp">发送验证码</button>
+        </div>
+        <label class="xm-label" for="webOtpCode" style="margin-top:12px">6 位邮箱验证码</label>
+        <div class="xm-row">
+          <input id="webOtpCode" class="xm-input" type="text" maxlength="6" placeholder="123456" />
+          <button type="button" class="btn btn-primary btn-sm" id="btnWebVerifyOtp">验证登录</button>
+        </div>
+        <div id="webOtpStatus" class="xm-status"></div>
+      </div>
+
+      <div id="portalDashBox" style="display:none">
+        <div class="portal-summary">
+          <div><small>当前登录邮箱</small><strong id="portalUserEmail"></strong></div>
+          <div><small>当前会员方案</small><strong id="portalUserPlan"></strong></div>
+          <div><small>可用额度</small><strong id="portalUserQuota"></strong></div>
+        </div>
+        <h4 style="margin:14px 0 8px;font-size:0.88rem">额度与授权记录</h4>
+        <div id="portalLedgerList" class="ledger-list"></div>
+        <div style="margin-top:14px;display:flex;gap:10px;justify-content:flex-end">
+          <button type="button" class="btn btn-secondary btn-sm" id="btnWebLogout">退出登录</button>
         </div>
       </div>
-      <div class="xm-field">
-        <label for="webOtpCode">6-Digit Code / 邮箱验证码</label>
-        <div class="xm-row">
-          <input id="webOtpCode" type="text" placeholder="123456" maxlength="6" />
-          <button type="button" id="btnWebVerifyOtp" class="btn btn-primary btn-sm" style="white-space:nowrap">Verify &amp; Sign In</button>
-        </div>
-      </div>
-      <div id="webOtpStatus" class="xm-status"></div>
-    </div>
-    <div id="portalDashBox" style="display:none">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;padding:12px;border-radius:12px;background:var(--surface-alt)">
-        <div><small style="color:var(--muted)">Account (site)</small><div id="portalUserEmail" style="font-weight:800;font-size:0.9rem"></div></div>
-        <div><small style="color:var(--muted)">Current Plan</small><div id="portalUserPlan" style="font-weight:800;font-size:0.9rem"></div></div>
-        <div><small style="color:var(--muted)">Remaining Quota</small><div id="portalUserQuota" style="font-weight:800;font-size:0.9rem;color:var(--primary)"></div></div>
-        <div style="display:flex;align-items:end;justify-content:end"><button type="button" id="btnWebLogout" class="btn btn-secondary btn-sm">Sign Out</button></div>
-      </div>
-      <strong style="font-size:0.88rem;display:block;margin-bottom:6px">Billing &amp; Deduction History / 权益与扣费记录</strong>
-      <div id="portalLedgerList" class="ledger-box"></div>
     </div>
   </dialog>
 
-  <dialog id="airwallexModal" class="xm-modal">
+  <dialog id="saasCheckoutModal" class="xm-modal">
     <div class="xm-modal-head">
-      <strong>🌐 Airwallex Global Checkout (USD)</strong>
-      <button type="button" id="btnCloseAwxModal" class="btn btn-secondary btn-sm">✕</button>
+      <strong>Global Card & SaaS Checkout</strong>
+      <button type="button" class="xm-modal-close" id="btnCloseCheckoutModal">✕</button>
     </div>
-    <p style="font-size:0.86rem;color:var(--ink-soft);margin-top:0">Powered by Airwallex (JINHUA CREDIT IMPORT AND EXPORT CO.,LTD). Supports Visa, MasterCard, Amex, Apple Pay &amp; Google Pay.</p>
-    <div class="xm-field">
-      <label for="awxPlanSelect">Select Plan / 选择方案</label>
-      <select id="awxPlanSelect">
-        <option value="pack100">Collector VIP — $69 USD</option>
+    <div class="xm-modal-body">
+      <p style="margin-top:0;color:var(--ink-soft);font-size:0.9rem">
+        国际 SaaS 订阅与点数包结算（支持全球信用卡/借记卡，Creem MoR 托管收银台）。<strong>付款后通过 <code>api.xiaomie.tools</code> 邮箱账号自动即时开通</strong>，并享有 14 天退款保障（<a href="/refund/">Refund Policy</a>）。
+      </p>
+      <label class="xm-label" for="checkoutPlanSelect">选择 SaaS 方案 / 点数包</label>
+      <select id="checkoutPlanSelect" class="xm-input">
+        <option value="monthly9">目录卖点生成器月度版（$9 / 月）</option>
+        <option value="monthly19">轮播视频月度版（$19 / 月）</option>
+        <option value="pack100">100 次额度包（$69）</option>
+        <option value="annual99">年度专业订阅 Annual Pro（$99 / 年）</option>
       </select>
+      <label class="xm-label" for="checkoutBuyerEmail" style="margin-top:12px">接收自动开通授权的邮箱（api.xiaomie.tools 账号）</label>
+      <input id="checkoutBuyerEmail" class="xm-input" type="email" placeholder="buyer@company.com" />
+      <div style="margin-top:14px;display:flex;gap:10px">
+        <button type="button" class="btn btn-primary" id="btnSubmitSaasCheckout" style="width:100%">
+          前往 Global SaaS Checkout 结算
+        </button>
+      </div>
+      <div id="saasCheckoutStatus" class="xm-status"></div>
     </div>
-    <div class="xm-field">
-      <label for="awxBuyerEmail">Delivery Email / 接收激活码邮箱</label>
-      <input id="awxBuyerEmail" type="email" placeholder="you@example.com" />
-    </div>
-    <button type="button" id="btnSubmitAwxCheckout" class="btn btn-primary" style="width:100%">Proceed to Airwallex Checkout ↗</button>
-    <div id="awxCheckoutStatus" class="xm-status"></div>
   </dialog>
+  
   <script src="/assets/app.js" defer></script>
 </body>
 </html>

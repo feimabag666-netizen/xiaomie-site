@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const APP_ID = document.documentElement.getAttribute("data-app-id") || "collector";
+  const APP_ID = document.documentElement.getAttribute("data-app-id") || "catalog";
 
   const langSelect = document.getElementById("langSwitcher");
   if (langSelect) {
@@ -35,7 +35,7 @@
 
   function defaultQuotaForApp() {
     if (APP_ID === "carousel") return 1;
-    if (APP_ID === "collector") return 20;
+    if (APP_ID === "catalog") return 20;
     return 0;
   }
 
@@ -83,18 +83,22 @@
       if (emailEl) emailEl.textContent = `${acc.email} (${APP_ID})`;
       if (planEl) {
         planEl.textContent =
-          acc.plan === "lifetime"
-            ? "👑 SVIP Lifetime"
+          acc.plan === "annual"
+            ? "👑 Annual Pro"
+            : acc.plan === "lifetime"
+            ? "👑 Lifetime Pro"
             : acc.plan === "pack100"
-            ? "⭐ VIP (100 Pack)"
+            ? "⭐ Growth Pack (100)"
+            : acc.plan === "starter" || acc.plan === "monthly"
+            ? "⭐ Starter SaaS"
             : acc.plan === "pack50"
-            ? "⭐ VIP (50 Pack)"
+            ? "⭐ Studio Pack (50)"
             : "🎁 Free Trial";
       }
       if (quotaEl) {
         quotaEl.textContent =
-          acc.plan === "lifetime"
-            ? "∞ Unlimited"
+          acc.plan === "lifetime" || acc.plan === "annual"
+            ? "Active Unlimited"
             : `${Math.max(0, (acc.quotaLimit || 0) - (acc.usedCount || 0))} / ${acc.quotaLimit || 0}`;
       }
       if (ledgerEl) {
@@ -201,56 +205,59 @@
     });
   }
 
-  // Airwallex Checkout Modal
-  const awxModal = document.getElementById("airwallexModal");
-  const btnOpenAwx = document.querySelectorAll("[data-open-airwallex]");
-  const btnCloseAwx = document.getElementById("btnCloseAwxModal");
-  const btnSubmitAwx = document.getElementById("btnSubmitAwxCheckout");
-  const awxStatus = document.getElementById("awxCheckoutStatus");
+  // Global Card & SaaS Checkout Modal (Creem MoR Ready)
+  const checkoutModal = document.getElementById("saasCheckoutModal");
+  const openCheckoutBtns = document.querySelectorAll("[data-open-checkout]");
+  const btnCloseCheckout = document.getElementById("btnCloseCheckoutModal");
+  const btnSubmitCheckout = document.getElementById("btnSubmitSaasCheckout");
+  const checkoutStatus = document.getElementById("saasCheckoutStatus");
 
-  btnOpenAwx.forEach((btn) => {
+  openCheckoutBtns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
-      if (!awxModal) return;
-      const plan = btn.getAttribute("data-plan") || "pack100";
-      const planSel = document.getElementById("awxPlanSelect");
-      if (planSel) planSel.value = plan;
+      if (!checkoutModal) return;
+      const plan = btn.getAttribute("data-plan") || "starter";
+      const planSel = document.getElementById("checkoutPlanSelect");
+      if (planSel) {
+        const hasOpt = [...planSel.options].some((o) => o.value === plan);
+        if (hasOpt) planSel.value = plan;
+      }
       const acc = loadAccount();
-      const emailInput = document.getElementById("awxBuyerEmail");
+      const emailInput = document.getElementById("checkoutBuyerEmail");
       if (emailInput && acc.email) emailInput.value = acc.email;
-      if (awxStatus) awxStatus.textContent = "";
-      awxModal.showModal();
+      if (checkoutStatus) checkoutStatus.textContent = "";
+      checkoutModal.showModal();
     });
   });
 
-  if (btnCloseAwx && awxModal) {
-    btnCloseAwx.addEventListener("click", () => awxModal.close());
+  if (btnCloseCheckout && checkoutModal) {
+    btnCloseCheckout.addEventListener("click", () => checkoutModal.close());
   }
 
-  if (btnSubmitAwx) {
-    btnSubmitAwx.addEventListener("click", async () => {
-      const planId = document.getElementById("awxPlanSelect")?.value || "pack100";
-      const email = (document.getElementById("awxBuyerEmail")?.value || "").trim();
+  if (btnSubmitCheckout) {
+    btnSubmitCheckout.addEventListener("click", async () => {
+      const planId = document.getElementById("checkoutPlanSelect")?.value || "starter";
+      const email = (document.getElementById("checkoutBuyerEmail")?.value || "").trim();
       if (!email) {
-        if (awxStatus) awxStatus.textContent = "Please enter your email for License Key delivery.";
+        if (checkoutStatus) checkoutStatus.textContent = "Please enter your email for instant account activation via api.xiaomie.tools.";
         return;
       }
-      btnSubmitAwx.disabled = true;
-      if (awxStatus) awxStatus.textContent = "Creating secure Airwallex checkout session...";
+      btnSubmitCheckout.disabled = true;
+      if (checkoutStatus) checkoutStatus.textContent = "Preparing Global Card & SaaS Checkout session...";
       try {
-        const data = await apiPost("/api/airwallex-checkout", { planId, email });
+        const data = await apiPost("/api/checkout", { planId, email });
         if (data.ok && data.checkoutUrl) {
-          if (awxStatus) awxStatus.textContent = "✅ Redirecting to Airwallex...";
+          if (checkoutStatus) checkoutStatus.textContent = "✅ Redirecting to secure SaaS checkout...";
           window.open(data.checkoutUrl, "_blank", "noopener");
         } else {
-          if (awxStatus) {
-            awxStatus.textContent = `ℹ️ ${data.error || "Please contact info@xiaomie.tools for instant Airwallex link."}`;
+          if (checkoutStatus) {
+            checkoutStatus.textContent = `ℹ️ ${data.error || "Global SaaS Checkout is being finalized. Contact info@xiaomie.tools for instant invoice & activation."}`;
           }
         }
-      } catch (e) {
-        if (awxStatus) awxStatus.textContent = `ℹ️ ${e.message}`;
+      } catch {
+        if (checkoutStatus) checkoutStatus.textContent = "ℹ️ Contact info@xiaomie.tools for immediate checkout & api.xiaomie.tools activation.";
       } finally {
-        btnSubmitAwx.disabled = false;
+        btnSubmitCheckout.disabled = false;
       }
     });
   }

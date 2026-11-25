@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="ja" dir="ltr" data-app-id="catalog">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Xiaomie 商品カタログ・訴求文ジェネレーター — 長尺画像OCR＆多言語カタログ作成AI</title>
+  <meta name="description" content="越境EC・商品企画チーム向けのAI生産性ツール：長尺画像OCR文字認識、商品仕様・梱包サイズの自動整理、多言語ローカライズ訴求文の生成、整った商品カタログ書き出しを実現。" />
+  <meta name="keywords" content="商品カタログ作成,長尺画像OCR,スペック自動整理,多言語商品説明生成,AI業務効率化ツール" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://xiaomie.tools/catalog/ja/" />
+  <link rel="alternate" hreflang="zh-CN" href="https://xiaomie.tools/catalog/" />
+  <link rel="alternate" hreflang="zh-TW" href="https://xiaomie.tools/catalog/zh-tw/" />
+  <link rel="alternate" hreflang="en" href="https://xiaomie.tools/catalog/en/" />
+  <link rel="alternate" hreflang="ja" href="https://xiaomie.tools/catalog/ja/" />
+  <link rel="alternate" hreflang="ko" href="https://xiaomie.tools/catalog/ko/" />
+  <link rel="alternate" hreflang="es" href="https://xiaomie.tools/catalog/es/" />
+  <link rel="alternate" hreflang="de" href="https://xiaomie.tools/catalog/de/" />
+  <link rel="alternate" hreflang="fr" href="https://xiaomie.tools/catalog/fr/" />
+  <link rel="alternate" hreflang="vi" href="https://xiaomie.tools/catalog/vi/" />
+  <link rel="alternate" hreflang="th" href="https://xiaomie.tools/catalog/th/" />
+  <link rel="alternate" hreflang="x-default" href="https://xiaomie.tools/catalog/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Xiaomie 商品カタログ・訴求文ジェネレーター — 長尺画像OCR＆多言語カタログ作成AI" />
+  <meta property="og:description" content="越境EC・商品企画チーム向けのAI生産性ツール：長尺画像OCR文字認識、商品仕様・梱包サイズの自動整理、多言語ローカライズ訴求文の生成、整った商品カタログ書き出しを実現。" />
+  <meta property="og:url" content="https://xiaomie.tools/catalog/ja/" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:image" content="https://xiaomie.tools/assets/cat-logo.jpg" />
+  <link rel="icon" type="image/jpeg" href="/assets/cat-logo.jpg" />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"Xiaomie Product Catalog & Selling Point Generator","applicationCategory":"BusinessApplication","operatingSystem":"Windows 10/11, macOS, Web","url":"https://xiaomie.tools/catalog/ja/","description":"越境EC・商品企画チーム向けのAI生産性ツール：長尺画像OCR文字認識、商品仕様・梱包サイズの自動整理、多言語ローカライズ訴求文の生成、整った商品カタログ書き出しを実現。","publisher":{"@type":"Person","name":"Limei Chen","email":"info@xiaomie.tools"},"offers":[{"@type":"Offer","name":"🚀 Starter 月額プラン","priceCurrency":"USD","price":"9","url":"https://xiaomie.tools/catalog/ja/"},{"@type":"Offer","name":"⭐ 100件プロパック","priceCurrency":"USD","price":"69","url":"https://xiaomie.tools/catalog/ja/"},{"@type":"Offer","name":"👑 年間スタジオ版","priceCurrency":"USD","price":"99","url":"https://xiaomie.tools/catalog/ja/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"決済後はどのくらいで有効になりますか？","acceptedAnswer":{"@type":"Answer","text":"決済完了直後、api.xiaomie.tools のご登録メールアドレスに即時自動で反映されます。"}},{"@type":"Question","name":"返金ポリシーはありますか？","acceptedAnswer":{"@type":"Answer","text":"はい、14日間の返金保証（14-day refund policy）に対応しています。info@xiaomie.tools までご連絡ください。"}}]}]}</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/en/">
+        <img src="/assets/cat-logo.jpg" alt="XiaoMie Tools Logo" width="38" height="38" />
+        <span>Xiaomie Catalog &amp; Copy Generator</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/en/">Suite Hub</a>
+        <a href="#features">主な機能</a>
+        <a href="#pricing">料金プラン</a>
+        <a href="#install">利用手順</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="header-actions">
+        <select id="langSwitcher" class="lang-select" aria-label="Language"><option value="/catalog/">简体中文</option><option value="/catalog/zh-tw/">繁體中文</option><option value="/catalog/en/">English</option><option value="/catalog/ja/" selected>日本語</option><option value="/catalog/ko/">한국어</option><option value="/catalog/es/">Español</option><option value="/catalog/de/">Deutsch</option><option value="/catalog/fr/">Français</option><option value="/catalog/vi/">Tiếng Việt</option><option value="/catalog/th/">ภาษาไทย</option></select>
+        <button type="button" class="btn btn-primary btn-sm" id="btnOpenAccountPortal">👤 Account / 账号中心</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="badge">提供中 · XiaoMie Tools SaaS · 20件無料体験</span>
+          <h1>商品長尺画像のOCR認識・仕様整理・多言語カタログ作成を30秒で完了</h1>
+          <p class="lead">ローカルWASM高精度OCRによる画像内テキスト抽出、サイズ・重量・梱包仕様の1対1整理、B2B/ToC向け多言語アピール文生成とカタログ出力を一つのワークフローで提供します。</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#pricing">料金プランを見る ($9–$99)</a>
+            <a class="btn btn-secondary" href="#features">コア機能を確認</a>
+          </div>
+          <ul class="trust-list">
+            <li>高速ローカルWASM OCR処理</li><li>サイズ・重量・梱包仕様を自動整合</li><li>決済後 api.xiaomie.tools アカウントへ即時自動反映</li>
+          </ul>
+        </div>
+        <aside class="hero-card">
+          <img class="hero-mascot" src="/assets/cat-logo.jpg" alt="XiaoMie Tools Mascot" />
+          <h3 style="margin:0 0 6px">Long-Image OCR · Specs · Copywriting</h3>
+          <p style="margin:0;color:var(--muted);font-size:0.9rem">日本市場向けEC・カタログ制作チーム</p>
+          <div class="hero-card-tags">
+            <span class="chip">🔍 Image OCR</span>
+            <span class="chip">📦 Spec Tables</span>
+            <span class="chip">💡 Copywriting</span>
+            <span class="chip">🔐 BYOK</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="stats-bar">
+      <div class="container stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">20件</div>
+        <div class="stat-label">無料トライアル枠</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1対1整合</div>
+        <div class="stat-label">仕様・梱包データの自動整理</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">高速OCR</div>
+        <div class="stat-label">長尺画像テキスト抽出</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">純粋翻訳</div>
+        <div class="stat-label">単一言語カタログ出力</div>
+      </div></div>
+    </section>
+
+    <section class="section section-alt" id="features">
+      <div class="container">
+        <div class="section-head">
+          <h2>選ばれる理由</h2>
+          <p>画像文字起こし・仕様整理・訴求文作成・カタログ出力を自動化します。</p>
+        </div>
+        <div class="features-grid">
+      <article class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>商品長尺画像 OCR 文字認識</h3>
+        <p>ブラウザ内Tesseract WASM SIMDエンジンが長尺画像内の素材・寸法・仕様表を高精度でテキスト化します。</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">📦</div>
+        <h3>複数規格・梱包仕様の自動整合</h3>
+        <p>サイズ・単体重量・容量・入数・外箱サイズ・価格を規格ごとに正確に紐付け整理します。</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">💡</div>
+        <h3>多言語ローカライズ訴求文作成</h3>
+        <p>B2B卸売向け・ToC消費者向けのトーンを切り替え、言語混在のない自然な説明文を生成します。</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">🗂️</div>
+        <h3>構造化カタログ一括書き出し</h3>
+        <p>整理済みの仕様テキストと商品画像をフォルダ分けして即座に出力できます。</p>
+      </article></div>
+      </div>
+    </section>
+
+    <section class="section" id="compare">
+      <div class="container">
+        <div class="section-head">
+          <h2>手作業 vs Xiaomie カタログジェネレーター</h2>
+        </div>
+        <div class="table-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr><th>比較項目</th><th>従来の手作業</th><th>Xiaomie カタログジェネレーター</th></tr>
+            </thead>
+            <tbody>
+      <tr>
+        <td><strong>長尺画像内テキスト</strong></td>
+        <td>目視確認して手入力</td>
+        <td>ローカルWASM OCRで自動文字起こし</td>
+      </tr>
+      <tr>
+        <td><strong>複数規格・梱包計算</strong></td>
+        <td>ミスやズレが発生しやすい</td>
+        <td>規格ごとに1対1で自動整合</td>
+      </tr>
+      <tr>
+        <td><strong>多言語訴求文</strong></td>
+        <td>別ツールで都度翻訳・調整</td>
+        <td>B2B/ToC対応の統一カタログ出力</td>
+      </tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <h2>透明な SaaS 料金プラン (USD)</h2>
+          <p>決済完了後、api.xiaomie.tools のメールアドレス宛に即時自動アクティベートされます。</p>
+        </div>
+        <div class="pricing-grid">
+      <div class="price-card">
+        
+        <div>
+          <div class="price-name">🚀 Starter 月額プラン</div>
+          <div class="price-amount">$9 <small>/ 月 · SaaS サブスク · USD / 月</small></div>
+          <p class="price-desc">個人の日々のカタログ整備・OCR抽出に最適。</p>
+          <ul class="price-list"><li>月30件のカタログ整理出力</li><li>ローカル長尺画像OCR</li><li>規格・梱包仕様の自動整理</li><li>api.xiaomie.tools 即時自動有効化</li></ul>
+        </div>
+        <button type="button" class="btn btn-secondary" data-open-checkout data-plan="monthly9">Starter を開始 ($9/mo)</button>
+      </div>
+      <div class="price-card featured">
+        <span class="popular-badge">人気プラン</span>
+        <div>
+          <div class="price-name">⭐ 100件プロパック</div>
+          <div class="price-amount">$69 <small>/ 100件（無期限） · USD · 買い切り</small></div>
+          <p class="price-desc">有効期限なしのクレジットパック。独自APIキー(BYOK)にも対応。</p>
+          <ul class="price-list"><li>100件分のカタログ＆訴求文生成</li><li>独自APIキー(BYOK)設定を解放</li><li>B2B/ToC多言語コピー出力</li><li>api.xiaomie.tools 即時自動有効化</li></ul>
+        </div>
+        <button type="button" class="btn btn-primary" data-open-checkout data-plan="pack100">プロパック購入 ($69)</button>
+      </div>
+      <div class="price-card">
+        
+        <div>
+          <div class="price-name">👑 年間スタジオ版</div>
+          <div class="price-amount">$99 <small>/ 年 · 年間プラン · USD / 年</small></div>
+          <p class="price-desc">チームや高頻度運用に最適な年間パッケージ。</p>
+          <ul class="price-list"><li>年間高容量カタログ生成</li><li>BYOK＆全言語対応コピー機能</li><li>メール優先サポート</li><li>api.xiaomie.tools 即時自動有効化</li></ul>
+        </div>
+        <button type="button" class="btn btn-secondary" data-open-checkout data-plan="annual99">年間プラン契約 ($99/yr)</button>
+      </div></div>
+      </div>
+    </section>
+
+    <section class="section" id="install">
+      <div class="container">
+        <div class="section-head">
+          <h2>簡単 3 ステップ</h2>
+        </div>
+        <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>メールOTPでログイン</h3>
+        <p>noreply@xiaomie.tools からの認証コードで api.xiaomie.tools にサインイン。</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>商品画像・仕様を読み込む</h3>
+        <p>対象の商品画像や仕様シートを選択し、言語とトーンを設定。</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>整ったカタログを出力</h3>
+        <p>OCR抽出・仕様整理・訴求文生成済みのカタログフォルダを保存します。</p>
+      </div></div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="checkout-methods">
+      <div class="container">
+        <div class="section-head">
+          <h2>Global SaaS Checkout &amp; Instant Account Provisioning</h2>
+          <p>Powered by Global Card &amp; SaaS Checkout (Visa, MasterCard, Apple Pay, Google Pay). Entitlements are activated automatically and instantaneously under your email via api.xiaomie.tools after payment.</p>
+        </div>
+        <div class="payment-grid">
+          <div class="pay-card active">
+            <span class="pay-badge live">Global SaaS · USD</span>
+            <h3>🌐 Global Card &amp; SaaS Checkout (USD)</h3>
+            <p>Pay securely with Visa, MasterCard, Amex, Apple Pay, or Google Pay. Automatic instant activation under your email via api.xiaomie.tools.</p>
+            <p style="font-size:0.84rem;color:var(--muted)">Operated by XiaoMie Tools (Limei Chen) · Support: info@xiaomie.tools</p>
+            <button type="button" class="btn btn-primary btn-sm" data-open-checkout data-plan="pack100">Proceed to Global SaaS Checkout</button>
+          </div>
+          <div class="pay-card">
+            <span class="pay-badge soon">Local Method · Reserved</span>
+            <h3>💚 WeChat Pay (CNY Ref)</h3>
+            <p>Regional CNY payment option reserved alongside automatic api.xiaomie.tools provisioning.</p>
+            <small style="color:var(--muted)">⏳ Reserved Slot · info@xiaomie.tools</small>
+          </div>
+          <div class="pay-card">
+            <span class="pay-badge soon">Local Method · Reserved</span>
+            <h3>💙 Alipay (CNY Ref)</h3>
+            <p>Regional CNY payment option reserved alongside automatic api.xiaomie.tools provisioning.</p>
+            <small style="color:var(--muted)">⏳ Reserved Slot · info@xiaomie.tools</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <h2>よくある質問 (FAQ)</h2>
+        </div>
+        <div class="faq-list">
+      <details>
+        <summary>決済後はどのくらいで有効になりますか？</summary>
+        <p>決済完了直後、api.xiaomie.tools のご登録メールアドレスに即時自動で反映されます。</p>
+      </details>
+      <details>
+        <summary>返金ポリシーはありますか？</summary>
+        <p>はい、14日間の返金保証（14-day refund policy）に対応しています。info@xiaomie.tools までご連絡ください。</p>
+      </details></div>
+      </div>
+    </section>
+  </main>
+
+  
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2026 XiaoMie Tools. Operated by Limei Chen. Contact: <a href="mailto:info@xiaomie.tools" style="color:var(--primary);font-weight:700">info@xiaomie.tools</a></div>
+      <div class="footer-langs">
+        <a href="/terms/">Terms of Service</a>
+        <a href="/privacy/">Privacy Policy</a>
+        <a href="/refund/">Refund Policy (14-Day)</a>
+        <a href="/catalog/">简中</a><a href="/catalog/zh-tw/">繁中</a><a href="/catalog/en/">EN</a><a href="/catalog/ja/">JP</a><a href="/catalog/ko/">KR</a><a href="/catalog/es/">ES</a><a href="/catalog/de/">DE</a><a href="/catalog/fr/">FR</a><a href="/catalog/vi/">VI</a><a href="/catalog/th/">TH</a>
+      </div>
+    </div>
+  </footer>
+  
+  <dialog id="accountPortalModal" class="xm-modal">
+    <div class="xm-modal-head">
+      <strong>XiaoMie Tools · Account & Usage Portal</strong>
+      <button type="button" class="xm-modal-close" id="btnCloseAccountPortal">✕</button>
+    </div>
+    <div class="xm-modal-body">
+      <div id="portalLoginBox">
+        <p style="margin-top:0;color:var(--ink-soft);font-size:0.9rem">
+          Sign in passwordlessly with a 6-digit code sent from <code>noreply@xiaomie.tools</code>. Paid plans activate automatically on your <code>api.xiaomie.tools</code> email account.
+        </p>
+        <label class="xm-label" for="webOtpEmail">Email Address</label>
+        <div class="xm-row">
+          <input id="webOtpEmail" class="xm-input" type="email" placeholder="name@company.com" />
+          <button type="button" class="btn btn-secondary btn-sm" id="btnWebSendOtp">Send Code</button>
+        </div>
+        <label class="xm-label" for="webOtpCode" style="margin-top:12px">6-Digit Verification Code</label>
+        <div class="xm-row">
+          <input id="webOtpCode" class="xm-input" type="text" maxlength="6" placeholder="123456" />
+          <button type="button" class="btn btn-primary btn-sm" id="btnWebVerifyOtp">Sign In</button>
+        </div>
+        <div id="webOtpStatus" class="xm-status"></div>
+      </div>
+
+      <div id="portalDashBox" style="display:none">
+        <div class="portal-summary">
+          <div><small>Account Email</small><strong id="portalUserEmail"></strong></div>
+          <div><small>Plan</small><strong id="portalUserPlan"></strong></div>
+          <div><small>Remaining Credits</small><strong id="portalUserQuota"></strong></div>
+        </div>
+        <h4 style="margin:14px 0 8px;font-size:0.88rem">Credit Ledger</h4>
+        <div id="portalLedgerList" class="ledger-list"></div>
+        <div style="margin-top:14px;display:flex;gap:10px;justify-content:flex-end">
+          <button type="button" class="btn btn-secondary btn-sm" id="btnWebLogout">Sign Out</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="saasCheckoutModal" class="xm-modal">
+    <div class="xm-modal-head">
+      <strong>Global Card & SaaS Checkout</strong>
+      <button type="button" class="xm-modal-close" id="btnCloseCheckoutModal">✕</button>
+    </div>
+    <div class="xm-modal-body">
+      <p style="margin-top:0;color:var(--ink-soft);font-size:0.9rem">
+        Global SaaS subscription & credit pack checkout (Creem MoR ready). <strong>Activates instantly via your <code>api.xiaomie.tools</code> email account after payment</strong>, backed by our <a href="/refund/">14-day refund policy</a>.
+      </p>
+      <label class="xm-label" for="checkoutPlanSelect">Select SaaS Plan</label>
+      <select id="checkoutPlanSelect" class="xm-input">
+          <option value="monthly9">Monthly Starter ($9 / mo · 50 catalogs)</option>
+          <option value="pack100">100-Item Pro Pack ($69 · Non-expiring)</option>
+          <option value="annual99">Annual Pro SaaS ($99 / yr · Unlimited)</option>
+        </select>
+      <label class="xm-label" for="checkoutBuyerEmail" style="margin-top:12px">Account Email for Instant Activation (api.xiaomie.tools)</label>
+      <input id="checkoutBuyerEmail" class="xm-input" type="email" placeholder="buyer@company.com" />
+      <div style="margin-top:14px;display:flex;gap:10px">
+        <button type="button" class="btn btn-primary" id="btnSubmitSaasCheckout" style="width:100%">
+          Continue to Global SaaS Checkout
+        </button>
+      </div>
+      <div id="saasCheckoutStatus" class="xm-status"></div>
+    </div>
+  </dialog>
+  
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>

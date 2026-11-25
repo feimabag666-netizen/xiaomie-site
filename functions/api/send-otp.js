@@ -9,7 +9,7 @@ export async function onRequestPost(context) {
     const body = await context.request.json().catch(() => ({}));
     const email = String(body.email || "").trim().toLowerCase();
     const lang = String(body.lang || "zh-CN");
-    const app = resolveApp(body.app_id, "collector");
+    const app = resolveApp(body.app_id, "catalog");
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return json({ ok: false, error: "Invalid email address" }, 400);

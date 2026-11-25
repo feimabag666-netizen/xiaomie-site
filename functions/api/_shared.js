@@ -7,47 +7,63 @@ export const CORS_HEADERS = {
 };
 
 export const APP_REGISTRY = {
-  collector: {
-    appId: "collector",
-    nameZh: "小咩魔法采集",
-    nameEn: "Xiaomie Magic Collector",
-    fromName: "Xiaomie Magic Collector",
-    homeUrl: "https://xiaomie.tools/collector/",
+  catalog: {
+    appId: "catalog",
+    nameZh: "小咩商品目录卖点生成器",
+    nameEn: "Xiaomie Product Catalog & Selling Point Generator",
+    fromName: "XiaoMie Tools",
+    homeUrl: "https://xiaomie.tools/catalog/",
     defaultTrialQuota: 20,
     plans: {
+      monthly9: {
+        amount: 9,
+        currency: "USD",
+        cny: 68,
+        credits: 30,
+        type: "subscription",
+        title: "Catalog Generator Starter ($9/mo)",
+      },
       pack100: {
         amount: 69,
         currency: "USD",
         cny: 500,
         credits: 100,
         type: "pack",
-        title: "Xiaomie Magic Collector VIP (100 Products)",
+        title: "Catalog Generator 100-Item Pack ($69)",
       },
-      lifetime: {
-        amount: 139,
+      annual99: {
+        amount: 99,
         currency: "USD",
-        cny: 999,
+        cny: 699,
         credits: -1,
-        type: "lifetime",
-        title: "Xiaomie Magic Collector SVIP (Lifetime Unlimited)",
+        type: "subscription",
+        title: "Catalog Generator Pro Annual ($99/yr)",
       },
     },
   },
   carousel: {
     appId: "carousel",
     nameZh: "小咩魔法轮播视频",
-    nameEn: "Xiaomie Magic Carousel",
-    fromName: "Xiaomie Magic Carousel",
+    nameEn: "Xiaomie Carousel Video Studio",
+    fromName: "XiaoMie Tools",
     homeUrl: "https://carousel.xiaomie.tools/",
     defaultTrialQuota: 1,
     plans: {
+      monthly19: {
+        amount: 19,
+        currency: "USD",
+        cny: 138,
+        credits: 20,
+        type: "subscription",
+        title: "Carousel Video Studio Monthly ($19/mo)",
+      },
       pack50: {
         amount: 49.9,
         currency: "USD",
         cny: 360,
         credits: 50,
         type: "pack",
-        title: "Xiaomie Magic Carousel (50 Videos)",
+        title: "Carousel Video Studio (50 Videos)",
       },
       pack100: {
         amount: 69.9,
@@ -55,31 +71,73 @@ export const APP_REGISTRY = {
         cny: 500,
         credits: 100,
         type: "pack",
-        title: "Xiaomie Magic Carousel (100 Videos)",
+        title: "Carousel Video Studio (100 Videos)",
       },
-      lifetime: {
-        amount: 139.9,
+      annual99: {
+        amount: 99,
         currency: "USD",
-        cny: 999,
+        cny: 699,
         credits: -1,
-        type: "lifetime",
-        title: "Xiaomie Magic Carousel (Lifetime Unlimited)",
+        type: "subscription",
+        title: "Carousel Video Studio Annual Pro ($99/yr)",
       },
     },
   },
   site: {
     appId: "site",
     nameZh: "小咩魔法系列软件",
-    nameEn: "Xiaomie Magic Tools",
-    fromName: "Xiaomie Magic Tools",
+    nameEn: "XiaoMie Tools",
+    fromName: "XiaoMie Tools",
     homeUrl: "https://xiaomie.tools/",
     defaultTrialQuota: 0,
-    plans: {},
+    plans: {
+      monthly9: {
+        amount: 9,
+        currency: "USD",
+        cny: 68,
+        credits: 30,
+        type: "subscription",
+        title: "Catalog & Copy Monthly ($9/mo)",
+      },
+      monthly19: {
+        amount: 19,
+        currency: "USD",
+        cny: 138,
+        credits: 50,
+        type: "subscription",
+        title: "Carousel Video Monthly ($19/mo)",
+      },
+      starter: {
+        amount: 19,
+        currency: "USD",
+        cny: 138,
+        credits: 50,
+        type: "subscription",
+        title: "XiaoMie Tools Starter SaaS ($19/mo)",
+      },
+      pack100: {
+        amount: 69,
+        currency: "USD",
+        cny: 500,
+        credits: 100,
+        type: "pack",
+        title: "XiaoMie Tools 100-Unit Pack ($69)",
+      },
+      annual99: {
+        amount: 99,
+        currency: "USD",
+        cny: 699,
+        credits: -1,
+        type: "subscription",
+        title: "XiaoMie Tools Studio Annual ($99/yr)",
+      },
+    },
   },
 };
 
-export function resolveApp(rawAppId, fallback = "collector") {
+export function resolveApp(rawAppId, fallback = "catalog") {
   const key = String(rawAppId || fallback).trim().toLowerCase();
+  if (key === "collector") return APP_REGISTRY.catalog;
   return APP_REGISTRY[key] || APP_REGISTRY[fallback] || APP_REGISTRY.site;
 }
 

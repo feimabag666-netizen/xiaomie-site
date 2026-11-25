@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="de" dir="ltr" data-app-id="catalog">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Xiaomie Produktkatalog- &amp; Verkaufsargument-Generator — Langbild-OCR &amp; KI-Katalogstudio</title>
+  <meta name="description" content="KI-Produktivitätssoftware für E-Commerce-Teams: lokale Langbild-OCR-Texterkennung, automatische Abgleichung von Maßen, Gewichten &amp; Kartondaten, mehrsprachige Verkaufsargumente und sauberer Katalogexport." />
+  <meta name="keywords" content="Produktkatalog Generator, Langbild OCR, Spezifikationen abgleichen, mehrsprachige Produkttexte, SaaS Produktivität" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://xiaomie.tools/catalog/de/" />
+  <link rel="alternate" hreflang="zh-CN" href="https://xiaomie.tools/catalog/" />
+  <link rel="alternate" hreflang="zh-TW" href="https://xiaomie.tools/catalog/zh-tw/" />
+  <link rel="alternate" hreflang="en" href="https://xiaomie.tools/catalog/en/" />
+  <link rel="alternate" hreflang="ja" href="https://xiaomie.tools/catalog/ja/" />
+  <link rel="alternate" hreflang="ko" href="https://xiaomie.tools/catalog/ko/" />
+  <link rel="alternate" hreflang="es" href="https://xiaomie.tools/catalog/es/" />
+  <link rel="alternate" hreflang="de" href="https://xiaomie.tools/catalog/de/" />
+  <link rel="alternate" hreflang="fr" href="https://xiaomie.tools/catalog/fr/" />
+  <link rel="alternate" hreflang="vi" href="https://xiaomie.tools/catalog/vi/" />
+  <link rel="alternate" hreflang="th" href="https://xiaomie.tools/catalog/th/" />
+  <link rel="alternate" hreflang="x-default" href="https://xiaomie.tools/catalog/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Xiaomie Produktkatalog- &amp; Verkaufsargument-Generator — Langbild-OCR &amp; KI-Katalogstudio" />
+  <meta property="og:description" content="KI-Produktivitätssoftware für E-Commerce-Teams: lokale Langbild-OCR-Texterkennung, automatische Abgleichung von Maßen, Gewichten &amp; Kartondaten, mehrsprachige Verkaufsargumente und sauberer Katalogexport." />
+  <meta property="og:url" content="https://xiaomie.tools/catalog/de/" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:image" content="https://xiaomie.tools/assets/cat-logo.jpg" />
+  <link rel="icon" type="image/jpeg" href="/assets/cat-logo.jpg" />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"Xiaomie Product Catalog & Selling Point Generator","applicationCategory":"BusinessApplication","operatingSystem":"Windows 10/11, macOS, Web","url":"https://xiaomie.tools/catalog/de/","description":"KI-Produktivitätssoftware für E-Commerce-Teams: lokale Langbild-OCR-Texterkennung, automatische Abgleichung von Maßen, Gewichten & Kartondaten, mehrsprachige Verkaufsargumente und sauberer Katalogexport.","publisher":{"@type":"Person","name":"Limei Chen","email":"info@xiaomie.tools"},"offers":[{"@type":"Offer","name":"🚀 Starter Monatlich","priceCurrency":"USD","price":"9","url":"https://xiaomie.tools/catalog/de/"},{"@type":"Offer","name":"⭐ 100er Pro-Paket","priceCurrency":"USD","price":"69","url":"https://xiaomie.tools/catalog/de/"},{"@type":"Offer","name":"👑 Studio Jahresplan","priceCurrency":"USD","price":"99","url":"https://xiaomie.tools/catalog/de/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Wie schnell erfolgt die Freischaltung?","acceptedAnswer":{"@type":"Answer","text":"Sofort automatisch nach Zahlungsabschluss auf Ihre E-Mail-Adresse bei api.xiaomie.tools."}},{"@type":"Question","name":"Gibt es ein Rückgaberecht?","acceptedAnswer":{"@type":"Answer","text":"Ja, wir bieten eine 14-tägige Geld-zurück-Garantie (14-day refund policy) über info@xiaomie.tools."}}]}]}</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/en/">
+        <img src="/assets/cat-logo.jpg" alt="XiaoMie Tools Logo" width="38" height="38" />
+        <span>Xiaomie Catalog &amp; Copy Generator</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/en/">Suite Hub</a>
+        <a href="#features">Funktionen</a>
+        <a href="#pricing">Preise</a>
+        <a href="#install">Ablauf</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="header-actions">
+        <select id="langSwitcher" class="lang-select" aria-label="Language"><option value="/catalog/">简体中文</option><option value="/catalog/zh-tw/">繁體中文</option><option value="/catalog/en/">English</option><option value="/catalog/ja/">日本語</option><option value="/catalog/ko/">한국어</option><option value="/catalog/es/">Español</option><option value="/catalog/de/" selected>Deutsch</option><option value="/catalog/fr/">Français</option><option value="/catalog/vi/">Tiếng Việt</option><option value="/catalog/th/">ภาษาไทย</option></select>
+        <button type="button" class="btn btn-primary btn-sm" id="btnOpenAccountPortal">👤 Account / 账号中心</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="badge">Live · XiaoMie Tools SaaS · 20 Gratis-Tests</span>
+          <h1>Lange Produktbilder &amp; Datenblätter in 30 Sekunden in saubere Kataloge verwandeln</h1>
+          <p class="lead">Lokale WASM-OCR-Texterkennung für lange Bilder, präzise 1:1-Zuordnung von Maßen, Gewichten &amp; Kartondaten sowie einsprachige B2B/ToC-Texte in einem Workflow.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#pricing">SaaS-Preise ansehen ($9–$99)</a>
+            <a class="btn btn-secondary" href="#features">Funktionen entdecken</a>
+          </div>
+          <ul class="trust-list">
+            <li>Schnelle lokale WASM SIMD OCR</li><li>Automatischer 1:1-Abgleich von Maßen &amp; Kartons</li><li>Sofortige Aktivierung über api.xiaomie.tools nach Zahlung</li>
+          </ul>
+        </div>
+        <aside class="hero-card">
+          <img class="hero-mascot" src="/assets/cat-logo.jpg" alt="XiaoMie Tools Mascot" />
+          <h3 style="margin:0 0 6px">Long-Image OCR · Specs · Copywriting</h3>
+          <p style="margin:0;color:var(--muted);font-size:0.9rem">DACH E-Commerce &amp; Produktkatalog-Teams</p>
+          <div class="hero-card-tags">
+            <span class="chip">🔍 Image OCR</span>
+            <span class="chip">📦 Spec Tables</span>
+            <span class="chip">💡 Copywriting</span>
+            <span class="chip">🔐 BYOK</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="stats-bar">
+      <div class="container stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">20 Artikel</div>
+        <div class="stat-label">Kostenloser Test</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1:1 Match</div>
+        <div class="stat-label">Daten- &amp; Kartonabgleich</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">0 Freeze</div>
+        <div class="stat-label">Lokale Langbild-OCR</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">100 % Rein</div>
+        <div class="stat-label">Saubere Textausgabe</div>
+      </div></div>
+    </section>
+
+    <section class="section section-alt" id="features">
+      <div class="container">
+        <div class="section-head">
+          <h2>Kernfunktionen</h2>
+          <p>Langbild-OCR + automatischer Spezifikationsabgleich + lokalisierte Texte + Katalogexport.</p>
+        </div>
+        <div class="features-grid">
+      <article class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Langbild-OCR-Texterkennung</h3>
+        <p>Integrierte Tesseract WASM SIMD Engine liest Material-, Maß- und Leistungsdaten aus langen Produktgrafiken.</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">📦</div>
+        <h3>1:1 Varianten- &amp; Kartonabgleich</h3>
+        <p>Ordnet Maße, Stückgewichte, Kapazitäten, Verpackungseinheiten und Preise sauber jeder Variante zu.</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">💡</div>
+        <h3>Mehrsprachige Verkaufsargumente</h3>
+        <p>Erzeugt B2B- oder ToC-Texte in klarem Englisch, Chinesisch oder Zielsprachen ohne Sprachmix.</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">🗂️</div>
+        <h3>Strukturierter Katalogexport</h3>
+        <p>Exportiert bereinigte Grafiken und formatierte Produktdatenblätter direkt in geordnete Ordner.</p>
+      </article></div>
+      </div>
+    </section>
+
+    <section class="section" id="compare">
+      <div class="container">
+        <div class="section-head">
+          <h2>Manuell vs. Xiaomie Katalog-Generator</h2>
+        </div>
+        <div class="table-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr><th>Aufgabe</th><th>Manuelle Pflege</th><th>Xiaomie Katalog-Generator</th></tr>
+            </thead>
+            <tbody>
+      <tr>
+        <td><strong>Text in langen Bildern</strong></td>
+        <td>Mühsam abtippen</td>
+        <td>Lokale WASM OCR liest automatisch aus</td>
+      </tr>
+      <tr>
+        <td><strong>Varianten &amp; Kartondaten</strong></td>
+        <td>Häufige Zuordnungsfehler</td>
+        <td>Exakter 1:1-Abgleich je Variante</td>
+      </tr>
+      <tr>
+        <td><strong>Lokalisierte Texte</strong></td>
+        <td>Manuelles Kopieren &amp; Übersetzen</td>
+        <td>Integrierter B2B/ToC-Textgenerator</td>
+      </tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <h2>Transparente SaaS-Preise (USD)</h2>
+          <p>Automatische Sofortaktivierung über Ihr api.xiaomie.tools E-Mail-Konto direkt nach Zahlungseingang.</p>
+        </div>
+        <div class="pricing-grid">
+      <div class="price-card">
+        
+        <div>
+          <div class="price-name">🚀 Starter Monatlich</div>
+          <div class="price-amount">$9 <small>/ Monat · SaaS-Abo · USD / Monat</small></div>
+          <p class="price-desc">Ideal für regelmäßige Katalogerstellung.</p>
+          <ul class="price-list"><li>30 Katalogexporte pro Monat</li><li>Lokale Langbild-OCR</li><li>Automatischer Datenabgleich</li><li>Sofortaktivierung über api.xiaomie.tools</li></ul>
+        </div>
+        <button type="button" class="btn btn-secondary" data-open-checkout data-plan="monthly9">Starter wählen ($9/mo)</button>
+      </div>
+      <div class="price-card featured">
+        <span class="popular-badge">Beliebt</span>
+        <div>
+          <div class="price-name">⭐ 100er Pro-Paket</div>
+          <div class="price-amount">$69 <small>/ 100 Kataloge (ohne Verfall) · USD · Einmalig</small></div>
+          <p class="price-desc">Stapelbare Credits inkl. eigenem API-Key (BYOK).</p>
+          <ul class="price-list"><li>100 vollständige Katalogexporte</li><li>Eigener API-Key (BYOK) nutzbar</li><li>B2B/ToC-Verkaufstexte</li><li>Sofortaktivierung über api.xiaomie.tools</li></ul>
+        </div>
+        <button type="button" class="btn btn-primary" data-open-checkout data-plan="pack100">Pro-Paket kaufen ($69)</button>
+      </div>
+      <div class="price-card">
+        
+        <div>
+          <div class="price-name">👑 Studio Jahresplan</div>
+          <div class="price-amount">$99 <small>/ Jahr · Jahresabo · USD / Jahr</small></div>
+          <p class="price-desc">Bestes Preis-Leistungs-Verhältnis für aktive Teams.</p>
+          <ul class="price-list"><li>Hohes Jahresvolumen für Kataloge</li><li>BYOK &amp; alle Zielsprachen</li><li>Bevorzugter E-Mail-Support</li><li>Sofortaktivierung über api.xiaomie.tools</li></ul>
+        </div>
+        <button type="button" class="btn btn-secondary" data-open-checkout data-plan="annual99">Jahresplan wählen ($99/yr)</button>
+      </div></div>
+      </div>
+    </section>
+
+    <section class="section" id="install">
+      <div class="container">
+        <div class="section-head">
+          <h2>In 3 Schritten startklar</h2>
+        </div>
+        <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Per E-Mail-OTP anmelden</h3>
+        <p>Über noreply@xiaomie.tools verifizieren und Konto auf api.xiaomie.tools verknüpfen.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>Produktdaten &amp; Bilder laden</h3>
+        <p>Ausgabesprache und gewünschten B2B/ToC-Stil auswählen.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>Katalog sauber exportieren</h3>
+        <p>Abgeglichene Spezifikationen, Texte und bereinigte Bilder in einem Ordner sichern.</p>
+      </div></div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="checkout-methods">
+      <div class="container">
+        <div class="section-head">
+          <h2>Global SaaS Checkout &amp; Instant Account Provisioning</h2>
+          <p>Powered by Global Card &amp; SaaS Checkout (Visa, MasterCard, Apple Pay, Google Pay). Entitlements are activated automatically and instantaneously under your email via api.xiaomie.tools after payment.</p>
+        </div>
+        <div class="payment-grid">
+          <div class="pay-card active">
+            <span class="pay-badge live">Global SaaS · USD</span>
+            <h3>🌐 Global Card &amp; SaaS Checkout (USD)</h3>
+            <p>Pay securely with Visa, MasterCard, Amex, Apple Pay, or Google Pay. Automatic instant activation under your email via api.xiaomie.tools.</p>
+            <p style="font-size:0.84rem;color:var(--muted)">Operated by XiaoMie Tools (Limei Chen) · Support: info@xiaomie.tools</p>
+            <button type="button" class="btn btn-primary btn-sm" data-open-checkout data-plan="pack100">Proceed to Global SaaS Checkout</button>
+          </div>
+          <div class="pay-card">
+            <span class="pay-badge soon">Local Method · Reserved</span>
+            <h3>💚 WeChat Pay (CNY Ref)</h3>
+            <p>Regional CNY payment option reserved alongside automatic api.xiaomie.tools provisioning.</p>
+            <small style="color:var(--muted)">⏳ Reserved Slot · info@xiaomie.tools</small>
+          </div>
+          <div class="pay-card">
+            <span class="pay-badge soon">Local Method · Reserved</span>
+            <h3>💙 Alipay (CNY Ref)</h3>
+            <p>Regional CNY payment option reserved alongside automatic api.xiaomie.tools provisioning.</p>
+            <small style="color:var(--muted)">⏳ Reserved Slot · info@xiaomie.tools</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <h2>Häufige Fragen (FAQ)</h2>
+        </div>
+        <div class="faq-list">
+      <details>
+        <summary>Wie schnell erfolgt die Freischaltung?</summary>
+        <p>Sofort automatisch nach Zahlungsabschluss auf Ihre E-Mail-Adresse bei api.xiaomie.tools.</p>
+      </details>
+      <details>
+        <summary>Gibt es ein Rückgaberecht?</summary>
+        <p>Ja, wir bieten eine 14-tägige Geld-zurück-Garantie (14-day refund policy) über info@xiaomie.tools.</p>
+      </details></div>
+      </div>
+    </section>
+  </main>
+
+  
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2026 XiaoMie Tools. Operated by Limei Chen. Contact: <a href="mailto:info@xiaomie.tools" style="color:var(--primary);font-weight:700">info@xiaomie.tools</a></div>
+      <div class="footer-langs">
+        <a href="/terms/">Terms of Service</a>
+        <a href="/privacy/">Privacy Policy</a>
+        <a href="/refund/">Refund Policy (14-Day)</a>
+        <a href="/catalog/">简中</a><a href="/catalog/zh-tw/">繁中</a><a href="/catalog/en/">EN</a><a href="/catalog/ja/">JP</a><a href="/catalog/ko/">KR</a><a href="/catalog/es/">ES</a><a href="/catalog/de/">DE</a><a href="/catalog/fr/">FR</a><a href="/catalog/vi/">VI</a><a href="/catalog/th/">TH</a>
+      </div>
+    </div>
+  </footer>
+  
+  <dialog id="accountPortalModal" class="xm-modal">
+    <div class="xm-modal-head">
+      <strong>XiaoMie Tools · Account & Usage Portal</strong>
+      <button type="button" class="xm-modal-close" id="btnCloseAccountPortal">✕</button>
+    </div>
+    <div class="xm-modal-body">
+      <div id="portalLoginBox">
+        <p style="margin-top:0;color:var(--ink-soft);font-size:0.9rem">
+          Sign in passwordlessly with a 6-digit code sent from <code>noreply@xiaomie.tools</code>. Paid plans activate automatically on your <code>api.xiaomie.tools</code> email account.
+        </p>
+        <label class="xm-label" for="webOtpEmail">Email Address</label>
+        <div class="xm-row">
+          <input id="webOtpEmail" class="xm-input" type="email" placeholder="name@company.com" />
+          <button type="button" class="btn btn-secondary btn-sm" id="btnWebSendOtp">Send Code</button>
+        </div>
+        <label class="xm-label" for="webOtpCode" style="margin-top:12px">6-Digit Verification Code</label>
+        <div class="xm-row">
+          <input id="webOtpCode" class="xm-input" type="text" maxlength="6" placeholder="123456" />
+          <button type="button" class="btn btn-primary btn-sm" id="btnWebVerifyOtp">Sign In</button>
+        </div>
+        <div id="webOtpStatus" class="xm-status"></div>
+      </div>
+
+      <div id="portalDashBox" style="display:none">
+        <div class="portal-summary">
+          <div><small>Account Email</small><strong id="portalUserEmail"></strong></div>
+          <div><small>Plan</small><strong id="portalUserPlan"></strong></div>
+          <div><small>Remaining Credits</small><strong id="portalUserQuota"></strong></div>
+        </div>
+        <h4 style="margin:14px 0 8px;font-size:0.88rem">Credit Ledger</h4>
+        <div id="portalLedgerList" class="ledger-list"></div>
+        <div style="margin-top:14px;display:flex;gap:10px;justify-content:flex-end">
+          <button type="button" class="btn btn-secondary btn-sm" id="btnWebLogout">Sign Out</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="saasCheckoutModal" class="xm-modal">
+    <div class="xm-modal-head">
+      <strong>Global Card & SaaS Checkout</strong>
+      <button type="button" class="xm-modal-close" id="btnCloseCheckoutModal">✕</button>
+    </div>
+    <div class="xm-modal-body">
+      <p style="margin-top:0;color:var(--ink-soft);font-size:0.9rem">
+        Global SaaS subscription & credit pack checkout (Creem MoR ready). <strong>Activates instantly via your <code>api.xiaomie.tools</code> email account after payment</strong>, backed by our <a href="/refund/">14-day refund policy</a>.
+      </p>
+      <label class="xm-label" for="checkoutPlanSelect">Select SaaS Plan</label>
+      <select id="checkoutPlanSelect" class="xm-input">
+          <option value="monthly9">Monthly Starter ($9 / mo · 50 catalogs)</option>
+          <option value="pack100">100-Item Pro Pack ($69 · Non-expiring)</option>
+          <option value="annual99">Annual Pro SaaS ($99 / yr · Unlimited)</option>
+        </select>
+      <label class="xm-label" for="checkoutBuyerEmail" style="margin-top:12px">Account Email for Instant Activation (api.xiaomie.tools)</label>
+      <input id="checkoutBuyerEmail" class="xm-input" type="email" placeholder="buyer@company.com" />
+      <div style="margin-top:14px;display:flex;gap:10px">
+        <button type="button" class="btn btn-primary" id="btnSubmitSaasCheckout" style="width:100%">
+          Continue to Global SaaS Checkout
+        </button>
+      </div>
+      <div id="saasCheckoutStatus" class="xm-status"></div>
+    </div>
+  </dialog>
+  
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>

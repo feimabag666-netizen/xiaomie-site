@@ -5,6 +5,3 @@
 
 /assets/*
   Cache-Control: public, max-age=86400
-
-/collector/assets/*
-  Cache-Control: public, max-age=86400

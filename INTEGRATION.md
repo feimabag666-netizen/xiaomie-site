@@ -1,4 +1,4 @@
-# 小咩魔法系列软件 · 共用接口接入指南 (`api.xiaomie.tools`)
+# XiaoMie Tools · 共用接口接入指南 (`api.xiaomie.tools`)
 
 > 本文档仅供系列软件内部集成使用，**不含任何密钥或敏感凭据**。所有密钥统一由 Cloudflare Pages / Workers 加密环境变量注入。
 
@@ -8,12 +8,12 @@
 
 | 域名 / 路径 | 用途 | 所属项目 |
 | --- | --- | --- |
-| `https://xiaomie.tools/` | 系列软件总官网 & 统一入口 | `xiaomie-site` |
-| `https://xiaomie.tools/collector/` | 小咩魔法采集 10 语种落地页 | `xiaomie-site` |
+| `https://xiaomie.tools/` | 系列软件总官网 & 统一入口（含 Terms / Privacy / Refund） | `xiaomie-site` |
+| `https://xiaomie.tools/catalog/` | 小咩商品目录卖点生成器 10 语种落地页 | `xiaomie-site` |
 | `https://xiaomie.tools/carousel/` | 小咩魔法轮播视频 多语种落地页 | `xiaomie-site` |
-| `https://collector.xiaomie.tools/` | 小咩魔法采集安装包下载站 | `小咩魔法采集` |
-| `https://carousel.xiaomie.tools/` | 小咩魔法轮播视频在线工作台 | `小咩魔法轮播视频` |
-| `https://api.xiaomie.tools/` | **全系列共用 API（登录、邮箱、收款、账本）** | `xiaomie-site` |
+| `https://catalog.xiaomie.tools/` | 小咩商品目录卖点生成器下载与工作台入口 | `XiaoMie Tools` |
+| `https://carousel.xiaomie.tools/` | 小咩魔法轮播视频在线工作台 | `XiaoMie Tools` |
+| `https://api.xiaomie.tools/` | **全系列共用 API（登录、邮箱、SaaS 结算、账本）** | `xiaomie-site` |
 
 ---
 
@@ -23,32 +23,32 @@
 
 | `app_id` | 软件名称 | 默认试用额度 | 套餐 `planId` |
 | --- | --- | --- | --- |
-| `collector` | 小咩魔法采集 (Xiaomie Magic Collector) | `20` 次 | `pack100` (\$69 / ¥500, 100次) · `lifetime` (\$139 / ¥999, 终身) |
-| `carousel` | 小咩魔法轮播视频 (Xiaomie Magic Carousel) | `1` 次 | `pack50` (\$49.9, 50次) · `pack100` (\$69.9, 100次) · `lifetime` (\$139.9, 终身) |
-| `site` | 官网账号中心（兜底） | `0` 次 | — |
+| `catalog` | 小咩商品目录卖点生成器 (`Xiaomie Product Catalog & Selling Point Generator`) | `20` 次 | `monthly9` (\$9/mo) · `pack100` (\$69, 100次) · `annual99` (\$99/yr) |
+| `carousel` | 小咩魔法轮播视频 (`Xiaomie Carousel Video Studio`) | `1` 次 | `monthly19` (\$19/mo) · `pack50` (\$49.9) · `pack100` (\$69.9) · `annual99` (\$99/yr) |
+| `site` | 官网账号中心（兜底） | `0` 次 | `monthly9` · `monthly19` · `pack100` · `annual99` |
 
-- **账本严格隔离**：Cloudflare KV 中用户权益按 `acct:<app_id>:<email>` 存储，同一邮箱在不同软件下的试用额度、付费次数与终身会员完全独立，互不串台。
-- **新增软件接入**：在 `functions/api/_shared.js` 的 `APP_REGISTRY` 中新增一个 `app_id` 条目即可立即复用全部登录、发信与收款能力。
+- **账本严格隔离**：Cloudflare KV 中用户权益按 `acct:<app_id>:<email>` 存储，同一邮箱在不同软件下的试用额度、付费次数与年度订阅完全独立，互不串台。
+- **新增软件接入**：在 `functions/api/_shared.js` 的 `APP_REGISTRY` 中新增一个 `app_id` 条目即可立即复用全部登录、发信与结算能力。
 
 ---
 
 ## 3. 共用接口清单
 
 ### 3.1 发送邮箱验证码：`POST /api/send-otp`
-系统自动通过 `noreply@xiaomie.tools` 发信，并自动携带 `Reply-To: info@xiaomie.tools` 及对应软件名抬头（如 `【小咩魔法采集】`）。
+系统自动通过 `noreply@xiaomie.tools` 发信，并自动携带 `Reply-To: info@xiaomie.tools` 及对应软件名抬头。
 
 ```json
 // Request
 {
   "email": "user@example.com",
-  "app_id": "collector",
+  "app_id": "catalog",
   "lang": "zh-CN"
 }
 
 // Response (200)
 {
   "ok": true,
-  "app_id": "collector",
+  "app_id": "catalog",
   "token": "<payload>.<hmac_signature>",
   "expiresIn": 600
 }
@@ -61,65 +61,21 @@
   "email": "user@example.com",
   "code": "123456",
   "token": "<payload>.<hmac_signature>",
-  "app_id": "collector"
-}
-
-// Response (200)
-{
-  "ok": true,
-  "email": "user@example.com",
-  "app_id": "collector",
-  "provider": "email_otp",
-  "verifiedAt": "2026-11-16T09:00:00.000Z",
-  "account": {
-    "plan": "trial",
-    "quotaLimit": 20,
-    "usedCount": 0,
-    "remaining": 20
-  }
+  "app_id": "catalog"
 }
 ```
 
 ### 3.3 查询 / 扣减软件额度：`POST /api/account`
 ```json
-// 查询账本
 {
   "action": "get",
   "email": "user@example.com",
-  "app_id": "collector"
-}
-
-// 扣减 1 次额度
-{
-  "action": "consume",
-  "email": "user@example.com",
-  "app_id": "collector",
-  "count": 1
+  "app_id": "catalog"
 }
 ```
 
-### 3.4 统一收款下单：`POST /api/airwallex-checkout`
-自动根据 `(app_id, planId)` 读取对应软件的价目表并生成 Airwallex 支付链接（`metadata` 自动携带 `app_id`、`planId`、`buyerEmail`）。
-
-```json
-// Request
-{
-  "app_id": "collector",
-  "planId": "pack100",
-  "email": "user@example.com"
-}
-
-// Response (200)
-{
-  "ok": true,
-  "app_id": "collector",
-  "planId": "pack100",
-  "checkoutUrl": "https://checkout.airwallex.com/...",
-  "paymentLinkId": "pl_..."
-}
-```
-
-`GET /api/airwallex-checkout?app_id=collector` 可查询当前软件的可用套餐与支付通道状态（Airwallex 已接入，微信支付 / 支付宝预留位就绪）。
+### 3.4 统一 SaaS 结算：`POST /api/checkout` & `GET /api/checkout?app_id=catalog`
+自动根据 `(app_id, planId)` 返回 Creem MoR 结算配置或跳转链接，付款后通过 `api.xiaomie.tools` 邮箱账号自动即时开通权益。
 
 ---
 
@@ -127,6 +83,6 @@
 
 - `PURELYMAIL_NOREPLY_PASSWORD`（或兼容 `PURELYMAIL_PASSWORD`）：`noreply@xiaomie.tools` SMTP 密码
 - `OTP_SECRET`：OTP 令牌签名密钥
-- `AIRWALLEX_CLIENT_ID`：空中云汇 Client ID
-- `AIRWALLEX_API_KEY`：空中云汇 API Key
+- `CREEM_API_KEY`：Creem MoR API 密钥
+- `CREEM_CHECKOUT_URL`：Creem Checkout 托管收银台基础链接
 - `XIAOMIE_KV`（可选 KV 绑定）：用于 `(email, app_id)` 持久化账本

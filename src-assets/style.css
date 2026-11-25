@@ -589,3 +589,63 @@ dialog.xm-modal::backdrop { background: rgba(15, 10, 25, 0.55); backdrop-filter:
 @media (max-width: 960px) {
   .payment-grid { grid-template-columns: 1fr; }
 }
+
+/* Status Pills, BYOK Notice & Legal Pages */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+.status-badge.live { background: var(--emerald-soft); color: #065f46; }
+.status-badge.coming-soon { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+.btn-disabled,
+.btn[disabled] {
+  background: #e5e7eb;
+  color: #6b7280;
+  border-color: #d1d5db;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+.translator-pricing-box {
+  margin-top: 28px;
+  background: linear-gradient(135deg, #fffbeb 0%, #fefce8 100%);
+  border: 1.5px dashed #f59e0b;
+  border-radius: 18px;
+  padding: 26px;
+}
+.byok-notice {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #f59e0b;
+  color: #78350f;
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+.legal-card {
+  max-width: 860px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 36px;
+  box-shadow: var(--shadow);
+}
+.legal-card h1 { margin-top: 0; font-size: 1.9rem; }
+.legal-card h2 { margin-top: 26px; font-size: 1.18rem; color: var(--primary-dark); }
+.legal-card p, .legal-card li { color: var(--ink-soft); font-size: 0.96rem; line-height: 1.75; }
+.legal-meta {
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--surface-alt);
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin-bottom: 22px;
+}

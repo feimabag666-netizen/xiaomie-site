@@ -10,7 +10,7 @@ export async function onRequestPost(context) {
     const email = String(body.email || "").trim().toLowerCase();
     const code = String(body.code || "").trim();
     const token = String(body.token || "").trim();
-    const requestedApp = resolveApp(body.app_id, "collector");
+    const requestedApp = resolveApp(body.app_id, "catalog");
 
     if (!email || !code || !token || !token.includes(".")) {
       return json({ ok: false, error: "Missing email, code, or verification token" }, 400);
@@ -39,7 +39,7 @@ export async function onRequestPost(context) {
       return json({ ok: false, error: "Token app_id mismatch" }, 401);
     }
 
-    const app = resolveApp(data.app_id || requestedApp.appId, "collector");
+    const app = resolveApp(data.app_id || requestedApp.appId, "catalog");
     const account = await getOrInitAccount(context.env, app, email);
 
     return json({

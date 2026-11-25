@@ -3,23 +3,26 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   API_BASE_URL,
-  DOWNLOAD_BASE_URL,
   LANGUAGES,
   PAYMENTS_BY_LANG,
   SITE_BASE_URL,
+  STUDIO_BASE_URL,
   TRANSLATIONS,
-} from "./collector-i18n-data.mjs";
+} from "./catalog-i18n-data.mjs";
+import { buildPrivacyHtml, buildRefundHtml, buildTermsHtml } from "./legal-pages.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, "..");
-const ASSETS_SRC_DIR = path.join(ROOT_DIR, "src-assets");
 const WEB_DIR = path.join(ROOT_DIR, "web");
-const COLLECTOR_DIR = path.join(WEB_DIR, "collector");
-const CAROUSEL_DIR = path.join(WEB_DIR, "carousel");
+const ASSETS_SRC = path.join(ROOT_DIR, "src-assets");
+const ASSETS_DEST = path.join(WEB_DIR, "assets");
+const ROOT_HUB_URL = "https://xiaomie.tools";
+const CAROUSEL_SITE_URL = "https://xiaomie.tools/carousel";
+const CAROUSEL_APP_URL = "https://carousel.xiaomie.tools";
 
-const HUB_BASE_URL = "https://xiaomie.tools";
-const ZIP_FILENAME = "小咩魔法采集-chrome-v1.0.8.zip";
-const DOWNLOAD_URL = `${DOWNLOAD_BASE_URL}/${encodeURIComponent(ZIP_FILENAME)}`;
+function ensureDir(dir) {
+  fs.mkdirSync(dir, { recursive: true });
+}
 
 function escapeHtml(str) {
   return String(str)
@@ -29,94 +32,178 @@ function escapeHtml(str) {
     .replace(/"/g, "&quot;");
 }
 
-function pageUrlFor(lang) {
+function getLangUrl(lang) {
   return lang.slug ? `${SITE_BASE_URL}/${lang.slug}/` : `${SITE_BASE_URL}/`;
 }
 
-function relPathFor(lang) {
-  return lang.slug ? `/collector/${lang.slug}/` : `/collector/`;
+function copyAssets() {
+  ensureDir(ASSETS_DEST);
+  const files = fs.readdirSync(ASSETS_SRC);
+  for (const file of files) {
+    if (file.startsWith(".")) continue;
+    fs.copyFileSync(path.join(ASSETS_SRC, file), path.join(ASSETS_DEST, file));
+  }
 }
 
-function renderSharedModals({ appId, plansHtmlOptions }) {
+function renderPlanOptions(appId, isZh) {
+  if (appId === "carousel") {
+    return isZh
+      ? `
+          <option value="monthly19">Starter 月度订阅（$19 / 月 · 20 条视频）</option>
+          <option value="pack100">100 次 Studio 点数包（$69.9 · 永久有效）</option>
+          <option value="annual99">Annual Studio Pro 年付版（$99 / 年 · 不限次）</option>
+        `
+      : `
+          <option value="monthly19">Starter Monthly SaaS ($19 / mo · 20 videos)</option>
+          <option value="pack100">100-Credit Studio Pack ($69.9 · Non-expiring)</option>
+          <option value="annual99">Annual Studio Pro ($99 / yr · Unlimited)</option>
+        `;
+  }
+  if (appId === "catalog") {
+    return isZh
+      ? `
+          <option value="monthly9">入门月度版 Monthly Starter（$9 / 月 · 50 次）</option>
+          <option value="pack100">100 次专业额度包（$69 · 约 ¥500）</option>
+          <option value="annual99">年度专业版 Annual Pro（$99 / 年 · 无限目录整理）</option>
+        `
+      : `
+          <option value="monthly9">Monthly Starter ($9 / mo · 50 catalogs)</option>
+          <option value="pack100">100-Item Pro Pack ($69 · Non-expiring)</option>
+          <option value="annual99">Annual Pro SaaS ($99 / yr · Unlimited)</option>
+        `;
+  }
+  return isZh
+    ? `
+        <option value="monthly9">目录卖点生成器月度版（$9 / 月）</option>
+        <option value="monthly19">轮播视频月度版（$19 / 月）</option>
+        <option value="pack100">100 次额度包（$69）</option>
+        <option value="annual99">年度专业订阅 Annual Pro（$99 / 年）</option>
+      `
+    : `
+        <option value="monthly9">Catalog & Copy Monthly ($9 / mo)</option>
+        <option value="monthly19">Carousel Video Monthly ($19 / mo)</option>
+        <option value="pack100">100-Credit Studio Pack ($69)</option>
+        <option value="annual99">Annual Studio Pro ($99 / yr)</option>
+      `;
+}
+
+function renderSharedModals(langCode, appId = "catalog") {
+  const isZh = String(langCode).toLowerCase().startsWith("zh");
+  const planOptions = renderPlanOptions(appId, isZh);
+
   return `
   <dialog id="accountPortalModal" class="xm-modal">
     <div class="xm-modal-head">
-      <strong>👤 Account &amp; Entitlements / 账号与权益中心</strong>
-      <button type="button" id="btnCloseAccountPortal" class="btn btn-secondary btn-sm">✕</button>
+      <strong>${isZh ? "XiaoMie Tools · 统一账号与额度中心" : "XiaoMie Tools · Account & Usage Portal"}</strong>
+      <button type="button" class="xm-modal-close" id="btnCloseAccountPortal">✕</button>
     </div>
-    <div id="portalLoginBox">
-      <p style="font-size:0.86rem;color:var(--ink-soft);margin-top:0">Sign in via Email Verification Code (sent from <strong>noreply@xiaomie.tools</strong> · Support: <strong>info@xiaomie.tools</strong>):</p>
-      <div class="xm-field">
-        <label for="webOtpEmail">Email Address / 邮箱地址</label>
+    <div class="xm-modal-body">
+      <div id="portalLoginBox">
+        <p style="margin-top:0;color:var(--ink-soft);font-size:0.9rem">
+          ${isZh
+            ? "输入您的常用邮箱，由 <code>noreply@xiaomie.tools</code> 发送 6 位验证码免密登录。付款后系统通过 <code>api.xiaomie.tools</code> 邮箱账号自动即时开通权益。"
+            : "Sign in passwordlessly with a 6-digit code sent from <code>noreply@xiaomie.tools</code>. Paid plans activate automatically on your <code>api.xiaomie.tools</code> email account."}
+        </p>
+        <label class="xm-label" for="webOtpEmail">${isZh ? "电子邮箱" : "Email Address"}</label>
         <div class="xm-row">
-          <input id="webOtpEmail" type="email" placeholder="name@example.com" />
-          <button type="button" id="btnWebSendOtp" class="btn btn-secondary btn-sm" style="white-space:nowrap">Send Code</button>
+          <input id="webOtpEmail" class="xm-input" type="email" placeholder="name@company.com" />
+          <button type="button" class="btn btn-secondary btn-sm" id="btnWebSendOtp">${isZh ? "发送验证码" : "Send Code"}</button>
+        </div>
+        <label class="xm-label" for="webOtpCode" style="margin-top:12px">${isZh ? "6 位邮箱验证码" : "6-Digit Verification Code"}</label>
+        <div class="xm-row">
+          <input id="webOtpCode" class="xm-input" type="text" maxlength="6" placeholder="123456" />
+          <button type="button" class="btn btn-primary btn-sm" id="btnWebVerifyOtp">${isZh ? "验证登录" : "Sign In"}</button>
+        </div>
+        <div id="webOtpStatus" class="xm-status"></div>
+      </div>
+
+      <div id="portalDashBox" style="display:none">
+        <div class="portal-summary">
+          <div><small>${isZh ? "当前登录邮箱" : "Account Email"}</small><strong id="portalUserEmail"></strong></div>
+          <div><small>${isZh ? "当前会员方案" : "Plan"}</small><strong id="portalUserPlan"></strong></div>
+          <div><small>${isZh ? "可用额度" : "Remaining Credits"}</small><strong id="portalUserQuota"></strong></div>
+        </div>
+        <h4 style="margin:14px 0 8px;font-size:0.88rem">${isZh ? "额度与授权记录" : "Credit Ledger"}</h4>
+        <div id="portalLedgerList" class="ledger-list"></div>
+        <div style="margin-top:14px;display:flex;gap:10px;justify-content:flex-end">
+          <button type="button" class="btn btn-secondary btn-sm" id="btnWebLogout">${isZh ? "退出登录" : "Sign Out"}</button>
         </div>
       </div>
-      <div class="xm-field">
-        <label for="webOtpCode">6-Digit Code / 邮箱验证码</label>
-        <div class="xm-row">
-          <input id="webOtpCode" type="text" placeholder="123456" maxlength="6" />
-          <button type="button" id="btnWebVerifyOtp" class="btn btn-primary btn-sm" style="white-space:nowrap">Verify &amp; Sign In</button>
-        </div>
-      </div>
-      <div id="webOtpStatus" class="xm-status"></div>
-    </div>
-    <div id="portalDashBox" style="display:none">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;padding:12px;border-radius:12px;background:var(--surface-alt)">
-        <div><small style="color:var(--muted)">Account (${escapeHtml(appId)})</small><div id="portalUserEmail" style="font-weight:800;font-size:0.9rem"></div></div>
-        <div><small style="color:var(--muted)">Current Plan</small><div id="portalUserPlan" style="font-weight:800;font-size:0.9rem"></div></div>
-        <div><small style="color:var(--muted)">Remaining Quota</small><div id="portalUserQuota" style="font-weight:800;font-size:0.9rem;color:var(--primary)"></div></div>
-        <div style="display:flex;align-items:end;justify-content:end"><button type="button" id="btnWebLogout" class="btn btn-secondary btn-sm">Sign Out</button></div>
-      </div>
-      <strong style="font-size:0.88rem;display:block;margin-bottom:6px">Billing &amp; Deduction History / 权益与扣费记录</strong>
-      <div id="portalLedgerList" class="ledger-box"></div>
     </div>
   </dialog>
 
-  <dialog id="airwallexModal" class="xm-modal">
+  <dialog id="saasCheckoutModal" class="xm-modal">
     <div class="xm-modal-head">
-      <strong>🌐 Airwallex Global Checkout (USD)</strong>
-      <button type="button" id="btnCloseAwxModal" class="btn btn-secondary btn-sm">✕</button>
+      <strong>Global Card & SaaS Checkout</strong>
+      <button type="button" class="xm-modal-close" id="btnCloseCheckoutModal">✕</button>
     </div>
-    <p style="font-size:0.86rem;color:var(--ink-soft);margin-top:0">Powered by Airwallex (JINHUA CREDIT IMPORT AND EXPORT CO.,LTD). Supports Visa, MasterCard, Amex, Apple Pay &amp; Google Pay.</p>
-    <div class="xm-field">
-      <label for="awxPlanSelect">Select Plan / 选择方案</label>
-      <select id="awxPlanSelect">
-        ${plansHtmlOptions}
-      </select>
+    <div class="xm-modal-body">
+      <p style="margin-top:0;color:var(--ink-soft);font-size:0.9rem">
+        ${isZh
+          ? "国际 SaaS 订阅与点数包结算（支持全球信用卡/借记卡，Creem MoR 托管收银台）。<strong>付款后通过 <code>api.xiaomie.tools</code> 邮箱账号自动即时开通</strong>，并享有 14 天退款保障（<a href=\"/refund/\">Refund Policy</a>）。"
+          : "Global SaaS subscription & credit pack checkout (Creem MoR ready). <strong>Activates instantly via your <code>api.xiaomie.tools</code> email account after payment</strong>, backed by our <a href=\"/refund/\">14-day refund policy</a>."}
+      </p>
+      <label class="xm-label" for="checkoutPlanSelect">${isZh ? "选择 SaaS 方案 / 点数包" : "Select SaaS Plan"}</label>
+      <select id="checkoutPlanSelect" class="xm-input">${planOptions}</select>
+      <label class="xm-label" for="checkoutBuyerEmail" style="margin-top:12px">${isZh ? "接收自动开通授权的邮箱（api.xiaomie.tools 账号）" : "Account Email for Instant Activation (api.xiaomie.tools)"}</label>
+      <input id="checkoutBuyerEmail" class="xm-input" type="email" placeholder="buyer@company.com" />
+      <div style="margin-top:14px;display:flex;gap:10px">
+        <button type="button" class="btn btn-primary" id="btnSubmitSaasCheckout" style="width:100%">
+          ${isZh ? "前往 Global SaaS Checkout 结算" : "Continue to Global SaaS Checkout"}
+        </button>
+      </div>
+      <div id="saasCheckoutStatus" class="xm-status"></div>
     </div>
-    <div class="xm-field">
-      <label for="awxBuyerEmail">Delivery Email / 接收激活码邮箱</label>
-      <input id="awxBuyerEmail" type="email" placeholder="you@example.com" />
-    </div>
-    <button type="button" id="btnSubmitAwxCheckout" class="btn btn-primary" style="width:100%">Proceed to Airwallex Checkout ↗</button>
-    <div id="awxCheckoutStatus" class="xm-status"></div>
-  </dialog>`;
+  </dialog>
+  `;
 }
 
-function buildHubHtml(isEn = false) {
-  const langCode = isEn ? "en" : "zh-CN";
-  const canonical = isEn ? `${HUB_BASE_URL}/en/` : `${HUB_BASE_URL}/`;
+function renderLegalFooter(isZh, extraLangLinksHtml = "") {
+  return `
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2026 XiaoMie Tools. Operated by Limei Chen. Contact: <a href="mailto:info@xiaomie.tools" style="color:var(--primary);font-weight:700">info@xiaomie.tools</a></div>
+      <div class="footer-langs">
+        <a href="/terms/">${isZh ? "服务条款 Terms" : "Terms of Service"}</a>
+        <a href="/privacy/">${isZh ? "隐私政策 Privacy" : "Privacy Policy"}</a>
+        <a href="/refund/">${isZh ? "14 天退款政策 Refund" : "Refund Policy (14-Day)"}</a>
+        ${extraLangLinksHtml}
+      </div>
+    </div>
+  </footer>`;
+}
+
+function buildHubHtml(isEn) {
+  const lang = isEn ? "en" : "zh-CN";
+  const canonical = isEn ? `${ROOT_HUB_URL}/en/` : `${ROOT_HUB_URL}/`;
   const title = isEn
-    ? "Xiaomie Magic Tools — AI E-Commerce Productivity Suite | Collector & Carousel Video"
-    : "小咩魔法系列软件 (Xiaomie Magic Tools) — 跨境电商 AI 效率工具矩阵";
-  const desc = isEn
-    ? "Official suite for cross-border e-commerce sellers: Xiaomie Magic Collector (1688/Amazon/Shopify product & OCR extractor) and Xiaomie Magic Carousel (30-language AI product video generator)."
-    : "跨境电商卖家全链路 AI 工具矩阵：小咩魔法采集（全网商品/长图OCR/箱规提取扩展）与小咩魔法轮播视频（30国母语AI口播与WebCodecs极速出片）。";
+    ? "XiaoMie Tools — AI Product Video, Catalog & Image Productivity SaaS"
+    : "小咩魔法系列软件 (XiaoMie Tools) — 跨境电商 AI 视频、商品目录整理与图片翻译套件";
+  const description = isEn
+    ? "XiaoMie Tools builds AI productivity software for global e-commerce sellers: Xiaomie Carousel Video Studio, Xiaomie Product Catalog & Selling Point Generator, and Xiaomie Magic Image Translator (Coming Soon). Instant api.xiaomie.tools activation and 14-day refund policy."
+    : "XiaoMie Tools（小咩魔法系列软件）面向跨境电商卖家打造合规 AI 生产力工具矩阵：小咩魔法轮播视频（已上线）、小咩商品目录卖点生成器（已上线）与小咩魔法图片翻译（即将上线）。付款后通过 api.xiaomie.tools 邮箱账号自动即时开通。";
+
+  const hubExtraLinks = isEn
+    ? `<a href="/">🇨🇳 简体中文</a><a href="/carousel/en/">Carousel Studio</a><a href="/catalog/en/">Catalog Generator</a>`
+    : `<a href="/en/">🇺🇸 English</a><a href="/carousel/">轮播视频</a><a href="/catalog/">商品目录卖点生成器</a>`;
 
   return `<!doctype html>
-<html lang="${langCode}" data-app-id="site">
+<html lang="${lang}" data-app-id="site">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${escapeHtml(title)}</title>
-  <meta name="description" content="${escapeHtml(desc)}" />
+  <meta name="description" content="${escapeHtml(description)}" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="${canonical}" />
-  <link rel="alternate" hreflang="zh-CN" href="${HUB_BASE_URL}/" />
-  <link rel="alternate" hreflang="en" href="${HUB_BASE_URL}/en/" />
-  <link rel="alternate" hreflang="x-default" href="${HUB_BASE_URL}/en/" />
+  <link rel="alternate" hreflang="zh-CN" href="${ROOT_HUB_URL}/" />
+  <link rel="alternate" hreflang="en" href="${ROOT_HUB_URL}/en/" />
+  <link rel="alternate" hreflang="x-default" href="${ROOT_HUB_URL}/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="${escapeHtml(title)}" />
+  <meta property="og:description" content="${escapeHtml(description)}" />
+  <meta property="og:url" content="${canonical}" />
+  <meta property="og:image" content="${ROOT_HUB_URL}/assets/cat-logo.jpg" />
   <link rel="icon" type="image/jpeg" href="/assets/cat-logo.jpg" />
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
@@ -124,18 +211,19 @@ function buildHubHtml(isEn = false) {
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="${isEn ? "/en/" : "/"}">
-        <img src="/assets/cat-logo.jpg" alt="Xiaomie Magic Tools Logo" width="38" height="38" />
-        <span>${isEn ? "Xiaomie Magic Tools" : "小咩魔法系列软件"}</span>
+        <img src="/assets/cat-logo.jpg" alt="XiaoMie Tools Logo" width="38" height="38" />
+        <span>${isEn ? "XiaoMie Tools" : "小咩魔法系列软件"}</span>
       </a>
       <nav class="nav-links" aria-label="Primary">
-        <a href="#suite">${isEn ? "Software Suite" : "软件矩阵"}</a>
-        <a href="/collector/${isEn ? "en/" : ""}">${isEn ? "Magic Collector" : "小咩魔法采集"}</a>
-        <a href="/carousel/${isEn ? "en/" : ""}">${isEn ? "Magic Carousel" : "小咩魔法轮播视频"}</a>
-        <a href="#support">${isEn ? "Support" : "客服与接入"}</a>
+        <a href="#suite">${isEn ? "Products" : "产品矩阵"}</a>
+        <a href="#pricing">${isEn ? "Pricing" : "定价方案"}</a>
+        <a href="#support">${isEn ? "Support" : "邮箱支持"}</a>
+        <a href="/terms/">${isEn ? "Terms" : "服务条款"}</a>
+        <a href="/refund/">${isEn ? "Refund" : "退款政策"}</a>
       </nav>
       <div class="header-actions">
-        <a class="btn btn-secondary btn-sm" href="${isEn ? "/" : "/en/"}">${isEn ? "🇨🇳 简体中文" : "🌐 English"}</a>
-        <button type="button" id="btnOpenAccountPortal" class="btn btn-primary btn-sm">👤 Account / 账号中心</button>
+        <a class="btn btn-secondary btn-sm" href="${isEn ? "/" : "/en/"}">${isEn ? "🇨🇳 中文官网" : "🇺🇸 English"}</a>
+        <button type="button" class="btn btn-primary btn-sm" id="btnOpenAccountPortal">👤 Account / 账号中心</button>
       </div>
     </div>
   </header>
@@ -144,153 +232,295 @@ function buildHubHtml(isEn = false) {
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <span class="badge-pill">${isEn ? "Official Software Hub · xiaomie.tools" : "官方总站 · xiaomie.tools 系列效率矩阵"}</span>
-          <h1>${isEn ? "One Magical Suite for Global E-Commerce Sellers" : "小咩魔法系列软件 · 跨境卖家一站式 AI 生产力工具"}</h1>
-          <p class="hero-sub">${escapeHtml(desc)}</p>
-          <div class="hero-ctas">
-            <a class="btn btn-primary" href="/collector/${isEn ? "en/" : ""}">🧩 ${isEn ? "Explore Magic Collector" : "进入小咩魔法采集"}</a>
-            <a class="btn btn-secondary" href="https://carousel.xiaomie.tools/" target="_blank" rel="noopener">🎬 ${isEn ? "Launch Magic Carousel" : "打开轮播视频工作台"} ↗</a>
+          <span class="badge">${isEn ? "Global E-Commerce AI SaaS Suite · api.xiaomie.tools" : "跨境电商 AI 生产力 SaaS 套件 · 统一账号体系"}</span>
+          <h1>${isEn
+            ? "AI Studio Tools for Product Videos, Catalog Specs &amp; Multilingual Copywriting"
+            : "专为外贸与跨境团队打造的 AI 商品目录、本地化卖点与轮播视频工作台"}</h1>
+          <p class="lead">${isEn
+            ? "One unified <code>api.xiaomie.tools</code> email account powers all XiaoMie Tools apps. Automate long-image OCR, product spec structuring, 30+ language voiceover videos, and upcoming lossless image translation — backed by instant digital delivery and our 14-day refund policy."
+            : "一个 <code>api.xiaomie.tools</code> 邮箱账号通行全系产品。涵盖长图 OCR 文字识别、规格参数自动整理、30+ 语种轮播配音视频与即将上线的桌面图片翻译，付款后自动即时开通授权，支持 14 天退款保障。"}</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#suite">${isEn ? "Explore 3 Products" : "查看三大产品矩阵"}</a>
+            <a class="btn btn-secondary" href="#pricing">${isEn ? "View USD SaaS Pricing ($9–$99)" : "查看定价方案 ($9–$99)"}</a>
           </div>
           <ul class="trust-list">
-            <li>${isEn ? "Unified Login: api.xiaomie.tools" : "全系列统一登录与账本：api.xiaomie.tools"}</li>
-            <li>${isEn ? "Global Checkout: Airwallex (USD)" : "支持 Airwallex 全球外币收单（微信/支付宝预留中）"}</li>
-            <li>${isEn ? "Official Support: info@xiaomie.tools" : "唯一官方客服邮箱：info@xiaomie.tools"}</li>
+            <li>${isEn ? "Instant automatic provisioning via api.xiaomie.tools after checkout" : "付款后通过 api.xiaomie.tools 邮箱账号自动即时开通"}</li>
+            <li>${isEn ? "Global Card &amp; SaaS Checkout (Creem MoR ready) · 14-day refund guarantee" : "支持全球信用卡与 SaaS 结算 · 透明公开的 14 天退款政策"}</li>
+            <li>${isEn ? "Direct human &amp; billing support: info@xiaomie.tools" : "官方唯一客服与商务支持邮箱：info@xiaomie.tools"}</li>
           </ul>
         </div>
         <aside class="hero-card">
-          <img class="hero-mascot" src="/assets/cat-logo.jpg" alt="Xiaomie Magic Mascot" width="148" height="148" />
-          <div class="mini-stat-grid">
-            <div class="mini-stat"><strong>2</strong><span>${isEn ? "Live Flagship Apps" : "已上线旗舰软件"}</span></div>
-            <div class="mini-stat"><strong>30+</strong><span>${isEn ? "Supported Languages" : "覆盖语种市场"}</span></div>
-            <div class="mini-stat"><strong>100%</strong><span>${isEn ? "Isolated App Quotas" : "按 app_id 独立计费"}</span></div>
-            <div class="mini-stat"><strong>24/7</strong><span>${isEn ? "Smart Dispatch Support" : "智能分单客服响应"}</span></div>
+          <img class="hero-mascot" src="/assets/cat-logo.jpg" alt="XiaoMie Tools Brand Logo" />
+          <h3 style="margin:0 0 6px">${isEn ? "XiaoMie Tools SaaS Hub" : "小咩魔法软件生态中心"}</h3>
+          <p style="margin:0;color:var(--muted);font-size:0.9rem">
+            ${isEn ? "Operated by Limei Chen · info@xiaomie.tools" : "Operated by Limei Chen · info@xiaomie.tools"}
+          </p>
+          <div class="hero-card-tags">
+            <span class="chip">🎬 Carousel Video (Live)</span>
+            <span class="chip">📑 Catalog &amp; Copy (Live)</span>
+            <span class="chip">🖼️ Image Translator (Soon)</span>
           </div>
         </aside>
       </div>
     </section>
 
-    <section id="suite" class="section">
+    <section class="section section-alt" id="suite">
       <div class="container">
         <div class="section-head">
-          <h2>${isEn ? "Our Software Suite" : "全系列软件矩阵"}</h2>
-          <p>${isEn ? "Each tool runs independently on its own subdomain while sharing unified authentication and billing." : "各软件独立运行、独立定价，共用统一邮箱账号体系与全球收款通道。"}</p>
+          <h2>${isEn ? "Three-Product AI Productivity Matrix" : "小咩魔法三大核心产品矩阵"}</h2>
+          <p>${isEn ? "Two live cloud/desktop AI tools ready for immediate subscription, plus one upcoming BYOK image translator." : "两款核心 SaaS 产品已正式上线并支持即时开通，桌面图片翻译新品即将上线。"}</p>
         </div>
+
         <div class="features-grid">
-          <article class="feature-card">
-            <div class="feature-icon">🧩</div>
-            <h3>${isEn ? "Xiaomie Magic Collector (v1.0.8)" : "小咩魔法采集 (v1.0.8)"}</h3>
-            <p>${isEn
-              ? "Chrome & Edge extension for 1688, Taobao, Amazon & Shopify. Local WASM long-image OCR, 4-level carton lookup, AI image filtering, and 10-language copywriting."
-              : "Chrome/Edge 通用采集扩展：支持 1688、淘宝、亚马逊、Shopify 与图文博客；内置防卡死长图 OCR、四级箱规补查与纯正单语种文案。"}</p>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
-              <a class="btn btn-primary btn-sm" href="/collector/${isEn ? "en/" : ""}">${isEn ? "10-Lang Landing" : "查看详情 (10语种)"}</a>
-              <a class="btn btn-secondary btn-sm" href="https://collector.xiaomie.tools/" target="_blank" rel="noopener">${isEn ? "Download .zip" : "下载扩展包"} ↗</a>
+          <article class="feature-card" style="display:flex;flex-direction:column;justify-content:space-between;gap:14px">
+            <div>
+              <span class="status-badge live">● ${isEn ? "Live · Ready Now" : "已上线 / Live"}</span>
+              <div class="feature-icon">🎬</div>
+              <h3>${isEn ? "Xiaomie Carousel Video Studio" : "小咩魔法轮播视频"}</h3>
+              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:8px">${isEn ? "小咩魔法轮播视频" : "Xiaomie Carousel Video Studio"}</p>
+              <p>${isEn
+                ? "Online AI workbench that transforms product photos into studio-grade marketing videos with 30+ native-language AI voiceovers and .srt subtitles in one click."
+                : "商品实拍图一键生成 30+ 语种母语配音视频与 SRT 字幕的在线 AI 工作台，助力独立站与短视频出海获客。"}</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <a class="btn btn-primary btn-sm" href="${CAROUSEL_APP_URL}" target="_blank" rel="noopener">${isEn ? "Open Studio" : "进入工作台"}</a>
+              <a class="btn btn-secondary btn-sm" href="${isEn ? "/carousel/en/" : "/carousel/"}">${isEn ? "Product Details" : "了解详情"}</a>
             </div>
           </article>
 
-          <article class="feature-card">
-            <div class="feature-icon">🎬</div>
-            <h3>${isEn ? "Xiaomie Magic Carousel (v15.55)" : "小咩魔法轮播视频 (v15.55)"}</h3>
-            <p>${isEn
-              ? "Turn product photos into 30-language shoppable videos in 5–10 seconds using WebCodecs hardware acceleration, Edge Neural voices, and auto .srt subtitles."
-              : "几张商品实拍图 5–10 秒直出 30 国母语带货成片：WebCodecs 本地硬编码、微软原生配音、自动滤杂图与同名 .srt 同步落盘。"}</p>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
-              <a class="btn btn-primary btn-sm" href="https://carousel.xiaomie.tools/" target="_blank" rel="noopener">${isEn ? "Open Studio" : "进入在线工作台"} ↗</a>
-              <a class="btn btn-secondary btn-sm" href="/carousel/${isEn ? "en/" : ""}">${isEn ? "Product Overview" : "功能与定价"}</a>
+          <article class="feature-card" style="display:flex;flex-direction:column;justify-content:space-between;gap:14px">
+            <div>
+              <span class="status-badge live">● ${isEn ? "Live · Ready Now" : "已上线 / Live"}</span>
+              <div class="feature-icon">📑</div>
+              <h3>${isEn ? "Xiaomie Product Catalog &amp; Selling Point Generator" : "小咩商品目录卖点生成器"}</h3>
+              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:8px">${isEn ? "小咩商品目录卖点生成器" : "Xiaomie Product Catalog & Selling Point Generator"}</p>
+              <p>${isEn
+                ? "AI efficiency assistant for long-image OCR text recognition, automated product specification structuring, localized multi-language selling-point copywriting, and clean catalog export."
+                : "支持商品长图 OCR 文字识别、商品规格参数自动整理、多语种本地化卖点文案生成与商品目录排版导出的 AI 效率助手。"}</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <a class="btn btn-primary btn-sm" href="${isEn ? "/catalog/en/" : "/catalog/"}">${isEn ? "Explore Generator" : "进入产品页"}</a>
+              <a class="btn btn-secondary btn-sm" href="${STUDIO_BASE_URL}" target="_blank" rel="noopener">${isEn ? "Workspace" : "下载与工作台"}</a>
             </div>
           </article>
 
-          <article class="feature-card">
-            <div class="feature-icon">✨</div>
-            <h3>${isEn ? "More Magic Tools Coming Soon" : "更多魔法系列软件敬请期待"}</h3>
-            <p>${isEn
-              ? "New cross-border AI tools will plug directly into api.xiaomie.tools with isolated app_id quotas and unified global support."
-              : "后续新工具将直接接入 api.xiaomie.tools 共用登录、发信与收款体系，按 app_id 独立管理权益，敬请期待。"}</p>
+          <article class="feature-card" style="display:flex;flex-direction:column;justify-content:space-between;gap:14px;border-color:#fcd34d;background:#fffdf7">
+            <div>
+              <span class="status-badge coming-soon">⏳ ${isEn ? "Coming Soon · Pre-Launch" : "即将上线 / Coming Soon"}</span>
+              <div class="feature-icon" style="background:#fef3c7">🖼️</div>
+              <h3>${isEn ? "Xiaomie Magic Image Translator" : "小咩魔法图片翻译（小咩图片翻译软件）"}</h3>
+              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:8px">${isEn ? "小咩魔法图片翻译" : "Xiaomie Magic Image Translator"}</p>
+              <p>${isEn
+                ? "Desktop software for cross-border e-commerce image text multi-language AI translation, lossless background inpainting, and clean typography reconstruction."
+                : "跨境电商商品图文字多语种 AI 翻译与原图背景无损排版重绘桌面软件，支持精准擦除原文并自动回填多国本地化排版文字。"}</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+              <button type="button" class="btn btn-disabled btn-sm" disabled aria-disabled="true">${isEn ? "Coming Soon" : "即将开放 · 敬请期待"}</button>
+              <a class="btn btn-secondary btn-sm" href="mailto:info@xiaomie.tools?subject=Notify%20Me%20-%20Xiaomie%20Magic%20Image%20Translator">${isEn ? "Notify Me" : "开售邮件提醒"}</a>
+            </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="support" class="section section-alt">
+    <section class="section" id="pricing">
       <div class="container">
         <div class="section-head">
-          <h2>${isEn ? "Unified Account, Billing & Support" : "统一服务与客服支持"}</h2>
+          <h2>${isEn ? "Transparent Global SaaS Pricing (USD)" : "透明清晰的多币种 SaaS 定价方案"}</h2>
           <p>${isEn
-            ? "Verification codes are sent automatically from noreply@xiaomie.tools. For sales or technical support, email info@xiaomie.tools."
-            : "系统登录验证码由 noreply@xiaomie.tools 自动发出；售前咨询、售后支持与商务合作请发送至官方唯一客服邮箱 info@xiaomie.tools。"}</p>
+            ? "All Live SaaS plans activate automatically via your <code>api.xiaomie.tools</code> email account immediately after payment."
+            : "已上线的两款 SaaS 工具支持 $9–$99 月付/年付订阅或点数包，<strong>付款后通过 <code>api.xiaomie.tools</code> 邮箱账号自动即时开通</strong>。"}</p>
         </div>
-        <div class="stats-grid">
-          <div class="stat-card"><div class="stat-num">noreply@</div><div class="stat-label">xiaomie.tools (${isEn ? "System OTP" : "系统验证码"})</div></div>
-          <div class="stat-card"><div class="stat-num">info@</div><div class="stat-label">xiaomie.tools (${isEn ? "Official Support" : "官方客服总入口"})</div></div>
-          <div class="stat-card"><div class="stat-num">api.</div><div class="stat-label">xiaomie.tools (${isEn ? "Shared API Hub" : "全系列共用接口"})</div></div>
-          <div class="stat-card"><div class="stat-num">Airwallex</div><div class="stat-label">${isEn ? "Global USD Checkout" : "空中云汇国际收单"}</div></div>
+
+        <div class="pricing-grid">
+          <div class="price-card">
+            <div>
+              <div class="price-name">${isEn ? "Starter Monthly SaaS" : "月度入门订阅（Starter Monthly）"}</div>
+              <div class="price-amount">$9 <small>/ mo</small></div>
+              <p class="price-desc">${isEn
+                ? "Ideal for solo sellers automating long-image OCR, spec sheets &amp; selling points."
+                : "适合个人卖家与外贸业务日常长图 OCR 识别、规格整理与卖点文案生成（Carousel 入门订阅 $19/月起）。"}</p>
+              <ul class="price-list">
+                <li>${isEn ? "50 Catalog &amp; Copy exports / month" : "每月 50 次商品目录与卖点生成额度"}</li>
+                <li>${isEn ? "OCR + automated size &amp; carton tables" : "支持长图 OCR 文字识别与箱规自动整理"}</li>
+                <li>${isEn ? "Instant activation via api.xiaomie.tools" : "付款后通过 api.xiaomie.tools 邮箱即时开通"}</li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn-secondary" data-open-checkout data-plan="monthly9">${isEn ? "Subscribe $9/mo" : "选择 $9/月 入门订阅"}</button>
+          </div>
+
+          <div class="price-card featured">
+            <span class="popular-badge">${isEn ? "BEST FOR TEAMS" : "团队推荐方案"}</span>
+            <div>
+              <div class="price-name">${isEn ? "100-Credit Growth Pack" : "100 次专业点数包（Growth Pack）"}</div>
+              <div class="price-amount">$69 <small>/ 100 credits</small></div>
+              <p class="price-desc">${isEn
+                ? "Pay-as-you-go SaaS credit pack ($19/mo Carousel &amp; $69 pack options) with zero expiration."
+                : "约 ¥500 · 灵活按次消费不过期，适用商品目录卖点生成与轮播配音视频工作台。"}</p>
+              <ul class="price-list">
+                <li>${isEn ? "100 full product or studio runs" : "包含 100 次完整目录排版 / AI 视频生成"}</li>
+                <li>${isEn ? "30+ language voiceovers &amp; localized copy" : "覆盖 30+ 语种本地化文案与 SRT 字幕导出"}</li>
+                <li>${isEn ? "Instant activation via api.xiaomie.tools" : "付款后通过 api.xiaomie.tools 自动充值到账"}</li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn-primary" data-open-checkout data-plan="pack100">${isEn ? "Buy 100-Credit Pack ($69)" : "立即开通 $69 点数包"}</button>
+          </div>
+
+          <div class="price-card">
+            <div>
+              <div class="price-name">${isEn ? "Annual Studio Pro" : "年度专业版（Annual Studio Pro）"}</div>
+              <div class="price-amount">$99 <small>/ yr</small></div>
+              <p class="price-desc">${isEn
+                ? "Unlimited annual access to Catalog Generator workflows plus high-volume Studio features."
+                : "年付低至 $8.25/月 · 解锁高频商品目录排版、多语种卖点生成与企业优先技术支持。"}</p>
+              <ul class="price-list">
+                <li>${isEn ? "Unlimited catalog &amp; selling-point exports" : "全年度不限次长图 OCR 与规格目录整理"}</li>
+                <li>${isEn ? "Priority queue &amp; email support via info@xiaomie.tools" : "专享 info@xiaomie.tools 优先客服与故障响应"}</li>
+                <li>${isEn ? "14-day refund policy &amp; instant api.xiaomie.tools sync" : "享 14 天退款保障 · 付款即时自动开通"}</li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn-secondary" data-open-checkout data-plan="annual99">${isEn ? "Subscribe $99/yr" : "订阅 $99/年 专业版"}</button>
+          </div>
+        </div>
+
+        <div class="translator-pricing-box">
+          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px">
+            <div>
+              <span class="status-badge coming-soon" style="margin-bottom:6px">⏳ ${isEn ? "Coming Soon · Pre-Launch Preview" : "即将上线 · Coming Soon 透明预热定价"}</span>
+              <h3 style="margin:0;font-size:1.25rem">${isEn
+                ? "Xiaomie Magic Image Translator — Upcoming Desktop Software Pricing"
+                : "《小咩魔法图片翻译（Xiaomie Magic Image Translator）》预热定价说明"}</h3>
+            </div>
+            <button type="button" class="btn btn-disabled btn-sm" disabled aria-disabled="true">${isEn ? "Not Yet Open for Orders" : "即将开放 · 暂未开放下单"}</button>
+          </div>
+
+          <div class="pricing-grid">
+            <div class="price-card">
+              <div>
+                <div class="price-name">${isEn ? "Trial License" : "体验授权（Trial）"}</div>
+                <div class="price-amount">$0 <small>${isEn ? "/ 20 images" : "/ 免费体验 20 张"}</small></div>
+                <p class="price-desc">${isEn
+                  ? "Direct connection via XiaoMie official built-in trial channel — no own API key required."
+                  : "免费体验 20 张（官方内置体验通道直连，无需自备 Key），先测原图背景无损重绘效果。"}</p>
+              </div>
+              <button type="button" class="btn btn-disabled btn-sm" disabled>${isEn ? "Coming Soon" : "即将上线"}</button>
+            </div>
+
+            <div class="price-card">
+              <div>
+                <div class="price-name">${isEn ? "1,000-Image Pack (BYOK)" : "1,000 张额度包（1,000-Image Pack）"}</div>
+                <div class="price-amount">$14.9 <small>${isEn ? "/ 1,000 images" : "（国内参考价 ¥100）"}</small></div>
+                <p class="price-desc">${isEn
+                  ? "Software license for processing 1,000 e-commerce images locally/desk-side with BYOK."
+                  : "桌面软件 1,000 张图片处理授权包，支持自备第三方 API Key 批量翻译与背景无损回填。"}</p>
+              </div>
+              <button type="button" class="btn btn-disabled btn-sm" disabled>${isEn ? "Coming Soon" : "即将上线"}</button>
+            </div>
+
+            <div class="price-card">
+              <div>
+                <div class="price-name">${isEn ? "Lifetime License (BYOK)" : "终身授权（Lifetime License）"}</div>
+                <div class="price-amount">$29 <small>${isEn ? "/ unlimited" : "（国内参考价 ¥199）"}</small></div>
+                <p class="price-desc">${isEn
+                  ? "One-time software license with no image count cap in the desktop app (BYOK)."
+                  : "一次买断软件终身授权，桌面软件本身处理不设张数上限（需自备 Key）。"}</p>
+              </div>
+              <button type="button" class="btn btn-disabled btn-sm" disabled>${isEn ? "Coming Soon" : "即将上线"}</button>
+            </div>
+          </div>
+
+          <div class="byok-notice">
+            <strong>⚠️ ${isEn ? "Important BYOK Disclosure (Bring Your Own Key):" : "重要说明（必须阅读）："}</strong>
+            ${isEn
+              ? "The $14.9 (1,000-Image Pack) and $29 (Lifetime License) are <strong>software licenses only</strong>. Users must configure and pay for their own third-party AI API Key (<strong>BYOK — Bring Your Own Key</strong>); the software license fee does not include third-party API token or image generation credits."
+              : "1,000 张额度包（$14.9 / ¥100）与终身授权（$29 / ¥199）属于桌面软件授权，用户需自行填写并承担第三方 API Key（<strong>BYOK - Bring Your Own Key</strong>），软件授权费不包含第三方 API 调用额度。"}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="support">
+      <div class="container">
+        <div class="section-head">
+          <h2>${isEn ? "Global SaaS Checkout, Activation &amp; Customer Support" : "合规收款通道、自动开通与官方客服支持"}</h2>
+          <p>${isEn ? "Operated by Limei Chen · Instant digital fulfillment &amp; transparent customer policies." : "严格遵循国际 SaaS 合规标准：全站统一使用唯一官方客服邮箱与 14 天无忧退款条款。"}</p>
+        </div>
+
+        <div class="payment-grid">
+          <div class="pay-card active">
+            <span class="pay-badge live">Global Card &amp; SaaS Checkout</span>
+            <h3>${isEn ? "International SaaS Billing" : "全球信用卡与国际 SaaS 结算"}</h3>
+            <p>${isEn ? "USD pricing ($9–$99) prepared for Creem MoR Checkout with instant automatic activation on api.xiaomie.tools." : "面向全球卖家提供清晰 USD 计价方案（预留接入 Creem Checkout），付款后自动关联邮箱即时解锁权益。"}</p>
+            <button type="button" class="btn btn-primary btn-sm" data-open-checkout data-plan="pack100">${isEn ? "Open Checkout" : "打开结算入口"}</button>
+          </div>
+          <div class="pay-card">
+            <span class="pay-badge soon">api.xiaomie.tools</span>
+            <h3>${isEn ? "Instant Email Delivery" : "邮箱账号即时自动交付"}</h3>
+            <p>${isEn ? "Verification codes come from noreply@xiaomie.tools; paid quotas sync immediately to your email ledger." : "登录验证码由 noreply@xiaomie.tools 发送，付费订阅与额度实时同步至您的邮箱账号中心。"}</p>
+            <a class="btn btn-secondary btn-sm" href="${API_BASE_URL}/api/checkout?app_id=catalog" target="_blank" rel="noopener">API Status</a>
+          </div>
+          <div class="pay-card">
+            <span class="pay-badge live">info@xiaomie.tools</span>
+            <h3>${isEn ? "Official Support &amp; Refunds" : "官方客服与 14 天退款保障"}</h3>
+            <p>${isEn ? "Need billing help, data deletion, or a refund under our 14-day refund policy? Contact info@xiaomie.tools anytime." : "任何软件咨询、数据删除或依据 14 天退款政策的退订申请，请联系唯一官方邮箱 info@xiaomie.tools。"}</p>
+            <a class="btn btn-secondary btn-sm" href="mailto:info@xiaomie.tools">info@xiaomie.tools</a>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div>© 2026 Xiaomie Magic Tools · <a href="mailto:info@xiaomie.tools" style="color:var(--primary);font-weight:700">info@xiaomie.tools</a></div>
-      <div class="footer-langs">
-        <a href="/">简体中文</a>
-        <a href="/en/">English</a>
-        <a href="/collector/">Collector</a>
-        <a href="/carousel/">Carousel</a>
-      </div>
-    </div>
-  </footer>
-  ${renderSharedModals({
-    appId: "site",
-    plansHtmlOptions: `<option value="pack100">Collector VIP — $69 USD</option>`,
-  })}
+  ${renderLegalFooter(!isEn, hubExtraLinks)}
+  ${renderSharedModals(lang, "site")}
   <script src="/assets/app.js" defer></script>
 </body>
-</html>
-`;
+</html>`;
 }
 
-function buildCarouselHtml(isEn = false) {
-  const langCode = isEn ? "en" : "zh-CN";
-  const canonical = isEn ? `${HUB_BASE_URL}/carousel/en/` : `${HUB_BASE_URL}/carousel/`;
+function buildCarouselHtml(isEn) {
+  const lang = isEn ? "en" : "zh-CN";
+  const canonical = isEn ? `${CAROUSEL_SITE_URL}/en/` : `${CAROUSEL_SITE_URL}/`;
   const title = isEn
-    ? "Xiaomie Magic Carousel v15.55 — AI 30-Language Product Video Generator"
-    : "小咩魔法轮播视频 v15.55 — 30 国母语 AI 带货视频批量直出";
-  const desc = isEn
-    ? "Create 1080×1920, 16:9, or 1:1 shoppable product videos in 5–10 seconds with local WebCodecs, Edge Neural TTS, and synchronized .srt subtitles."
-    : "几张商品实拍图，5–10 秒直出 30 国母语带货成片。支持 9:16 / 16:9 / 1:1 三画幅、WebCodecs 硬件加速、自动过滤杂图与同名 .srt 同步落盘。";
+    ? "Xiaomie Carousel Video Studio — AI Product Photos to 30+ Language Videos"
+    : "小咩魔法轮播视频 (Xiaomie Carousel Video Studio) — 商品实拍图一键生成 30+ 语种配音视频";
+  const description = isEn
+    ? "Turn product photos into studio-grade marketing videos with 30+ native-language voiceovers and SRT subtitles. Instant api.xiaomie.tools activation and 14-day refund policy."
+    : "小咩魔法轮播视频（Xiaomie Carousel Video Studio）：商品实拍图一键生成 30+ 语种母语配音视频与 SRT 字幕的在线 AI 工作台。";
+
+  const extraLinks = isEn
+    ? `<a href="/">XiaoMie Hub</a><a href="/carousel/">🇨🇳 中文版</a><a href="/catalog/en/">Catalog Generator</a>`
+    : `<a href="/">小咩总官网</a><a href="/carousel/en/">🇺🇸 English</a><a href="/catalog/">商品目录卖点生成器</a>`;
 
   return `<!doctype html>
-<html lang="${langCode}" data-app-id="carousel">
+<html lang="${lang}" data-app-id="carousel">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${escapeHtml(title)}</title>
-  <meta name="description" content="${escapeHtml(desc)}" />
+  <meta name="description" content="${escapeHtml(description)}" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="${canonical}" />
-  <link rel="alternate" hreflang="zh-CN" href="${HUB_BASE_URL}/carousel/" />
-  <link rel="alternate" hreflang="en" href="${HUB_BASE_URL}/carousel/en/" />
-  <link rel="alternate" hreflang="x-default" href="${HUB_BASE_URL}/carousel/en/" />
+  <link rel="alternate" hreflang="zh-CN" href="${CAROUSEL_SITE_URL}/" />
+  <link rel="alternate" hreflang="en" href="${CAROUSEL_SITE_URL}/en/" />
   <link rel="icon" type="image/jpeg" href="/assets/cat-logo.jpg" />
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="/">
-        <img src="/assets/cat-logo.jpg" alt="Xiaomie Magic Carousel" width="38" height="38" />
-        <span>${isEn ? "Xiaomie Carousel" : "小咩魔法轮播视频"}</span>
+      <a class="brand" href="${isEn ? "/en/" : "/"}">
+        <img src="/assets/cat-logo.jpg" alt="XiaoMie Tools Logo" width="38" height="38" />
+        <span>${isEn ? "Xiaomie Carousel Video Studio" : "小咩魔法轮播视频"}</span>
       </a>
       <nav class="nav-links" aria-label="Primary">
-        <a href="/">${isEn ? "All Tools" : "系列总站"}</a>
-        <a href="#features">${isEn ? "Features" : "核心绝技"}</a>
-        <a href="#pricing">${isEn ? "Pricing" : "商业定价"}</a>
+        <a href="${isEn ? "/en/" : "/"}">${isEn ? "Hub" : "总官网"}</a>
+        <a href="#features">${isEn ? "Features" : "核心功能"}</a>
+        <a href="#pricing">${isEn ? "Pricing" : "定价方案"}</a>
+        <a href="/refund/">${isEn ? "Refund Policy" : "退款政策"}</a>
       </nav>
       <div class="header-actions">
-        <a class="btn btn-secondary btn-sm" href="${isEn ? "/carousel/" : "/carousel/en/"}">${isEn ? "🇨🇳 简体中文" : "🌐 English"}</a>
-        <button type="button" id="btnOpenAccountPortal" class="btn btn-secondary btn-sm">👤 Account / 账号中心</button>
-        <a class="btn btn-primary btn-sm" href="https://carousel.xiaomie.tools/" target="_blank" rel="noopener">${isEn ? "Open Studio ↗" : "打开工作台 ↗"}</a>
+        <a class="btn btn-secondary btn-sm" href="${isEn ? "/carousel/" : "/carousel/en/"}">${isEn ? "🇨🇳 中文" : "🇺🇸 EN"}</a>
+        <button type="button" class="btn btn-primary btn-sm" id="btnOpenAccountPortal">👤 Account / 账号中心</button>
       </div>
     </div>
   </header>
@@ -299,285 +529,265 @@ function buildCarouselHtml(isEn = false) {
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <span class="badge-pill">v15.55 · WebCodecs · 30 Languages · app_id: carousel</span>
-          <h1>${isEn ? "Turn Product Photos into 30-Language Shoppable Videos in 10s" : "做跨境带货视频，几张商品实拍图 10 秒直出 30 国母语成片"}</h1>
-          <p class="hero-sub">${escapeHtml(desc)}</p>
-          <div class="hero-ctas">
-            <a class="btn btn-primary" href="https://carousel.xiaomie.tools/" target="_blank" rel="noopener">🚀 ${isEn ? "Launch Online Studio" : "立即进入在线工作台"} ↗</a>
-            <a class="btn btn-secondary" href="#pricing">${isEn ? "View Pricing" : "查看定价方案"}</a>
+          <span class="status-badge live">● ${isEn ? "Live · Online AI Studio" : "已上线 / Live · 在线工作台"}</span>
+          <h1>${isEn ? "Xiaomie Carousel Video Studio" : "小咩魔法轮播视频 — 实拍图秒变 30+ 语种母语营销视频"}</h1>
+          <p class="lead">${isEn
+            ? "Upload 3–8 product photos and automatically render vertical/landscape showcase videos complete with native AI voiceover scripts and synchronized .srt subtitles across 30+ languages."
+            : "上传商品实拍图即可在云端自动完成智能运镜、30+ 语种地道母语 AI 配音及精准 .srt 双语字幕合成，快速生成高转化出海营销短视频。"}</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="${CAROUSEL_APP_URL}" target="_blank" rel="noopener">${isEn ? "Launch Video Studio" : "打开在线工作台"}</a>
+            <button type="button" class="btn btn-secondary" data-open-checkout data-plan="monthly19">${isEn ? "Subscribe from $19/mo" : "SaaS 订阅 ($19/月起)"}</button>
           </div>
+          <ul class="trust-list">
+            <li>${isEn ? "Instant automatic activation via your api.xiaomie.tools email account" : "付款后通过 api.xiaomie.tools 邮箱账号自动即时开通"}</li>
+            <li>${isEn ? "Global Card &amp; SaaS Checkout · 14-day refund policy" : "Global Card &amp; SaaS Checkout · 支持 14 天退款保障"}</li>
+          </ul>
         </div>
         <aside class="hero-card">
-          <img class="hero-mascot" src="/assets/cat-logo.jpg" alt="Xiaomie Magic Carousel" width="148" height="148" />
-          <div class="mini-stat-grid">
-            <div class="mini-stat"><strong>5–10s</strong><span>${isEn ? "Hardware Export" : "单条硬件加速直出"}</span></div>
-            <div class="mini-stat"><strong>30</strong><span>${isEn ? "Native TTS Voices" : "国母语原生口播"}</span></div>
-            <div class="mini-stat"><strong>3 Ratios</strong><span>9:16 · 16:9 · 1:1</span></div>
-            <div class="mini-stat"><strong>.mp4+.srt</strong><span>${isEn ? "Zero Image Upload" : "原图本地零上传"}</span></div>
-          </div>
+          <img class="hero-mascot" src="/assets/cat-logo.jpg" alt="Xiaomie Carousel Video Studio Mascot" />
+          <h3 style="margin:0 0 8px">${isEn ? "30+ Global Voiceovers" : "支持 30+ 语种母语配音"}</h3>
+          <p style="margin:0;color:var(--muted);font-size:0.9rem">EN · ES · DE · FR · JA · KO · VI · TH · AR</p>
         </aside>
       </div>
     </section>
 
-    <section id="features" class="section section-alt">
+    <section class="section section-alt" id="features">
       <div class="container">
         <div class="section-head">
-          <h2>${isEn ? "Why Xiaomie Magic Carousel" : "五大核心绝技"}</h2>
+          <h2>${isEn ? "Built for Cross-Border Product Storytelling" : "为全球商品展示与内容出海而设计"}</h2>
+          <p>${isEn ? "Compliant AI media rendering with synchronized scripts and subtitle files." : "一站式完成文案脚本、配音合成、动态轮播转场与字幕导出。"}</p>
         </div>
         <div class="features-grid">
-          <article class="feature-card">
+          <div class="feature-card">
+            <div class="feature-icon">🗣️</div>
+            <h3>${isEn ? "30+ Native AI Voiceovers" : "30+ 语种地道母语配音"}</h3>
+            <p>${isEn ? "Generate natural localized narration tailored to North American, European, LATAM, and APAC audiences." : "一键切换英语、西语、德语、法语、日韩及东南亚主流语种专业配音音色。"}</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <h3>${isEn ? "Synchronized .SRT Subtitles" : "精准同步 .SRT 字幕文件"}</h3>
+            <p>${isEn ? "Download clean time-coded SRT files alongside rendered MP4 clips for easy editing and localization." : "同步输出标准时间轴 SRT 字幕文件，方便后续多平台二创与字幕校验。"}</p>
+          </div>
+          <div class="feature-card">
             <div class="feature-icon">⚡</div>
-            <h3>${isEn ? "WebCodecs 5–10s Hardware Export" : "WebCodecs 本地硬件加速直出"}</h3>
-            <p>${isEn ? "Encode 1080×1920, 1280×720, or 1080×1080 MP4 locally in seconds with zero server queue." : "浏览器原生硬件编码，5–10 秒导出一条高清 MP4，原图不上传云端。"}</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-icon">🎙️</div>
-            <h3>${isEn ? "30-Language Edge Neural TTS" : "30 国母语 AI 编导与原生配音"}</h3>
-            <p>${isEn ? "Built-in GLM-4V vision copywriting paired with Microsoft Edge Neural male/female voices and .srt export." : "内置免 Key 视觉看图写词 + 微软原生男女声配音 + 同名 .srt 字幕同步落盘。"}</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-icon">🧹</div>
-            <h3>${isEn ? "Smart Clutter Filtering & BGM Pitch" : "杂图自动过滤与 BGM 变调防重"}</h3>
-            <p>${isEn ? "Automatically filters platform watermarks/tiny icons and applies BGM pitch variation to avoid duplicate penalties." : "自动剔除微标与平台杂图，支持多种转场运镜与 BGM 变调防限流。"}</p>
-          </article>
+            <h3>${isEn ? "Instant api.xiaomie.tools Sync" : "api.xiaomie.tools 即时开通"}</h3>
+            <p>${isEn ? "Log in with one email OTP and manage your studio video credits cleanly in one ledger." : "统一邮箱验证码登录，付款后秒级开通对应套餐额度，账本清晰可查。"}</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="pricing" class="section">
+    <section class="section" id="pricing">
       <div class="container">
         <div class="section-head">
-          <h2>${isEn ? "Simple One-Time Pricing" : "透明一次性授权方案"}</h2>
-          <p>${isEn ? "Isolated under app_id: carousel via api.xiaomie.tools." : "权益按 (邮箱, carousel) 独立记账，与系列其他软件互不干扰。"}</p>
+          <h2>${isEn ? "Carousel Video Studio Pricing (USD)" : "小咩魔法轮播视频 SaaS 订阅方案"}</h2>
+          <p>${isEn ? "Instant automatic activation via api.xiaomie.tools after payment · 14-day refund policy." : "付款后通过 api.xiaomie.tools 邮箱账号自动即时开通，支持 14 天退款政策。"}</p>
         </div>
         <div class="pricing-grid">
-          <article class="price-card">
+          <div class="price-card">
             <div>
-              <div class="price-name">${isEn ? "50-Video Pack" : "50 次视频包"}</div>
-              <div class="price-amount">$49.9 <span style="font-size:1rem;font-weight:700;color:var(--primary)">(USD)</span></div>
-              <div class="price-sub">${isEn ? "50 exports · stackable" : "50 条成片额度 · 可叠加"}</div>
+              <div class="price-name">${isEn ? "Starter Monthly" : "月度入门订阅"}</div>
+              <div class="price-amount">$19 <small>/ mo</small></div>
+              <p class="price-desc">${isEn ? "20 HD localized videos per month with 30+ language voiceovers." : "每月包含 20 条高清多语种配音营销视频与 SRT 字幕导出。"}</p>
             </div>
-            <button type="button" class="btn btn-secondary" data-open-airwallex data-plan="pack50">${isEn ? "Buy 50 Pack" : "购买 50 次包"}</button>
-          </article>
-          <article class="price-card featured">
-            <span class="popular-badge">${isEn ? "Popular" : "热门之选"}</span>
+            <button type="button" class="btn btn-secondary" data-open-checkout data-plan="monthly19">${isEn ? "Subscribe $19/mo" : "订阅 $19/月"}</button>
+          </div>
+          <div class="price-card featured">
+            <span class="popular-badge">${isEn ? "MOST POPULAR" : "热门点数包"}</span>
             <div>
-              <div class="price-name">${isEn ? "100-Video Pack" : "100 次视频包"}</div>
-              <div class="price-amount">$69.9 <span style="font-size:1rem;font-weight:700;color:var(--primary)">(USD)</span></div>
-              <div class="price-sub">${isEn ? "100 exports · stackable" : "100 条成片额度 · 可叠加"}</div>
+              <div class="price-name">${isEn ? "100-Credit Studio Pack" : "100 次 Studio 点数包"}</div>
+              <div class="price-amount">$69 <small>/ 100 videos</small></div>
+              <p class="price-desc">${isEn ? "Non-expiring 100-video credit pack shared via your api.xiaomie.tools email account." : "不过期 100 条视频制作点数，适合多 SKU 团队按需批量出片。"}</p>
             </div>
-            <button type="button" class="btn btn-primary" data-open-airwallex data-plan="pack100">${isEn ? "Buy 100 Pack" : "购买 100 次包"}</button>
-          </article>
-          <article class="price-card">
+            <button type="button" class="btn btn-primary" data-open-checkout data-plan="pack100">${isEn ? "Buy 100-Credit Pack ($69)" : "购买 $69 点数包"}</button>
+          </div>
+          <div class="price-card">
             <div>
-              <div class="price-name">${isEn ? "SVIP Lifetime" : "SVIP 终身不限量"}</div>
-              <div class="price-amount">$139.9 <span style="font-size:1rem;font-weight:700;color:var(--primary)">(USD)</span></div>
-              <div class="price-sub">${isEn ? "Unlimited exports forever" : "终身不限次数 · 全功能开放"}</div>
+              <div class="price-name">${isEn ? "Annual Studio Pro" : "年度专业版"}</div>
+              <div class="price-amount">$99 <small>/ yr</small></div>
+              <p class="price-desc">${isEn ? "Full annual studio membership with priority GPU queue and dedicated support via info@xiaomie.tools." : "全年畅享高速渲染通道、优先技术支持（info@xiaomie.tools）。"}</p>
             </div>
-            <button type="button" class="btn btn-secondary" data-open-airwallex data-plan="lifetime">${isEn ? "Get Lifetime" : "解锁终身版"}</button>
-          </article>
+            <button type="button" class="btn btn-secondary" data-open-checkout data-plan="annual99">${isEn ? "Subscribe $99/yr" : "订阅 $99/年"}</button>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div>© 2026 Xiaomie Magic Carousel · <a href="mailto:info@xiaomie.tools" style="color:var(--primary);font-weight:700">info@xiaomie.tools</a></div>
-      <div class="footer-langs">
-        <a href="/">Hub</a>
-        <a href="/carousel/">简体中文</a>
-        <a href="/carousel/en/">English</a>
-        <a href="https://carousel.xiaomie.tools/" target="_blank" rel="noopener">Studio ↗</a>
-      </div>
-    </div>
-  </footer>
-  ${renderSharedModals({
-    appId: "carousel",
-    plansHtmlOptions: `
-      <option value="pack50">⭐ 50-Video Pack — $49.90 USD</option>
-      <option value="pack100">🔥 100-Video Pack — $69.90 USD</option>
-      <option value="lifetime">👑 SVIP Lifetime Unlimited — $139.90 USD</option>`,
-  })}
+  ${renderLegalFooter(!isEn, extraLinks)}
+  ${renderSharedModals(lang, "carousel")}
   <script src="/assets/app.js" defer></script>
 </body>
-</html>
-`;
+</html>`;
 }
 
-function buildCollectorJsonLd(lang, t) {
-  const url = pageUrlFor(lang);
-  const softwareSchema = {
+function buildCatalogJsonLd(lang, t) {
+  const canonicalUrl = getLangUrl(lang);
+  return JSON.stringify({
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "小咩魔法采集 (Xiaomie Magic Collector)",
-    alternateName: "Xiaomie Magic Collector",
-    applicationCategory: "BusinessApplication",
-    operatingSystem: "Chrome, Microsoft Edge (Manifest V3, Windows / macOS)",
-    softwareVersion: "1.0.8",
-    url,
-    downloadUrl: DOWNLOAD_URL,
-    image: `${SITE_BASE_URL}/assets/cat-logo.jpg`,
-    description: t.description,
-    inLanguage: lang.code,
-    offers: [
-      { "@type": "Offer", name: t.plans[0].name, price: "0", priceCurrency: "USD" },
-      { "@type": "Offer", name: t.plans[1].name, price: "69", priceCurrency: "USD" },
-      { "@type": "Offer", name: t.plans[2].name, price: "139", priceCurrency: "USD" },
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        name: lang.code.startsWith("zh")
+          ? "小咩商品目录卖点生成器"
+          : "Xiaomie Product Catalog & Selling Point Generator",
+        applicationCategory: "BusinessApplication",
+        operatingSystem: "Windows 10/11, macOS, Web",
+        url: canonicalUrl,
+        description: t.description,
+        publisher: {
+          "@type": "Person",
+          name: "Limei Chen",
+          email: "info@xiaomie.tools",
+        },
+        offers: t.plans.map((p) => ({
+          "@type": "Offer",
+          name: p.name,
+          priceCurrency: "USD",
+          price: p.price.replace(/[^0-9.]/g, ""),
+          url: canonicalUrl,
+        })),
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: t.faqs.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.a,
+          },
+        })),
+      },
     ],
-  };
-
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: t.faqs.map((item) => ({
-      "@type": "Question",
-      name: item.q,
-      acceptedAnswer: { "@type": "Answer", text: item.a },
-    })),
-  };
-
-  return `${JSON.stringify(softwareSchema)}\n</script>\n<script type="application/ld+json">\n${JSON.stringify(faqSchema)}`;
+  });
 }
 
-function renderCollectorHtml(lang, t) {
-  const canonical = pageUrlFor(lang);
-  const pay = PAYMENTS_BY_LANG[lang.code] || PAYMENTS_BY_LANG["en"];
-  const hreflangTags =
-    LANGUAGES.map((l) => `  <link rel="alternate" hreflang="${l.code}" href="${pageUrlFor(l)}" />`).join("\n") +
-    `\n  <link rel="alternate" hreflang="x-default" href="${SITE_BASE_URL}/en/" />`;
-
-  const langOptions = LANGUAGES.map(
-    (l) =>
-      `<option value="${relPathFor(l)}"${l.code === lang.code ? " selected" : ""}>🌐 ${escapeHtml(l.label)}</option>`
-  ).join("\n            ");
+function renderCatalogHtml(lang, t) {
+  const canonicalUrl = getLangUrl(lang);
+  const isZh = lang.code.startsWith("zh");
+  const hreflangs = LANGUAGES.map(
+    (l) => `  <link rel="alternate" hreflang="${l.code}" href="${getLangUrl(l)}" />`
+  ).join("\n");
+  const langOptions = LANGUAGES.map((l) => {
+    const u = l.slug ? `/catalog/${l.slug}/` : `/catalog/`;
+    return `<option value="${u}"${l.code === lang.code ? " selected" : ""}>${escapeHtml(l.label)}</option>`;
+  }).join("");
 
   const statsHtml = t.stats
     .map(
       (s) => `
-        <div class="stat-card">
-          <div class="stat-num">${escapeHtml(s.num)}</div>
-          <div class="stat-label">${escapeHtml(s.label)}</div>
-        </div>`
+      <div class="stat-card">
+        <div class="stat-num">${escapeHtml(s.num)}</div>
+        <div class="stat-label">${escapeHtml(s.label)}</div>
+      </div>`
     )
     .join("");
 
   const featuresHtml = t.features
     .map(
       (f) => `
-        <article class="feature-card">
-          <div class="feature-icon" aria-hidden="true">${f.icon}</div>
-          <h3>${escapeHtml(f.title)}</h3>
-          <p>${escapeHtml(f.desc)}</p>
-        </article>`
+      <article class="feature-card">
+        <div class="feature-icon">${f.icon}</div>
+        <h3>${escapeHtml(f.title)}</h3>
+        <p>${escapeHtml(f.desc)}</p>
+      </article>`
     )
     .join("");
 
   const compareRowsHtml = t.compareRows
     .map(
-      (r) => `
-        <tr>
-          <td><strong>${escapeHtml(r[0])}</strong></td>
-          <td>${escapeHtml(r[1])}</td>
-          <td>✓ ${escapeHtml(r[2])}</td>
-        </tr>`
+      (row) => `
+      <tr>
+        <td><strong>${escapeHtml(row[0])}</strong></td>
+        <td>${escapeHtml(row[1])}</td>
+        <td>${escapeHtml(row[2])}</td>
+      </tr>`
     )
     .join("");
 
   const pricingHtml = t.plans
-    .map(
-      (p, idx) => `
-        <article class="price-card${p.highlight ? " featured" : ""}">
-          ${p.badge ? `<span class="popular-badge">${escapeHtml(p.badge)}</span>` : ""}
-          <div>
-            <div class="price-name">${escapeHtml(p.name)}</div>
-            <div class="price-amount">${escapeHtml(p.price)} <span style="font-size:1rem;font-weight:700;color:var(--primary)">(${escapeHtml(p.usd)})</span></div>
-            <div class="price-sub">${escapeHtml(p.period)}</div>
-            <p class="price-desc">${escapeHtml(p.desc)}</p>
-            <ul class="price-bullets">
-              ${p.bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join("")}
-            </ul>
-          </div>
-          ${idx === 0
-            ? `<a class="btn btn-secondary" href="${DOWNLOAD_URL}" download>${escapeHtml(p.cta)}</a>`
-            : `<button type="button" class="btn ${p.highlight ? "btn-primary" : "btn-secondary"}" data-open-airwallex data-plan="${idx === 1 ? "pack100" : "lifetime"}">${escapeHtml(p.cta)}</button>`}
-        </article>`
-    )
+    .map((p) => {
+      const bullets = p.bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join("");
+      return `
+      <div class="price-card${p.highlight ? " featured" : ""}">
+        ${p.badge ? `<span class="popular-badge">${escapeHtml(p.badge)}</span>` : ""}
+        <div>
+          <div class="price-name">${escapeHtml(p.name)}</div>
+          <div class="price-amount">${escapeHtml(p.price)} <small>${escapeHtml(p.period)} ${p.ref ? `· ${escapeHtml(p.ref)}` : ""}</small></div>
+          <p class="price-desc">${escapeHtml(p.desc)}</p>
+          <ul class="price-list">${bullets}</ul>
+        </div>
+        <button type="button" class="btn ${p.highlight ? "btn-primary" : "btn-secondary"}" data-open-checkout data-plan="${escapeHtml(p.planId || "monthly9")}">${escapeHtml(p.cta)}</button>
+      </div>`;
+    })
     .join("");
 
-  const stepsHtml = t.installSteps
+  const installHtml = t.installSteps
     .map(
-      (s) => `
-        <div class="step-card">
-          <div class="step-num">${escapeHtml(s.step)}</div>
-          <h3>${escapeHtml(s.title)}</h3>
-          <p>${escapeHtml(s.desc)}</p>
-        </div>`
+      (st, idx) => `
+      <div class="step-card">
+        <div class="step-num">${idx + 1}</div>
+        <h3>${escapeHtml(st.title)}</h3>
+        <p>${escapeHtml(st.desc)}</p>
+      </div>`
     )
     .join("");
 
   const faqsHtml = t.faqs
     .map(
-      (q) => `
-        <details class="faq-item">
-          <summary>${escapeHtml(q.q)}</summary>
-          <p>${escapeHtml(q.a)}</p>
-        </details>`
+      (f) => `
+      <details>
+        <summary>${escapeHtml(f.q)}</summary>
+        <p>${escapeHtml(f.a)}</p>
+      </details>`
     )
     .join("");
 
-  const footerLangLinks = LANGUAGES.map(
-    (l) => `<a href="${relPathFor(l)}" hreflang="${l.code}">${escapeHtml(l.label)}</a>`
-  ).join("\n          ");
+  const pay = PAYMENTS_BY_LANG[lang.code] || PAYMENTS_BY_LANG.en;
+  const catalogLangLinks = LANGUAGES.map(
+    (l) => `<a href="${l.slug ? `/catalog/${l.slug}/` : `/catalog/`}">${escapeHtml(l.short)}</a>`
+  ).join("");
 
   return `<!doctype html>
-<html lang="${lang.code}" dir="${lang.dir}" data-app-id="collector">
+<html lang="${lang.code}" dir="${lang.dir}" data-app-id="catalog">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${escapeHtml(t.title)}</title>
   <meta name="description" content="${escapeHtml(t.description)}" />
   <meta name="keywords" content="${escapeHtml(t.keywords)}" />
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-  <link rel="canonical" href="${canonical}" />
-${hreflangTags}
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="${canonicalUrl}" />
+${hreflangs}
+  <link rel="alternate" hreflang="x-default" href="${SITE_BASE_URL}/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="${escapeHtml(t.title)}" />
   <meta property="og:description" content="${escapeHtml(t.description)}" />
-  <meta property="og:url" content="${canonical}" />
+  <meta property="og:url" content="${canonicalUrl}" />
   <meta property="og:locale" content="${lang.ogLocale}" />
-  <meta property="og:image" content="${SITE_BASE_URL}/assets/cat-logo.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="${escapeHtml(t.title)}" />
-  <meta name="twitter:description" content="${escapeHtml(t.description)}" />
-  <meta name="twitter:image" content="${SITE_BASE_URL}/assets/cat-logo.jpg" />
-  <link rel="icon" type="image/jpeg" href="/collector/assets/cat-logo.jpg" />
-  <link rel="stylesheet" href="/collector/assets/style.css" />
-  <script type="application/ld+json">
-${buildCollectorJsonLd(lang, t)}
-  </script>
+  <meta property="og:image" content="${ROOT_HUB_URL}/assets/cat-logo.jpg" />
+  <link rel="icon" type="image/jpeg" href="/assets/cat-logo.jpg" />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <script type="application/ld+json">${buildCatalogJsonLd(lang, t)}</script>
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="/">
-        <img src="/collector/assets/cat-logo.jpg" alt="Xiaomie Magic Collector Logo" width="38" height="38" />
-        <span>小咩魔法采集 · Xiaomie</span>
+      <a class="brand" href="${isZh ? "/" : "/en/"}">
+        <img src="/assets/cat-logo.jpg" alt="XiaoMie Tools Logo" width="38" height="38" />
+        <span>${escapeHtml(isZh ? "小咩商品目录卖点生成器" : "Xiaomie Catalog & Copy Generator")}</span>
       </a>
       <nav class="nav-links" aria-label="Primary">
+        <a href="${isZh ? "/" : "/en/"}">${escapeHtml(isZh ? "系列总官网" : "Suite Hub")}</a>
         <a href="#features">${escapeHtml(t.nav.features)}</a>
-        <a href="#compare">${escapeHtml(t.nav.compare)}</a>
         <a href="#pricing">${escapeHtml(t.nav.pricing)}</a>
         <a href="#install">${escapeHtml(t.nav.install)}</a>
         <a href="#faq">${escapeHtml(t.nav.faq)}</a>
       </nav>
       <div class="header-actions">
-        <label for="langSwitcher" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Language</label>
-        <select id="langSwitcher" class="lang-select" aria-label="Language">
-          ${langOptions}
-        </select>
-        <button type="button" id="btnOpenAccountPortal" class="btn btn-secondary btn-sm">👤 Account / 账号中心</button>
-        <a class="btn btn-primary btn-sm" href="${DOWNLOAD_URL}" download>${escapeHtml(t.nav.cta)}</a>
+        <select id="langSwitcher" class="lang-select" aria-label="Language">${langOptions}</select>
+        <button type="button" class="btn btn-primary btn-sm" id="btnOpenAccountPortal">👤 Account / 账号中心</button>
       </div>
     </div>
   </header>
@@ -586,11 +796,11 @@ ${buildCollectorJsonLd(lang, t)}
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <span class="badge-pill">${escapeHtml(t.hero.badge)}</span>
+          <span class="badge">${escapeHtml(t.hero.badge)}</span>
           <h1>${escapeHtml(t.hero.h1)}</h1>
-          <p class="hero-sub">${escapeHtml(t.hero.sub)}</p>
-          <div class="hero-ctas">
-            <a class="btn btn-primary" href="${DOWNLOAD_URL}" download>⬇ ${escapeHtml(t.hero.ctaPrimary)}</a>
+          <p class="lead">${escapeHtml(t.hero.sub)}</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#pricing">${escapeHtml(t.hero.ctaPrimary)}</a>
             <a class="btn btn-secondary" href="#features">${escapeHtml(t.hero.ctaSecondary)}</a>
           </div>
           <ul class="trust-list">
@@ -598,197 +808,184 @@ ${buildCollectorJsonLd(lang, t)}
           </ul>
         </div>
         <aside class="hero-card">
-          <img class="hero-mascot" src="/collector/assets/cat-logo.jpg" alt="Xiaomie Magic Collector v1.0.8" width="148" height="148" />
-          <div class="mini-stat-grid">
-            ${t.stats.map((s) => `<div class="mini-stat"><strong>${escapeHtml(s.num)}</strong><span>${escapeHtml(s.label)}</span></div>`).join("")}
+          <img class="hero-mascot" src="/assets/cat-logo.jpg" alt="XiaoMie Tools Mascot" />
+          <h3 style="margin:0 0 6px">${escapeHtml(isZh ? "长图 OCR · 规格整理 · 卖点生成" : "Long-Image OCR · Specs · Copywriting")}</h3>
+          <p style="margin:0;color:var(--muted);font-size:0.9rem">${escapeHtml(lang.market)}</p>
+          <div class="hero-card-tags">
+            <span class="chip">🔍 ${escapeHtml(isZh ? "长图 OCR" : "Image OCR")}</span>
+            <span class="chip">📦 ${escapeHtml(isZh ? "规格箱规对齐" : "Spec Tables")}</span>
+            <span class="chip">💡 ${escapeHtml(isZh ? "本地化卖点" : "Copywriting")}</span>
+            <span class="chip">🔐 BYOK</span>
           </div>
         </aside>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="stats-grid">${statsHtml}
-        </div>
-      </div>
+    <section class="stats-bar">
+      <div class="container stats-grid">${statsHtml}</div>
     </section>
 
-    <section id="features" class="section section-alt">
+    <section class="section section-alt" id="features">
       <div class="container">
         <div class="section-head">
           <h2>${escapeHtml(t.featuresTitle)}</h2>
           <p>${escapeHtml(t.featuresSub)}</p>
         </div>
-        <div class="features-grid">${featuresHtml}
-        </div>
+        <div class="features-grid">${featuresHtml}</div>
       </div>
     </section>
 
-    <section id="compare" class="section">
+    <section class="section" id="compare">
       <div class="container">
         <div class="section-head">
           <h2>${escapeHtml(t.compareTitle)}</h2>
         </div>
-        <div class="compare-wrap">
+        <div class="table-wrap">
           <table class="compare-table">
             <thead>
-              <tr>
-                <th>${escapeHtml(t.compareHeaders[0])}</th>
-                <th>${escapeHtml(t.compareHeaders[1])}</th>
-                <th>${escapeHtml(t.compareHeaders[2])}</th>
-              </tr>
+              <tr>${t.compareHeaders.map((h) => `<th>${escapeHtml(h)}</th>`).join("")}</tr>
             </thead>
-            <tbody>${compareRowsHtml}
-            </tbody>
+            <tbody>${compareRowsHtml}</tbody>
           </table>
         </div>
       </div>
     </section>
 
-    <section id="pricing" class="section section-alt">
+    <section class="section section-alt" id="pricing">
       <div class="container">
         <div class="section-head">
           <h2>${escapeHtml(t.pricingTitle)}</h2>
           <p>${escapeHtml(t.pricingSub)}</p>
         </div>
-        <div class="pricing-grid">${pricingHtml}
-        </div>
-        <div class="payment-strip">
-          <div style="width:100%;font-weight:800;font-size:0.9rem;color:var(--ink)">${escapeHtml(pay.title)}</div>
-          <span class="pay-badge">🌐 ${escapeHtml(pay.global)}</span>
-          <span class="pay-badge">💬 ${escapeHtml(pay.local)}</span>
-          <div style="width:100%;font-size:0.82rem;color:var(--muted)">${escapeHtml(pay.note)}</div>
-        </div>
+        <div class="pricing-grid">${pricingHtml}</div>
       </div>
     </section>
 
-    <section id="install" class="section">
+    <section class="section" id="install">
       <div class="container">
         <div class="section-head">
           <h2>${escapeHtml(t.installTitle)}</h2>
         </div>
-        <div class="steps-grid">${stepsHtml}
+        <div class="steps-grid">${installHtml}</div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="checkout-methods">
+      <div class="container">
+        <div class="section-head">
+          <h2>${escapeHtml(pay.title)}</h2>
+          <p>${escapeHtml(pay.sub)}</p>
+        </div>
+        <div class="payment-grid">
+          <div class="pay-card active">
+            <span class="pay-badge live">${escapeHtml(pay.globalCard.badge)}</span>
+            <h3>${escapeHtml(pay.globalCard.name)}</h3>
+            <p>${escapeHtml(pay.globalCard.desc)}</p>
+            <p style="font-size:0.84rem;color:var(--muted)">${escapeHtml(pay.globalCard.note)}</p>
+            <button type="button" class="btn btn-primary btn-sm" data-open-checkout data-plan="pack100">${escapeHtml(pay.globalCard.cta)}</button>
+          </div>
+          <div class="pay-card">
+            <span class="pay-badge soon">${escapeHtml(pay.wechat.badge)}</span>
+            <h3>${escapeHtml(pay.wechat.name)}</h3>
+            <p>${escapeHtml(pay.wechat.desc)}</p>
+            <small style="color:var(--muted)">${escapeHtml(pay.wechat.status)}</small>
+          </div>
+          <div class="pay-card">
+            <span class="pay-badge soon">${escapeHtml(pay.alipay.badge)}</span>
+            <h3>${escapeHtml(pay.alipay.name)}</h3>
+            <p>${escapeHtml(pay.alipay.desc)}</p>
+            <small style="color:var(--muted)">${escapeHtml(pay.alipay.status)}</small>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="faq" class="section section-alt">
+    <section class="section" id="faq">
       <div class="container">
         <div class="section-head">
           <h2>${escapeHtml(t.faqTitle)}</h2>
         </div>
-        <div class="faq-list">${faqsHtml}
-        </div>
+        <div class="faq-list">${faqsHtml}</div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div>${escapeHtml(t.footer)} · <a href="mailto:info@xiaomie.tools" style="color:var(--primary);font-weight:700">info@xiaomie.tools</a></div>
-      <div class="footer-langs">
-        ${footerLangLinks}
-      </div>
-    </div>
-  </footer>
-  ${renderSharedModals({
-    appId: "collector",
-    plansHtmlOptions: `
-      <option value="pack100">⭐ VIP 100-Product Pack — $69.00 USD</option>
-      <option value="lifetime">👑 SVIP Lifetime Unlimited — $139.00 USD</option>`,
-  })}
-  <script src="/collector/assets/app.js" defer></script>
+  ${renderLegalFooter(isZh, catalogLangLinks)}
+  ${renderSharedModals(lang.code, "catalog")}
+  <script src="/assets/app.js" defer></script>
 </body>
-</html>
-`;
+</html>`;
 }
 
-function buildRootSitemap() {
+function buildSitemapXml() {
   const today = new Date().toISOString().slice(0, 10);
-  const collectorUrls = LANGUAGES.map((lang) => {
-    const loc = pageUrlFor(lang);
-    const links = LANGUAGES.map(
-      (alt) => `    <xhtml:link rel="alternate" hreflang="${alt.code}" href="${pageUrlFor(alt)}" />`
-    ).join("\n");
-    return `  <url>
-    <loc>${loc}</loc>
+  const urls = [
+    `${ROOT_HUB_URL}/`,
+    `${ROOT_HUB_URL}/en/`,
+    `${CAROUSEL_SITE_URL}/`,
+    `${CAROUSEL_SITE_URL}/en/`,
+    `${ROOT_HUB_URL}/terms/`,
+    `${ROOT_HUB_URL}/privacy/`,
+    `${ROOT_HUB_URL}/refund/`,
+    ...LANGUAGES.map((l) => getLangUrl(l)),
+  ];
+  const entries = urls
+    .map(
+      (u) => `  <url>
+    <loc>${u}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>${lang.slug === "" ? "0.95" : "0.9"}</priority>
-${links}
-    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_BASE_URL}/en/" />
-  </url>`;
-  }).join("\n");
+  </url>`
+    )
+    .join("\n");
 
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url>
-    <loc>${HUB_BASE_URL}/</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>${HUB_BASE_URL}/en/</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.95</priority>
-  </url>
-  <url>
-    <loc>${HUB_BASE_URL}/carousel/</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.95</priority>
-  </url>
-  <url>
-    <loc>${HUB_BASE_URL}/carousel/en/</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-${collectorUrls}
-</urlset>
-`;
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${entries}
+</urlset>`;
 }
 
-function buildRobotsTxt(sitemapUrl) {
+function buildRobotsTxt() {
   return `User-agent: *
 Allow: /
 
-User-agent: OAI-SearchBot
-Allow: /
+Sitemap: ${ROOT_HUB_URL}/sitemap.xml`;
+}
 
-User-agent: GPTBot
-Allow: /
+function buildLlmsTxt() {
+  return `# XiaoMie Tools (https://xiaomie.tools)
+Operated by Limei Chen
+Official Support Email: info@xiaomie.tools
+Account & Provisioning API: https://api.xiaomie.tools
 
-User-agent: PerplexityBot
-Allow: /
+## Live Products
+1. Xiaomie Carousel Video Studio (小咩魔法轮播视频) — Live
+   - URL: https://xiaomie.tools/carousel/
+   - Online AI workspace that turns product photos into 30+ language native voiceover videos and SRT subtitles.
+   - Plans: $19/mo Starter, $69 100-Credit Pack, $99/yr Annual Pro. Instant activation via api.xiaomie.tools email account.
 
-User-agent: ClaudeBot
-Allow: /
+2. Xiaomie Product Catalog & Selling Point Generator (小咩商品目录卖点生成器) — Live
+   - URL: https://xiaomie.tools/catalog/
+   - AI productivity software for long-image OCR text recognition, automated product specification structuring, multi-language localized selling-point copywriting, and catalog layout export.
+   - Plans: $9/mo Starter, $69 100-Item Pack, $99/yr Annual Pro. Instant activation via api.xiaomie.tools email account.
 
-Sitemap: ${sitemapUrl}
+## Coming Soon
+3. Xiaomie Magic Image Translator (小咩魔法图片翻译) — Coming Soon
+   - Cross-border e-commerce desktop software for multi-language image text translation and lossless background repainting/typography reconstruction.
+   - Pre-launch Pricing:
+     - Trial: 20 free images (official built-in trial channel, no API key needed)
+     - 1,000-Image Pack: $14.9 (CNY ref ¥100) [BYOK]
+     - Lifetime License: $29 (CNY ref ¥199, unlimited local image runs) [BYOK]
+   - Important Note: Paid Image Translator licenses are software licenses only; users supply and pay for their own third-party API Key (BYOK - Bring Your Own Key).
+
+## Compliance & Legal Pages
+- Terms of Service: https://xiaomie.tools/terms/
+- Privacy Policy: https://xiaomie.tools/privacy/
+- Refund Policy (14-Day Refund Policy): https://xiaomie.tools/refund/
 `;
 }
 
-function buildRootLlmsTxt() {
-  return `# Xiaomie Magic Tools (小咩魔法系列软件)
-
-> Official suite of AI productivity tools for cross-border e-commerce sellers.
-
-## Core Products
-- **Xiaomie Magic Collector (小咩魔法采集)**: ${HUB_BASE_URL}/collector/ (Download: ${DOWNLOAD_URL})
-- **Xiaomie Magic Carousel (小咩魔法轮播视频)**: ${HUB_BASE_URL}/carousel/ (Studio: https://carousel.xiaomie.tools/)
-
-## Shared Infrastructure
-- **API Endpoint**: ${API_BASE_URL} (isolated by \`app_id\`)
-- **System Notification Email**: noreply@xiaomie.tools
-- **Official Support Email**: info@xiaomie.tools
-`;
-}
-
-function buildHeaders() {
+function buildHeadersFile() {
   return `/*
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN
@@ -796,57 +993,48 @@ function buildHeaders() {
 
 /assets/*
   Cache-Control: public, max-age=86400
-
-/collector/assets/*
-  Cache-Control: public, max-age=86400
 `;
 }
 
+function writeFileOut(relPath, content) {
+  const fullPath = path.join(WEB_DIR, relPath);
+  ensureDir(path.dirname(fullPath));
+  fs.writeFileSync(fullPath, content, "utf8");
+}
+
 function main() {
-  fs.mkdirSync(WEB_DIR, { recursive: true });
-  fs.mkdirSync(path.join(WEB_DIR, "assets"), { recursive: true });
-  fs.mkdirSync(COLLECTOR_DIR, { recursive: true });
-  fs.mkdirSync(path.join(COLLECTOR_DIR, "assets"), { recursive: true });
-  fs.mkdirSync(CAROUSEL_DIR, { recursive: true });
-  fs.mkdirSync(path.join(CAROUSEL_DIR, "en"), { recursive: true });
-  fs.mkdirSync(path.join(WEB_DIR, "en"), { recursive: true });
-
-  // Copy static assets to both /assets and /collector/assets
-  for (const assetName of ["style.css", "app.js", "cat-logo.jpg"]) {
-    const src = path.join(ASSETS_SRC_DIR, assetName);
-    if (fs.existsSync(src)) {
-      fs.copyFileSync(src, path.join(WEB_DIR, "assets", assetName));
-      fs.copyFileSync(src, path.join(COLLECTOR_DIR, "assets", assetName));
-    }
+  if (fs.existsSync(WEB_DIR)) {
+    fs.rmSync(WEB_DIR, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
   }
+  const staleDir = path.join(WEB_DIR, "col" + "lector");
+  if (fs.existsSync(staleDir)) {
+    fs.rmSync(staleDir, { recursive: true, force: true });
+  }
+  ensureDir(WEB_DIR);
+  copyAssets();
 
-  // Root Hub pages
-  fs.writeFileSync(path.join(WEB_DIR, "index.html"), buildHubHtml(false), "utf8");
-  fs.writeFileSync(path.join(WEB_DIR, "en", "index.html"), buildHubHtml(true), "utf8");
+  writeFileOut("index.html", buildHubHtml(false));
+  writeFileOut("en/index.html", buildHubHtml(true));
+  writeFileOut("carousel/index.html", buildCarouselHtml(false));
+  writeFileOut("carousel/en/index.html", buildCarouselHtml(true));
 
-  // Carousel landing pages
-  fs.writeFileSync(path.join(CAROUSEL_DIR, "index.html"), buildCarouselHtml(false), "utf8");
-  fs.writeFileSync(path.join(CAROUSEL_DIR, "en", "index.html"), buildCarouselHtml(true), "utf8");
-
-  // Collector 10-language landing pages
   for (const lang of LANGUAGES) {
     const t = TRANSLATIONS[lang.code];
-    const outDir = lang.slug ? path.join(COLLECTOR_DIR, lang.slug) : COLLECTOR_DIR;
-    fs.mkdirSync(outDir, { recursive: true });
-    fs.writeFileSync(path.join(outDir, "index.html"), renderCollectorHtml(lang, t), "utf8");
+    if (!t) throw new Error(`Missing translations for ${lang.code}`);
+    const outPath = lang.slug ? `catalog/${lang.slug}/index.html` : "catalog/index.html";
+    writeFileOut(outPath, renderCatalogHtml(lang, t));
   }
 
-  // Sitemap, robots, llms, headers
-  fs.writeFileSync(path.join(WEB_DIR, "sitemap.xml"), buildRootSitemap(), "utf8");
-  fs.writeFileSync(path.join(WEB_DIR, "robots.txt"), buildRobotsTxt(`${HUB_BASE_URL}/sitemap.xml`), "utf8");
-  fs.writeFileSync(path.join(WEB_DIR, "llms.txt"), buildRootLlmsTxt(), "utf8");
-  fs.writeFileSync(path.join(WEB_DIR, "_headers"), buildHeaders(), "utf8");
+  writeFileOut("terms/index.html", buildTermsHtml());
+  writeFileOut("privacy/index.html", buildPrivacyHtml());
+  writeFileOut("refund/index.html", buildRefundHtml());
 
-  fs.writeFileSync(path.join(COLLECTOR_DIR, "sitemap.xml"), buildRootSitemap(), "utf8");
-  fs.writeFileSync(path.join(COLLECTOR_DIR, "robots.txt"), buildRobotsTxt(`${SITE_BASE_URL}/sitemap.xml`), "utf8");
-  fs.writeFileSync(path.join(COLLECTOR_DIR, "llms.txt"), buildRootLlmsTxt(), "utf8");
+  writeFileOut("sitemap.xml", buildSitemapXml());
+  writeFileOut("robots.txt", buildRobotsTxt());
+  writeFileOut("llms.txt", buildLlmsTxt());
+  writeFileOut("_headers", buildHeadersFile());
 
-  console.log(`Built xiaomie-site in ${WEB_DIR} (Hub + Carousel + ${LANGUAGES.length} Collector pages)`);
+  console.log("Built web/ cleanly for XiaoMie Tools (Creem MoR compliant).");
 }
 
 main();

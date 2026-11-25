@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="vi" dir="ltr" data-app-id="catalog">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trình Tạo Danh Mục &amp; Điểm Bán Hàng Xiaomie — OCR Ảnh Dài &amp; Soạn Catalog Đa Ngôn Ngữ</title>
+  <meta name="description" content="Công cụ SaaS AI cho đội ngũ thương mại điện tử: nhận diện chữ OCR trên ảnh dài, sắp xếp đồng bộ kích thước/trọng lượng/quy cách thùng, viết điểm bán hàng đa ngôn ngữ và xuất danh mục sản phẩm chuẩn." />
+  <meta name="keywords" content="trình tạo danh mục sản phẩm,OCR ảnh dài,sắp xếp thông số sản phẩm,viết mô tả đa ngôn ngữ,công cụ SaaS" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://xiaomie.tools/catalog/vi/" />
+  <link rel="alternate" hreflang="zh-CN" href="https://xiaomie.tools/catalog/" />
+  <link rel="alternate" hreflang="zh-TW" href="https://xiaomie.tools/catalog/zh-tw/" />
+  <link rel="alternate" hreflang="en" href="https://xiaomie.tools/catalog/en/" />
+  <link rel="alternate" hreflang="ja" href="https://xiaomie.tools/catalog/ja/" />
+  <link rel="alternate" hreflang="ko" href="https://xiaomie.tools/catalog/ko/" />
+  <link rel="alternate" hreflang="es" href="https://xiaomie.tools/catalog/es/" />
+  <link rel="alternate" hreflang="de" href="https://xiaomie.tools/catalog/de/" />
+  <link rel="alternate" hreflang="fr" href="https://xiaomie.tools/catalog/fr/" />
+  <link rel="alternate" hreflang="vi" href="https://xiaomie.tools/catalog/vi/" />
+  <link rel="alternate" hreflang="th" href="https://xiaomie.tools/catalog/th/" />
+  <link rel="alternate" hreflang="x-default" href="https://xiaomie.tools/catalog/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Trình Tạo Danh Mục &amp; Điểm Bán Hàng Xiaomie — OCR Ảnh Dài &amp; Soạn Catalog Đa Ngôn Ngữ" />
+  <meta property="og:description" content="Công cụ SaaS AI cho đội ngũ thương mại điện tử: nhận diện chữ OCR trên ảnh dài, sắp xếp đồng bộ kích thước/trọng lượng/quy cách thùng, viết điểm bán hàng đa ngôn ngữ và xuất danh mục sản phẩm chuẩn." />
+  <meta property="og:url" content="https://xiaomie.tools/catalog/vi/" />
+  <meta property="og:locale" content="vi_VN" />
+  <meta property="og:image" content="https://xiaomie.tools/assets/cat-logo.jpg" />
+  <link rel="icon" type="image/jpeg" href="/assets/cat-logo.jpg" />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"Xiaomie Product Catalog & Selling Point Generator","applicationCategory":"BusinessApplication","operatingSystem":"Windows 10/11, macOS, Web","url":"https://xiaomie.tools/catalog/vi/","description":"Công cụ SaaS AI cho đội ngũ thương mại điện tử: nhận diện chữ OCR trên ảnh dài, sắp xếp đồng bộ kích thước/trọng lượng/quy cách thùng, viết điểm bán hàng đa ngôn ngữ và xuất danh mục sản phẩm chuẩn.","publisher":{"@type":"Person","name":"Limei Chen","email":"info@xiaomie.tools"},"offers":[{"@type":"Offer","name":"🚀 Gói Tháng Starter","priceCurrency":"USD","price":"9","url":"https://xiaomie.tools/catalog/vi/"},{"@type":"Offer","name":"⭐ Gói Pro 100 Danh Mục","priceCurrency":"USD","price":"69","url":"https://xiaomie.tools/catalog/vi/"},{"@type":"Offer","name":"👑 Studio Năm (Annual Pro)","priceCurrency":"USD","price":"99","url":"https://xiaomie.tools/catalog/vi/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Thanh toán xong bao lâu thì dùng được?","acceptedAnswer":{"@type":"Answer","text":"Hệ thống tự động kích hoạt ngay lập tức vào email đăng ký trên api.xiaomie.tools."}},{"@type":"Question","name":"Có chính sách hoàn tiền không?","acceptedAnswer":{"@type":"Answer","text":"Có, áp dụng chính sách hoàn tiền 14 ngày (14-day refund policy). Liên hệ info@xiaomie.tools bất cứ lúc nào."}}]}]}</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/en/">
+        <img src="/assets/cat-logo.jpg" alt="XiaoMie Tools Logo" width="38" height="38" />
+        <span>Xiaomie Catalog &amp; Copy Generator</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/en/">Suite Hub</a>
+        <a href="#features">Tính năng</a>
+        <a href="#pricing">Bảng giá</a>
+        <a href="#install">Quy trình</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="header-actions">
+        <select id="langSwitcher" class="lang-select" aria-label="Language"><option value="/catalog/">简体中文</option><option value="/catalog/zh-tw/">繁體中文</option><option value="/catalog/en/">English</option><option value="/catalog/ja/">日本語</option><option value="/catalog/ko/">한국어</option><option value="/catalog/es/">Español</option><option value="/catalog/de/">Deutsch</option><option value="/catalog/fr/">Français</option><option value="/catalog/vi/" selected>Tiếng Việt</option><option value="/catalog/th/">ภาษาไทย</option></select>
+        <button type="button" class="btn btn-primary btn-sm" id="btnOpenAccountPortal">👤 Account / 账号中心</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="badge">Đang hoạt động · XiaoMie Tools SaaS · Dùng thử 20 mẫu</span>
+          <h1>Nhận Diện OCR Ảnh Dài, Sắp Xếp Thông Số &amp; Xuất Danh Mục Đa Ngôn Ngữ Trong 30 Giây</h1>
+          <p class="lead">Tích hợp OCR WASM cục bộ đọc chữ từ ảnh dài, căn chỉnh kích thước/trọng lượng/quy cách thùng 1-1, viết nội dung bán hàng B2B/ToC và xuất bộ danh mục hoàn chỉnh.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#pricing">Xem Bảng Giá SaaS ($9–$99)</a>
+            <a class="btn btn-secondary" href="#features">Khám Phá Tính Năng</a>
+          </div>
+          <ul class="trust-list">
+            <li>OCR cục bộ WASM SIMD mượt mà</li><li>Căn chỉnh thông số &amp; quy cách thùng 1-1</li><li>Kích hoạt tự động ngay qua email api.xiaomie.tools sau thanh toán</li>
+          </ul>
+        </div>
+        <aside class="hero-card">
+          <img class="hero-mascot" src="/assets/cat-logo.jpg" alt="XiaoMie Tools Mascot" />
+          <h3 style="margin:0 0 6px">Long-Image OCR · Specs · Copywriting</h3>
+          <p style="margin:0;color:var(--muted);font-size:0.9rem">Đội ngũ thương mại điện tử &amp; tạo catalog</p>
+          <div class="hero-card-tags">
+            <span class="chip">🔍 Image OCR</span>
+            <span class="chip">📦 Spec Tables</span>
+            <span class="chip">💡 Copywriting</span>
+            <span class="chip">🔐 BYOK</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="stats-bar">
+      <div class="container stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">20 Mẫu</div>
+        <div class="stat-label">Dùng Thử Miễn Phí</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1-1</div>
+        <div class="stat-label">Đồng Bộ Thông Số</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">0 Lag</div>
+        <div class="stat-label">OCR Ảnh Dài Cục Bộ</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">100% Sạch</div>
+        <div class="stat-label">Đơn Ngữ Chuẩn Xác</div>
+      </div></div>
+    </section>
+
+    <section class="section section-alt" id="features">
+      <div class="container">
+        <div class="section-head">
+          <h2>Tính Năng Cốt Lõi</h2>
+          <p>OCR ảnh dài + đồng bộ quy cách + viết điểm bán hàng đa ngôn ngữ + xuất danh mục.</p>
+        </div>
+        <div class="features-grid">
+      <article class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Nhận Diện Chữ OCR Ảnh Dài</h3>
+        <p>Engine Tesseract WASM SIMD trích xuất chất liệu, kích thước và thông số từ ảnh dài nhanh chóng.</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">📦</div>
+        <h3>Đồng Bộ Kích Thước, Trọng Lượng &amp; Thùng</h3>
+        <p>Sắp xếp chính xác từng biến thể kích thước, khối lượng đơn chiếc, quy cách thùng và giá tương ứng.</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">💡</div>
+        <h3>Viết Điểm Bán Hàng B2B / ToC Đa Ngôn Ngữ</h3>
+        <p>Tạo nội dung thuần tiếng Anh hoặc tiếng Trung tự nhiên, không bị trộn chữ.</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">🗂️</div>
+        <h3>Xuất Thư Mục Danh Mục Chuẩn Hóa</h3>
+        <p>Phân loại ảnh sạch và tài liệu thông số theo cấu trúc thư mục đánh số gọn gàng.</p>
+      </article></div>
+      </div>
+    </section>
+
+    <section class="section" id="compare">
+      <div class="container">
+        <div class="section-head">
+          <h2>Làm Thủ Công vs. Trình Tạo Danh Mục Xiaomie</h2>
+        </div>
+        <div class="table-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr><th>Hạng mục</th><th>Bảng tính thủ công</th><th>Trình tạo danh mục Xiaomie</th></tr>
+            </thead>
+            <tbody>
+      <tr>
+        <td><strong>Chữ trong ảnh dài</strong></td>
+        <td>Tự đọc và gõ tay mất thời gian</td>
+        <td>OCR WASM cục bộ trích xuất tự động</td>
+      </tr>
+      <tr>
+        <td><strong>Biến thể &amp; quy cách thùng</strong></td>
+        <td>Dễ sai lệch giữa các kích thước</td>
+        <td>Căn chỉnh 1-1 tự động cho từng biến thể</td>
+      </tr>
+      <tr>
+        <td><strong>Viết nội dung đa ngôn ngữ</strong></td>
+        <td>Dịch tay qua nhiều công cụ</td>
+        <td>Tạo sẵn B2B/ToC sạch đẹp chỉ 1 bước</td>
+      </tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <h2>Bảng Giá SaaS Minh Bạch (USD)</h2>
+          <p>Kích hoạt tự động tức thì qua tài khoản email api.xiaomie.tools ngay sau khi thanh toán thành công.</p>
+        </div>
+        <div class="pricing-grid">
+      <div class="price-card">
+        
+        <div>
+          <div class="price-name">🚀 Gói Tháng Starter</div>
+          <div class="price-amount">$9 <small>/ tháng · Gói SaaS · USD / tháng</small></div>
+          <p class="price-desc">Phù hợp cá nhân làm danh mục sản phẩm hằng tháng.</p>
+          <ul class="price-list"><li>30 bộ danh mục sản phẩm/tháng</li><li>OCR ảnh dài cục bộ</li><li>Căn chỉnh thông số &amp; thùng 1-1</li><li>Kích hoạt ngay qua api.xiaomie.tools</li></ul>
+        </div>
+        <button type="button" class="btn btn-secondary" data-open-checkout data-plan="monthly9">Đăng ký Starter ($9/mo)</button>
+      </div>
+      <div class="price-card featured">
+        <span class="popular-badge">Phổ biến nhất</span>
+        <div>
+          <div class="price-name">⭐ Gói Pro 100 Danh Mục</div>
+          <div class="price-amount">$69 <small>/ 100 danh mục (không hết hạn) · USD · một lần</small></div>
+          <p class="price-desc">Cộng dồn không giới hạn thời gian và hỗ trợ API Key riêng (BYOK).</p>
+          <ul class="price-list"><li>100 lượt xuất danh mục hoàn chỉnh</li><li>Mở khóa API Key riêng (BYOK)</li><li>Viết điểm bán hàng B2B/ToC đa ngôn ngữ</li><li>Kích hoạt ngay qua api.xiaomie.tools</li></ul>
+        </div>
+        <button type="button" class="btn btn-primary" data-open-checkout data-plan="pack100">Mua Gói Pro ($69)</button>
+      </div>
+      <div class="price-card">
+        
+        <div>
+          <div class="price-name">👑 Studio Năm (Annual Pro)</div>
+          <div class="price-amount">$99 <small>/ năm · Gói Năm · USD / năm</small></div>
+          <p class="price-desc">Tiết kiệm tối đa cho đội ngũ vận hành chuyên nghiệp.</p>
+          <ul class="price-list"><li>Xuất danh mục dung lượng lớn cả năm</li><li>Hỗ trợ BYOK &amp; mọi ngôn ngữ</li><li>Hỗ trợ ưu tiên qua email</li><li>Kích hoạt ngay qua api.xiaomie.tools</li></ul>
+        </div>
+        <button type="button" class="btn btn-secondary" data-open-checkout data-plan="annual99">Nâng cấp Gói Năm ($99/yr)</button>
+      </div></div>
+      </div>
+    </section>
+
+    <section class="section" id="install">
+      <div class="container">
+        <div class="section-head">
+          <h2>3 Bước Bắt Đầu Nhanh</h2>
+        </div>
+        <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Đăng Nhập Email OTP</h3>
+        <p>Xác thực qua noreply@xiaomie.tools để đồng bộ quyền trên api.xiaomie.tools.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>Tải Ảnh &amp; Thông Số</h3>
+        <p>Chọn ngôn ngữ đích và văn phong B2B hoặc ToC.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>Xuất Danh Mục Hoàn Chỉnh</h3>
+        <p>Nhận bảng quy cách đồng bộ, bài viết bán hàng và bộ ảnh sạch.</p>
+      </div></div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="checkout-methods">
+      <div class="container">
+        <div class="section-head">
+          <h2>Global SaaS Checkout &amp; Instant Account Provisioning</h2>
+          <p>Powered by Global Card &amp; SaaS Checkout (Visa, MasterCard, Apple Pay, Google Pay). Entitlements are activated automatically and instantaneously under your email via api.xiaomie.tools after payment.</p>
+        </div>
+        <div class="payment-grid">
+          <div class="pay-card active">
+            <span class="pay-badge live">Global SaaS · USD</span>
+            <h3>🌐 Global Card &amp; SaaS Checkout (USD)</h3>
+            <p>Pay securely with Visa, MasterCard, Amex, Apple Pay, or Google Pay. Automatic instant activation under your email via api.xiaomie.tools.</p>
+            <p style="font-size:0.84rem;color:var(--muted)">Operated by XiaoMie Tools (Limei Chen) · Support: info@xiaomie.tools</p>
+            <button type="button" class="btn btn-primary btn-sm" data-open-checkout data-plan="pack100">Proceed to Global SaaS Checkout</button>
+          </div>
+          <div class="pay-card">
+            <span class="pay-badge soon">Local Method · Reserved</span>
+            <h3>💚 WeChat Pay (CNY Ref)</h3>
+            <p>Regional CNY payment option reserved alongside automatic api.xiaomie.tools provisioning.</p>
+            <small style="color:var(--muted)">⏳ Reserved Slot · info@xiaomie.tools</small>
+          </div>
+          <div class="pay-card">
+            <span class="pay-badge soon">Local Method · Reserved</span>
+            <h3>💙 Alipay (CNY Ref)</h3>
+            <p>Regional CNY payment option reserved alongside automatic api.xiaomie.tools provisioning.</p>
+            <small style="color:var(--muted)">⏳ Reserved Slot · info@xiaomie.tools</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <h2>Câu Hỏi Thường Gặp (FAQ)</h2>
+        </div>
+        <div class="faq-list">
+      <details>
+        <summary>Thanh toán xong bao lâu thì dùng được?</summary>
+        <p>Hệ thống tự động kích hoạt ngay lập tức vào email đăng ký trên api.xiaomie.tools.</p>
+      </details>
+      <details>
+        <summary>Có chính sách hoàn tiền không?</summary>
+        <p>Có, áp dụng chính sách hoàn tiền 14 ngày (14-day refund policy). Liên hệ info@xiaomie.tools bất cứ lúc nào.</p>
+      </details></div>
+      </div>
+    </section>
+  </main>
+
+  
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2026 XiaoMie Tools. Operated by Limei Chen. Contact: <a href="mailto:info@xiaomie.tools" style="color:var(--primary);font-weight:700">info@xiaomie.tools</a></div>
+      <div class="footer-langs">
+        <a href="/terms/">Terms of Service</a>
+        <a href="/privacy/">Privacy Policy</a>
+        <a href="/refund/">Refund Policy (14-Day)</a>
+        <a href="/catalog/">简中</a><a href="/catalog/zh-tw/">繁中</a><a href="/catalog/en/">EN</a><a href="/catalog/ja/">JP</a><a href="/catalog/ko/">KR</a><a href="/catalog/es/">ES</a><a href="/catalog/de/">DE</a><a href="/catalog/fr/">FR</a><a href="/catalog/vi/">VI</a><a href="/catalog/th/">TH</a>
+      </div>
+    </div>
+  </footer>
+  
+  <dialog id="accountPortalModal" class="xm-modal">
+    <div class="xm-modal-head">
+      <strong>XiaoMie Tools · Account & Usage Portal</strong>
+      <button type="button" class="xm-modal-close" id="btnCloseAccountPortal">✕</button>
+    </div>
+    <div class="xm-modal-body">
+      <div id="portalLoginBox">
+        <p style="margin-top:0;color:var(--ink-soft);font-size:0.9rem">
+          Sign in passwordlessly with a 6-digit code sent from <code>noreply@xiaomie.tools</code>. Paid plans activate automatically on your <code>api.xiaomie.tools</code> email account.
+        </p>
+        <label class="xm-label" for="webOtpEmail">Email Address</label>
+        <div class="xm-row">
+          <input id="webOtpEmail" class="xm-input" type="email" placeholder="name@company.com" />
+          <button type="button" class="btn btn-secondary btn-sm" id="btnWebSendOtp">Send Code</button>
+        </div>
+        <label class="xm-label" for="webOtpCode" style="margin-top:12px">6-Digit Verification Code</label>
+        <div class="xm-row">
+          <input id="webOtpCode" class="xm-input" type="text" maxlength="6" placeholder="123456" />
+          <button type="button" class="btn btn-primary btn-sm" id="btnWebVerifyOtp">Sign In</button>
+        </div>
+        <div id="webOtpStatus" class="xm-status"></div>
+      </div>
+
+      <div id="portalDashBox" style="display:none">
+        <div class="portal-summary">
+          <div><small>Account Email</small><strong id="portalUserEmail"></strong></div>
+          <div><small>Plan</small><strong id="portalUserPlan"></strong></div>
+          <div><small>Remaining Credits</small><strong id="portalUserQuota"></strong></div>
+        </div>
+        <h4 style="margin:14px 0 8px;font-size:0.88rem">Credit Ledger</h4>
+        <div id="portalLedgerList" class="ledger-list"></div>
+        <div style="margin-top:14px;display:flex;gap:10px;justify-content:flex-end">
+          <button type="button" class="btn btn-secondary btn-sm" id="btnWebLogout">Sign Out</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="saasCheckoutModal" class="xm-modal">
+    <div class="xm-modal-head">
+      <strong>Global Card & SaaS Checkout</strong>
+      <button type="button" class="xm-modal-close" id="btnCloseCheckoutModal">✕</button>
+    </div>
+    <div class="xm-modal-body">
+      <p style="margin-top:0;color:var(--ink-soft);font-size:0.9rem">
+        Global SaaS subscription & credit pack checkout (Creem MoR ready). <strong>Activates instantly via your <code>api.xiaomie.tools</code> email account after payment</strong>, backed by our <a href="/refund/">14-day refund policy</a>.
+      </p>
+      <label class="xm-label" for="checkoutPlanSelect">Select SaaS Plan</label>
+      <select id="checkoutPlanSelect" class="xm-input">
+          <option value="monthly9">Monthly Starter ($9 / mo · 50 catalogs)</option>
+          <option value="pack100">100-Item Pro Pack ($69 · Non-expiring)</option>
+          <option value="annual99">Annual Pro SaaS ($99 / yr · Unlimited)</option>
+        </select>
+      <label class="xm-label" for="checkoutBuyerEmail" style="margin-top:12px">Account Email for Instant Activation (api.xiaomie.tools)</label>
+      <input id="checkoutBuyerEmail" class="xm-input" type="email" placeholder="buyer@company.com" />
+      <div style="margin-top:14px;display:flex;gap:10px">
+        <button type="button" class="btn btn-primary" id="btnSubmitSaasCheckout" style="width:100%">
+          Continue to Global SaaS Checkout
+        </button>
+      </div>
+      <div id="saasCheckoutStatus" class="xm-status"></div>
+    </div>
+  </dialog>
+  
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>

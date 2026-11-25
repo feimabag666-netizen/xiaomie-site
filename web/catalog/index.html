@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="zh-CN" dir="ltr" data-app-id="catalog">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>小咩商品目录卖点生成器 — 长图OCR、规格整理与多语种商品目录AI效率助手</title>
+  <meta name="description" content="专为跨境商家与品牌选品团队打造的 AI 生产力工具：支持商品长图 OCR 文字识别、商品规格与外箱参数自动整理、多语种本地化卖点文案生成及结构化商品目录排版导出，免费体验 20 款。" />
+  <meta name="keywords" content="小咩商品目录卖点生成器,长图OCR文字识别,商品规格参数整理,多语种卖点文案生成,商品目录排版导出,AI电商效率工具" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://xiaomie.tools/catalog/" />
+  <link rel="alternate" hreflang="zh-CN" href="https://xiaomie.tools/catalog/" />
+  <link rel="alternate" hreflang="zh-TW" href="https://xiaomie.tools/catalog/zh-tw/" />
+  <link rel="alternate" hreflang="en" href="https://xiaomie.tools/catalog/en/" />
+  <link rel="alternate" hreflang="ja" href="https://xiaomie.tools/catalog/ja/" />
+  <link rel="alternate" hreflang="ko" href="https://xiaomie.tools/catalog/ko/" />
+  <link rel="alternate" hreflang="es" href="https://xiaomie.tools/catalog/es/" />
+  <link rel="alternate" hreflang="de" href="https://xiaomie.tools/catalog/de/" />
+  <link rel="alternate" hreflang="fr" href="https://xiaomie.tools/catalog/fr/" />
+  <link rel="alternate" hreflang="vi" href="https://xiaomie.tools/catalog/vi/" />
+  <link rel="alternate" hreflang="th" href="https://xiaomie.tools/catalog/th/" />
+  <link rel="alternate" hreflang="x-default" href="https://xiaomie.tools/catalog/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="小咩商品目录卖点生成器 — 长图OCR、规格整理与多语种商品目录AI效率助手" />
+  <meta property="og:description" content="专为跨境商家与品牌选品团队打造的 AI 生产力工具：支持商品长图 OCR 文字识别、商品规格与外箱参数自动整理、多语种本地化卖点文案生成及结构化商品目录排版导出，免费体验 20 款。" />
+  <meta property="og:url" content="https://xiaomie.tools/catalog/" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:image" content="https://xiaomie.tools/assets/cat-logo.jpg" />
+  <link rel="icon" type="image/jpeg" href="/assets/cat-logo.jpg" />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"小咩商品目录卖点生成器","applicationCategory":"BusinessApplication","operatingSystem":"Windows 10/11, macOS, Web","url":"https://xiaomie.tools/catalog/","description":"专为跨境商家与品牌选品团队打造的 AI 生产力工具：支持商品长图 OCR 文字识别、商品规格与外箱参数自动整理、多语种本地化卖点文案生成及结构化商品目录排版导出，免费体验 20 款。","publisher":{"@type":"Person","name":"Limei Chen","email":"info@xiaomie.tools"},"offers":[{"@type":"Offer","name":"🚀 入门月付版 (Starter)","priceCurrency":"USD","price":"9","url":"https://xiaomie.tools/catalog/"},{"@type":"Offer","name":"⭐ 100 套专业点数包","priceCurrency":"USD","price":"69","url":"https://xiaomie.tools/catalog/"},{"@type":"Offer","name":"👑 年付工作室版 (Annual Pro)","priceCurrency":"USD","price":"99","url":"https://xiaomie.tools/catalog/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"「小咩商品目录卖点生成器」主要解决什么问题？","acceptedAnswer":{"@type":"Answer","text":"专注于电商商品资料处理自动化：通过本地长图 OCR 识别图片里的规格文字、把杂乱的尺寸/单重/箱规/价格参数整理成结构化表格，并一键生成地道的多语种卖点文案与产品目录。"}},{"@type":"Question","name":"付款后如何开通使用权限？","acceptedAnswer":{"@type":"Answer","text":"采用国际 SaaS 自动发卡体系，付款完成后权益会自动绑定到您的邮箱账号（api.xiaomie.tools），在工作台输入同一邮箱验证码登录即可立即生效。"}},{"@type":"Question","name":"是否支持退款保障？","acceptedAnswer":{"@type":"Answer","text":"支持。我们提供标准 14 天退款政策（14-day refund policy），如有任何问题请随时联系官方唯一客服邮箱 info@xiaomie.tools。"}}]}]}</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <img src="/assets/cat-logo.jpg" alt="XiaoMie Tools Logo" width="38" height="38" />
+        <span>小咩商品目录卖点生成器</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/">系列总官网</a>
+        <a href="#features">核心能力</a>
+        <a href="#pricing">SaaS 定价</a>
+        <a href="#install">快速上手</a>
+        <a href="#faq">常见问题</a>
+      </nav>
+      <div class="header-actions">
+        <select id="langSwitcher" class="lang-select" aria-label="Language"><option value="/catalog/" selected>简体中文</option><option value="/catalog/zh-tw/">繁體中文</option><option value="/catalog/en/">English</option><option value="/catalog/ja/">日本語</option><option value="/catalog/ko/">한국어</option><option value="/catalog/es/">Español</option><option value="/catalog/de/">Deutsch</option><option value="/catalog/fr/">Français</option><option value="/catalog/vi/">Tiếng Việt</option><option value="/catalog/th/">ภาษาไทย</option></select>
+        <button type="button" class="btn btn-primary btn-sm" id="btnOpenAccountPortal">👤 Account / 账号中心</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="badge">已上线 · XiaoMie Tools AI 生产力引擎 · 免费体验 20 款</span>
+          <h1>商品长图识别、规格整理与多语种目录排版，30 秒一站生成</h1>
+          <p class="lead">告别繁琐手工制表与反复核对：内置本地高精度长图 OCR 文字识别、产品尺寸/重量/箱规/价格多规格自动对齐整理、B2B 与 ToC 多语种本地化卖点生成，以及可直接归档导出的标准商品目录文档。</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#pricing">查看 SaaS 定价与开通</a>
+            <a class="btn btn-secondary" href="#features">了解 6 大核心能力</a>
+          </div>
+          <ul class="trust-list">
+            <li>本地长图 OCR 引擎，运行流畅不卡顿</li><li>支持中/英等 10 种语种纯净目录排版输出</li><li>付款后通过 api.xiaomie.tools 邮箱账号自动即时开通</li>
+          </ul>
+        </div>
+        <aside class="hero-card">
+          <img class="hero-mascot" src="/assets/cat-logo.jpg" alt="XiaoMie Tools Mascot" />
+          <h3 style="margin:0 0 6px">长图 OCR · 规格整理 · 卖点生成</h3>
+          <p style="margin:0;color:var(--muted);font-size:0.9rem">中国大陆及全球华人跨境商家</p>
+          <div class="hero-card-tags">
+            <span class="chip">🔍 长图 OCR</span>
+            <span class="chip">📦 规格箱规对齐</span>
+            <span class="chip">💡 本地化卖点</span>
+            <span class="chip">🔐 BYOK</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="stats-bar">
+      <div class="container stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">20 款</div>
+        <div class="stat-label">新账号免费体验额度</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">全维对齐</div>
+        <div class="stat-label">尺寸·重量·箱规·价格联动整理</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">0 卡顿</div>
+        <div class="stat-label">长图 OCR 本地高精度文字识别</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">100% 纯净</div>
+        <div class="stat-label">多语种本地化卖点无混杂</div>
+      </div></div>
+    </section>
+
+    <section class="section section-alt" id="features">
+      <div class="container">
+        <div class="section-head">
+          <h2>为什么商家团队都使用「小咩商品目录卖点生成器」？</h2>
+          <p>传统手工整理需要逐张看图手打规格与翻译文案，现在一步完成「长图 OCR 识字 + 规格参数对齐 + 多语种卖点写作 + 目录排版导出」。</p>
+        </div>
+        <div class="features-grid">
+      <article class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>商品长图 OCR 文字识别</h3>
+        <p>内置本地 WASM SIMD 离线 OCR 引擎，精准识别超长详情图中的材质、容量、尺寸表、电压功率及包装文字，直接转化为可编辑参数。</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">📦</div>
+        <h3>多规格尺寸·重量·箱规自动对齐整理</h3>
+        <p>智能关联产品尺寸、单件重量、容量、每箱数量、外箱毛净重与立方数，多规格商品自动分组匹配，告别数据错位。</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">💡</div>
+        <h3>多语种本地化卖点与真实案例文案</h3>
+        <p>一键切换 B2B 外贸批发与 ToC 真实种草风格，输出纯正单一语种卖点与服务细节案例，绝不出现中英混杂。</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">🗂️</div>
+        <h3>结构化商品目录一键排版导出</h3>
+        <p>自动区分产品主图、SKU 规格图、详情图与说明文档，按统一编号目录一键归档导出，可直接用于内部汇报与上架审核。</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>智能过滤冗余徽标与低质图标</h3>
+        <p>自动识别并剔除微标、空白占位线框图与无关营销角标，确保商品目录画面干净整洁、专业度一致。</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">🔐</div>
+        <h3>支持 BYOK 自填 API Key 与邮箱账本</h3>
+        <p>通过 api.xiaomie.tools 邮箱验证码即可管理权限；升级套餐后开放自定义 API Key 设置，成本透明可控。</p>
+      </article></div>
+      </div>
+    </section>
+
+    <section class="section" id="compare">
+      <div class="container">
+        <div class="section-head">
+          <h2>传统手工整理 vs 小咩商品目录卖点生成器</h2>
+        </div>
+        <div class="table-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr><th>效率环节</th><th>传统人工整理制表</th><th>小咩商品目录卖点生成器</th></tr>
+            </thead>
+            <tbody>
+      <tr>
+        <td><strong>长图里的规格文字</strong></td>
+        <td>人工肉眼对照长图手敲，极易错漏</td>
+        <td>本地长图 OCR 自动识别提取文本</td>
+      </tr>
+      <tr>
+        <td><strong>多规格参数与箱规</strong></td>
+        <td>尺寸、单重、箱规经常错位混乱</td>
+        <td>多规格一一对齐联动适配整理</td>
+      </tr>
+      <tr>
+        <td><strong>目录配图质检筛选</strong></td>
+        <td>导出后逐张手动排查无用图标</td>
+        <td>像素识别 + OCR 过滤，保留清晰产品图</td>
+      </tr>
+      <tr>
+        <td><strong>多语种卖点与故事</strong></td>
+        <td>另开多个工具翻译复制拼接</td>
+        <td>内置 B2B/ToC 多语种卖点排版一键导出</td>
+      </tr>
+      <tr>
+        <td><strong>目录输出语言纯净度</strong></td>
+        <td>中英混杂，交付前需二次校对</td>
+        <td>严格单语种纯净输出，直接交付</td>
+      </tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <h2>透明 SaaS 定价 · 付款后即时开通</h2>
+          <p>支持 $9–$99 月付/年付 SaaS 订阅及点数包；付款后通过 api.xiaomie.tools 邮箱账号自动即时开通，无隐藏费用。</p>
+        </div>
+        <div class="pricing-grid">
+      <div class="price-card">
+        
+        <div>
+          <div class="price-name">🚀 入门月付版 (Starter)</div>
+          <div class="price-amount">$9 <small>/ 月 · SaaS 订阅 · 约 ¥68 / 月</small></div>
+          <p class="price-desc">适合个人卖家与日常选品制表，每月自动补充目录生成额度。</p>
+          <ul class="price-list"><li>每月 30 套商品目录排版生成</li><li>商品长图 OCR 文字识别</li><li>多规格参数与箱规自动对齐</li><li>付款后 api.xiaomie.tools 自动即时开通</li></ul>
+        </div>
+        <button type="button" class="btn btn-secondary" data-open-checkout data-plan="monthly9">开通月付版 ($9/mo)</button>
+      </div>
+      <div class="price-card featured">
+        <span class="popular-badge">团队推荐</span>
+        <div>
+          <div class="price-name">⭐ 100 套专业点数包</div>
+          <div class="price-amount">$69 <small>/ 100 套目录（可叠加） · 约 ¥500 / 一次性</small></div>
+          <p class="price-desc">额度永久有效不过期，支持配置自有 API Key（BYOK），适合活跃运营团队。</p>
+          <ul class="price-list"><li>100 套完整商品目录与卖点生成</li><li>解锁自定义 API Key（BYOK）配置</li><li>B2B/ToC 多语种卖点与案例输出</li><li>付款后 api.xiaomie.tools 自动即时开通</li></ul>
+        </div>
+        <button type="button" class="btn btn-primary" data-open-checkout data-plan="pack100">购买专业点数包 ($69)</button>
+      </div>
+      <div class="price-card">
+        
+        <div>
+          <div class="price-name">👑 年付工作室版 (Annual Pro)</div>
+          <div class="price-amount">$99 <small>/ 年 · 全功能高配 · 约 ¥699 / 年</small></div>
+          <p class="price-desc">高频使用性价比之选，全年畅享目录排版、OCR 识别与全套更新。</p>
+          <ul class="price-list"><li>全年无限次标准目录格式化与导出</li><li>支持 BYOK 与全语种本地化文案</li><li>优先享受新功能与客户支持</li><li>付款后 api.xiaomie.tools 自动即时开通</li></ul>
+        </div>
+        <button type="button" class="btn btn-secondary" data-open-checkout data-plan="annual99">升级年付版 ($99/yr)</button>
+      </div></div>
+      </div>
+    </section>
+
+    <section class="section" id="install">
+      <div class="container">
+        <div class="section-head">
+          <h2>三步完成商品目录与卖点生成</h2>
+        </div>
+        <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>邮箱登录授权账号</h3>
+        <p>点击右上角账号中心输入邮箱，通过 noreply@xiaomie.tools 验证码登录并同步 api.xiaomie.tools 权益。</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>导入长图与基础资料</h3>
+        <p>载入产品实拍图、参数表格或详情长图，选择目标输出语种（中文/英文）与文案风格（B2B / ToC）。</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>一键排版导出成品目录</h3>
+        <p>系统自动完成 OCR 识字、规格箱规对齐与本地化卖点写作，导出整洁的标准商品目录包。</p>
+      </div></div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="checkout-methods">
+      <div class="container">
+        <div class="section-head">
+          <h2>全球 SaaS 收款与即时自动开通</h2>
+          <p>由 Global Card &amp; SaaS Checkout（Creem MoR 国际商户结算体系）提供安全支付支持，支持 Visa / MasterCard / Apple Pay / Google Pay。付款后通过 api.xiaomie.tools 邮箱账号自动即时开通。</p>
+        </div>
+        <div class="payment-grid">
+          <div class="pay-card active">
+            <span class="pay-badge live">国际 SaaS 通道 · 美元结算</span>
+            <h3>🌐 Global Card &amp; SaaS Checkout (USD)</h3>
+            <p>支持 Visa / MasterCard / Amex / Apple Pay / Google Pay；付款后系统自动向您的 api.xiaomie.tools 邮箱账号开通对应权益。</p>
+            <p style="font-size:0.84rem;color:var(--muted)">运营主体：XiaoMie Tools (Operated by Limei Chen) · 官方唯一客服：info@xiaomie.tools</p>
+            <button type="button" class="btn btn-primary btn-sm" data-open-checkout data-plan="pack100">进入 SaaS 在线结算 (USD)</button>
+          </div>
+          <div class="pay-card">
+            <span class="pay-badge soon">本土通道 · 接入预留中</span>
+            <h3>💚 微信支付（CNY 参考）</h3>
+            <p>国内本土扫码支付通道持续完善，支持通过 api.xiaomie.tools 邮箱自动发放授权。</p>
+            <small style="color:var(--muted)">⏳ 预留接入口 · 联系 info@xiaomie.tools</small>
+          </div>
+          <div class="pay-card">
+            <span class="pay-badge soon">本土通道 · 接入预留中</span>
+            <h3>💙 支付宝（CNY 参考）</h3>
+            <p>国内本土账单通道预留，支持通过 api.xiaomie.tools 邮箱自动发放授权。</p>
+            <small style="color:var(--muted)">⏳ 预留接入口 · 联系 info@xiaomie.tools</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <h2>常见问题与使用说明 (FAQ)</h2>
+        </div>
+        <div class="faq-list">
+      <details>
+        <summary>「小咩商品目录卖点生成器」主要解决什么问题？</summary>
+        <p>专注于电商商品资料处理自动化：通过本地长图 OCR 识别图片里的规格文字、把杂乱的尺寸/单重/箱规/价格参数整理成结构化表格，并一键生成地道的多语种卖点文案与产品目录。</p>
+      </details>
+      <details>
+        <summary>付款后如何开通使用权限？</summary>
+        <p>采用国际 SaaS 自动发卡体系，付款完成后权益会自动绑定到您的邮箱账号（api.xiaomie.tools），在工作台输入同一邮箱验证码登录即可立即生效。</p>
+      </details>
+      <details>
+        <summary>是否支持退款保障？</summary>
+        <p>支持。我们提供标准 14 天退款政策（14-day refund policy），如有任何问题请随时联系官方唯一客服邮箱 info@xiaomie.tools。</p>
+      </details></div>
+      </div>
+    </section>
+  </main>
+
+  
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2026 XiaoMie Tools. Operated by Limei Chen. Contact: <a href="mailto:info@xiaomie.tools" style="color:var(--primary);font-weight:700">info@xiaomie.tools</a></div>
+      <div class="footer-langs">
+        <a href="/terms/">服务条款 Terms</a>
+        <a href="/privacy/">隐私政策 Privacy</a>
+        <a href="/refund/">14 天退款政策 Refund</a>
+        <a href="/catalog/">简中</a><a href="/catalog/zh-tw/">繁中</a><a href="/catalog/en/">EN</a><a href="/catalog/ja/">JP</a><a href="/catalog/ko/">KR</a><a href="/catalog/es/">ES</a><a href="/catalog/de/">DE</a><a href="/catalog/fr/">FR</a><a href="/catalog/vi/">VI</a><a href="/catalog/th/">TH</a>
+      </div>
+    </div>
+  </footer>
+  
+  <dialog id="accountPortalModal" class="xm-modal">
+    <div class="xm-modal-head">
+      <strong>XiaoMie Tools · 统一账号与额度中心</strong>
+      <button type="button" class="xm-modal-close" id="btnCloseAccountPortal">✕</button>
+    </div>
+    <div class="xm-modal-body">
+      <div id="portalLoginBox">
+        <p style="margin-top:0;color:var(--ink-soft);font-size:0.9rem">
+          输入您的常用邮箱，由 <code>noreply@xiaomie.tools</code> 发送 6 位验证码免密登录。付款后系统通过 <code>api.xiaomie.tools</code> 邮箱账号自动即时开通权益。
+        </p>
+        <label class="xm-label" for="webOtpEmail">电子邮箱</label>
+        <div class="xm-row">
+          <input id="webOtpEmail" class="xm-input" type="email" placeholder="name@company.com" />
+          <button type="button" class="btn btn-secondary btn-sm" id="btnWebSendOtp">发送验证码</button>
+        </div>
+        <label class="xm-label" for="webOtpCode" style="margin-top:12px">6 位邮箱验证码</label>
+        <div class="xm-row">
+          <input id="webOtpCode" class="xm-input" type="text" maxlength="6" placeholder="123456" />
+          <button type="button" class="btn btn-primary btn-sm" id="btnWebVerifyOtp">验证登录</button>
+        </div>
+        <div id="webOtpStatus" class="xm-status"></div>
+      </div>
+
+      <div id="portalDashBox" style="display:none">
+        <div class="portal-summary">
+          <div><small>当前登录邮箱</small><strong id="portalUserEmail"></strong></div>
+          <div><small>当前会员方案</small><strong id="portalUserPlan"></strong></div>
+          <div><small>可用额度</small><strong id="portalUserQuota"></strong></div>
+        </div>
+        <h4 style="margin:14px 0 8px;font-size:0.88rem">额度与授权记录</h4>
+        <div id="portalLedgerList" class="ledger-list"></div>
+        <div style="margin-top:14px;display:flex;gap:10px;justify-content:flex-end">
+          <button type="button" class="btn btn-secondary btn-sm" id="btnWebLogout">退出登录</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="saasCheckoutModal" class="xm-modal">
+    <div class="xm-modal-head">
+      <strong>Global Card & SaaS Checkout</strong>
+      <button type="button" class="xm-modal-close" id="btnCloseCheckoutModal">✕</button>
+    </div>
+    <div class="xm-modal-body">
+      <p style="margin-top:0;color:var(--ink-soft);font-size:0.9rem">
+        国际 SaaS 订阅与点数包结算（支持全球信用卡/借记卡，Creem MoR 托管收银台）。<strong>付款后通过 <code>api.xiaomie.tools</code> 邮箱账号自动即时开通</strong>，并享有 14 天退款保障（<a href="/refund/">Refund Policy</a>）。
+      </p>
+      <label class="xm-label" for="checkoutPlanSelect">选择 SaaS 方案 / 点数包</label>
+      <select id="checkoutPlanSelect" class="xm-input">
+          <option value="monthly9">入门月度版 Monthly Starter（$9 / 月 · 50 次）</option>
+          <option value="pack100">100 次专业额度包（$69 · 约 ¥500）</option>
+          <option value="annual99">年度专业版 Annual Pro（$99 / 年 · 无限目录整理）</option>
+        </select>
+      <label class="xm-label" for="checkoutBuyerEmail" style="margin-top:12px">接收自动开通授权的邮箱（api.xiaomie.tools 账号）</label>
+      <input id="checkoutBuyerEmail" class="xm-input" type="email" placeholder="buyer@company.com" />
+      <div style="margin-top:14px;display:flex;gap:10px">
+        <button type="button" class="btn btn-primary" id="btnSubmitSaasCheckout" style="width:100%">
+          前往 Global SaaS Checkout 结算
+        </button>
+      </div>
+      <div id="saasCheckoutStatus" class="xm-status"></div>
+    </div>
+  </dialog>
+  
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>
